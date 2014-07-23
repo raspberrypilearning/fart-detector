@@ -36,6 +36,10 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 - A monitor or TV
 - **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
+-	2 x 47k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors))
+-	1 x 22k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors))
+- 2 x 10k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors))
+- 1 x 4.7k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors))
 -	Air quality sensor (try [RS Components](http://uk.rs-online.com/web/p/gas-detection/5389960))
 
 ### Software
