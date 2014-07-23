@@ -34,8 +34,9 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 - Ethernet cable
 - LAN with Internet connection
 - A monitor or TV
-- **Male** to **Female** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
+- **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
+-	Air quality sensor (try [RS Components](http://uk.rs-online.com/web/p/gas-detection/5389960)
 
 ### Software
 
