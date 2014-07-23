@@ -28,3 +28,13 @@ Those of you who play computer games may have experienced this before. Look at y
 
 I expect you can think of further examples of analogue and digital beyond just these.
 
+### But the Raspberry Pi is digital?
+
+![](./images/gpio_b_plus.png)
+
+So the challenge we face is being able to read an *analogue* signal on a *digital* computer. The Raspberry Pi GPIO pins can be used as inputs or outputs. Output mode is for when you want to supply voltage to something like an LED or a BUZZER. In input mode each pin has a value which can be read in code to detect voltage. In both cases though the pin can either be `HIGH` or `LOW`, binary 1 or 0. So they are digital only.
+
+How can we solve this? One way would be to use an ADC chip (Analogue to Digital Converter) or something like an Arduino. By connecting the output of the air quality sensor to an input of the ADC it will convert the analogue voltage level from the sensor to digital number in code. However this does complicate matters slightly.
+
+In practise we just want to make an alarm sound when a fart has been detected so everyone can run!
+
