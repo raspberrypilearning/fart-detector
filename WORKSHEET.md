@@ -1,4 +1,4 @@
-## Introduction: what's in a fart?
+## Introduction: how can we detect a fart?
 
 ![](./images/dude.png)
 
@@ -6,6 +6,7 @@ Flatulence or *farts* are essentially gasses that are produced in the stomach an
 
 You'll be surprised to learn that 99% of fart gasses do not smell at all. These include oxygen, nitrogen, carbon dioxide, hydrogen and methane. The remaining 1% is what gives farts their smell and these are mostly volatile sulphuric compounds. The same stuff that makes rotten eggs smell.
 
-In order to detect a fart using the Raspberry Pi we need to use a sensor that is responsive to one or more of the gasses mentioned above.
+To detect a fart with the Raspberry Pi we need to use a sensor that is responsive to one or more of these gasses. Essentially we need to give the Raspberry Pi a *nose*. The sensor recommended for this project is the Figaro TGS2600 and costs around £10. Here is a close-up of it:
 
 ![](./images/figaro.png)
+
