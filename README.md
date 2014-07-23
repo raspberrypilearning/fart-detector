@@ -8,7 +8,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 
 ## Lesson objectives
 
-- Understand what the difference between analogue and digital
+- Understand the difference between analogue and digital
 - Understand voltage, current and resistence
 - Understand how an air quality sensor works
 - Understand fart potency
