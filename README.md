@@ -11,6 +11,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 - Understand what the difference between analogue and digital
 - Understand voltage, current and resistence
 - Understand how an air quality sensor works
+- Understand fart potency
 
 ## Lesson outcomes
 
@@ -40,7 +41,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 
 ### Extras
 
-- A Digital Multimeter (try [Pimoroni](http://shop.pimoroni.com/products/digital-multimeter))
+- A digital multimeter (try [Pimoroni](http://shop.pimoroni.com/products/digital-multimeter) or [Maplin](http://www.maplin.co.uk/p/uni-trend-ut30b-digital-compact-multimeter-n15by))
 - A can of deoderant or pefume (to simulate farts)
 
 ### Time required
