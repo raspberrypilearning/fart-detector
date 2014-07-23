@@ -36,6 +36,8 @@ So the challenge we face is being able to read an *analogue* signal on a *digita
 
 How can we solve this? One way would be to use an ADC chip ([Analogue to Digital Converter](http://en.wikipedia.org/wiki/Analog-to-digital_converter)) or something like an [Arduino](http://arduino.cc/en/Main/Products). By connecting the output of the air quality sensor to the input of an ADC we can convert the analogue voltage from the sensor to a digital number in our code.
 
-However this does complicate matters slightly. In practise we just want to make an alarm go off when a fart has been detected so everyone can run! So if you think about it... this is a digital detection. There is a fart. There is no fart. ON or OFF, binary 1 or 0.
+However this does complicate matters slightly. In practise we just want to make an alarm go off when a fart has been detected so everyone can run! So if you think about it... this is a digital detection. There is a fart. There is no fart. on or off, binary 1 or 0.
 
 We can get away without having to worry about the analogue fidelity coming from the air quality sensor. We might want to use if we wanted to *rate* the fart though, fresh air, SBD, *EVACUATE THE BUILDING* etc.
+
+
