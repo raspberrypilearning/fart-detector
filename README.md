@@ -9,6 +9,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 ## Lesson objectives
 
 - Understand the difference between analogue and digital
+- Understand binary counting
 - Understand voltage, current and resistence
 - Understand how an air quality sensor works
 - Understand fart potency
@@ -16,6 +17,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 ## Lesson outcomes
 
 - To have built and programmed a working fart detector
+- To have made a rudimentary DAC (digital to analogue converter) 
 - Gained experience in Python programming
 - Gained experience using the Raspberry Pi GPIO pins
 
