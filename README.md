@@ -34,6 +34,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 - Ethernet cable
 - LAN with Internet connection
 - A monitor or TV
+- Breadboard (try [Pimoroni](http://shop.pimoroni.com/products/solderless-breadboard-400-point) or [Maplin](http://www.maplin.co.uk/p/ad-102-breadboard-ag10l))
 - **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 -	2 x 47k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
