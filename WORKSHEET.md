@@ -88,6 +88,8 @@ This is the **bottom** view... the pin numbers have the following functions:
 
 So there are two distinct circuits that we need to accommodate. First is the *heater* which is used to energise the air and the other is the sensor itself. The output (-) side of which is where we'll be doing our hacky trick. Take the breadboard and push the four pins of the sensor into it so that it straddles the central gap as shown below. You may need to bend the pins a little, this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
 
+*Note:* On a breadboard like this the holes on the outside are connected *vertically* and on the inside they're connected *horizontally*. Look at the green highlighting in the diagram.
+
 ![](./images/fzz_a.png)
 
 The sensor can run on 5 volts but we're going to run it on 3.3 volts here since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above, this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive electrodes). The colour of the wire you use doesn't matter. Next connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
@@ -96,7 +98,7 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 ## Step 2: Wire up the trigger pin
 
-Next let's connect the output of the sensor circuit to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper lead and make the white connection shown below.
+Next let's connect the output of the sensor output to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper lead and make the white connection shown below.
 
 ![](./images/fzz_b.png)
 
