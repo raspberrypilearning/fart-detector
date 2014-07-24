@@ -90,5 +90,14 @@ So there are two distinct circuits that we need to accommodate. First is the *he
 
 ![](./images/fzz_a.png)
 
-The sensor can run on 5 volts but we're going to run it on 3.3 volts here since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above, this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive the electrodes). The colour of the wire you use doesn't matter. Next connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
+The sensor can run on 5 volts but we're going to run it on 3.3 volts here since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above, this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive electrodes). The colour of the wire you use doesn't matter. Next connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
 
+We still need to do something with the negative side of the sensor, row 1 in the top right corner of the breadboard. See below.
+
+## Step 2: Wire up the trigger pin
+
+Next let's connect the output of the sensor circuit to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper lead and make the white connection shown below.
+
+![](./images/fzz_b.png)
+
+Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output pin to help bring it down to region of the GPIO threshold mentioned above.
