@@ -44,7 +44,6 @@ We already know that the sensor is like a variable resistor, the worse the air q
 
 You now might be wondering how the Raspberry Pi knows if a GPIO pin is `HIGH` or `LOW`?
 
-The answer to this question is actually part of our solution. You may already know that the GPIO pins work at a voltage of 3.3 volts. So if you set a pin to be `HIGH` in output mode that pin will give/supply 3.3 volts. If you set it to output `LOW` though it will be connected to ground but could form the return path for completing a circuit.
+The answer to this question is actually part of our solution. You may already know that the GPIO pins work at 3.3 volts. So if you set a pin to be `HIGH` in output mode that pin will give/supply 3.3 volts. If you set it to output `LOW` though it will be connected to ground but could form the return path for completing a circuit.
 
-In input mode things work slightly differently. Naturally you would assume that the reading of the pin would be `HIGH` if it was connected to 3.3 volts and `LOW` if connected to ground. This is true but there is more to it. There is actually a voltage *threshold* that lies somewhere between 1.1 and 1.4 volts. The actual threshold varies slightly between different hardware revisions of the Raspberry Pi (but we can cope with this).
-
+In input mode things work slightly differently. Naturally you would assume that the reading of the pin would be `HIGH` if it was connected to 3.3 volts and `LOW` if connected to ground. This is true but there is more to it. There is actually a voltage *threshold* that lies somewhere between 1.1 and 1.4 volts. The actual threshold varies slightly between different hardware revisions of the Raspberry Pi (but we can cope with this). So for example 1.0 volts would read `LOW`, despite there actually being some voltage there where as 1.5 volts would read `HIGH` despite this being a lot less than 3.3.
