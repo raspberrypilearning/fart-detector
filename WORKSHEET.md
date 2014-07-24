@@ -108,6 +108,9 @@ Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.o
 
 The problem we now have is that despite the addition of the 47k resistor the air quality sensor has quite a large voltage range. 0 volts would be in a vacuum (no air, e.g. space) and the maximum 3.3 would be in a terrible, eye watering, SBD fart. Depending on the background quality of the air the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold under different air quality conditions.
 
-To do this we need *another* variable resistor, one that we can control. We could use a [potentiometer](http://en.wikipedia.org/wiki/Potentiometer) for this but you would always need to manually tune it to the background air before it could be used. This is not ideal if you want to set the trap and wait for an unsuspecting victim. The background air quality can change naturally in the mean time and thus the alarm might go off without a fart. Awkward.
+To do this we need *another* variable resistor, so that we can vary the amount of voltage that we siphon off to ground. We could use a [potentiometer](http://en.wikipedia.org/wiki/Potentiometer) for this but you would always need to manually tune it to the background air before it could be used. This is not ideal if you want to set the trap and wait for an unsuspecting victim. The background air quality can change naturally in the mean time and thus the alarm might go off without a fart. Awkward.
+
+It would be a lot better to have control of this from within our code. Then we can program it to keep adjusting to the background air quality and the trap would not need manual intervention if the air quality changed.
 
 ![](./images/ladder_schematic.png)
+
