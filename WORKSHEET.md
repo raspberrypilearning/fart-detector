@@ -48,5 +48,32 @@ The answer to this question is actually part of our solution. You may already kn
 
 In input mode things work slightly differently. Naturally you would assume that the reading of the pin would be `HIGH` if it was connected to 3.3 volts and `LOW` if connected to ground. There is actually a voltage *threshold* that lies somewhere around 1.1 to 1.4 volts. The actual threshold varies slightly between different hardware revisions of the Raspberry Pi (but we can cope with this). Below the threshold is `LOW` and above it is `HIGH`. So for example 1.0 volt would read `LOW`, despite there actually being some voltage there where as 1.6 volts would read `HIGH` despite this being a lot less than 3.3.
 
-This is quite a hacky way to do it but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold then the spike caused by a fart will trip it over from `LOW` to `HIGH` and we have our digital fart detection.
+This is quite a hacky way to do it but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold then the spike caused by a fart will tip it over from `LOW` to `HIGH` and we have our digital fart detection.
+
+## Step 0: Setting up your Pi
+
+First check that you have all the parts you need to get your Raspberry Pi set up and working.
+
+- Raspberry Pi
+- Micro USB power adaptor
+- An SD card with Raspbian already set up through NOOBS
+- USB keyboard
+- USB mouse
+- HDMI cable
+- A monitor or TV
+
+### Activity checklist:
+
+1. Place the SD card into the slot of your Raspberry Pi.
+1. Next connect the HDMI cable from the monitor or TV.
+1. Plug in the USB keyboard and mouse.
+1. Plug in the micro USB power supply.
+1. When prompted to login type:
+
+    ```bash
+    Login: pi
+    Password: raspberry
+    ```
+
+## Step 1: Build a resistor ladder
 
