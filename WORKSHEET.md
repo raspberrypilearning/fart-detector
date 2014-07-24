@@ -98,10 +98,14 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 ## Step 2: Wire up the trigger pin
 
-Next let's connect the output of the sensor output to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper lead and make the white connection shown below.
+Next let's connect the output of the sensor to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper wire and make the white connection shown below.
 
 ![](./images/fzz_b.png)
 
 Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
 
 ## Step 3: Build a resistor ladder DAC
+
+The problem we now have is that despite the addition of the 47k resistor the air quality sensor has quite a large analogue range that it can supply.  
+
+![](./images/ladder_schematic.png)
