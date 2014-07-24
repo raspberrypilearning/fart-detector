@@ -75,5 +75,19 @@ First check that you have all the parts you need to get your Raspberry Pi set up
     Password: raspberry
     ```
 
-## Step 1: Build a resistor ladder
+## Step 1: Wire up the Air Quality sensor
 
+![](./images/pinout.png)
+
+This is the **bottom** view... the pin numbers have the following functions:
+
+1. Heater (-)
+1. Sensor electrode (-)
+1. Sensor electrode (+)
+1. Heater (+)
+
+So there are two distinct circuits that we need to accommodate. First is the *heater* which is used to energise the air and the other is the sensor itself. The output (-) side of which is where we'll be doing our hacky trick. Take the breadboard and push the four pins of the sensor into it so that it straddles the central gap as shown below. You may need to bend the pins a little, this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
+
+![](./images/fzz_a.png)
+
+Then insert the other connections using the jumper wires as per the diagram above. The colour of the wires does not matter.
