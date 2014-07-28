@@ -102,15 +102,17 @@ Next let's connect the output of the sensor to one of the GPIO pins, this will b
 
 ![](images/fzz_b.png)
 
-Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
+Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to the (1.1 to 1.4 volt) region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
 
 ## Step 3: Build a resistor ladder DAC
 
-The problem we now have is that despite the addition of the 47k resistor the air quality sensor has quite a large voltage range. 0 volts would be in a vacuum (no air, e.g. space) and the maximum 3.3 would be in a terrible, eye watering, SBD fart. Depending on the background quality of the air the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold under different air quality conditions.
+The problem we now have is that despite the addition of the 47k resistor the air quality sensor has quite a large output voltage range. 0 volts would be in a vacuum (no air, e.g. space) and the maximum 3.3 would be in a terrible, eye watering, silent but deadly fart. Depending on the background quality of the air the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold under different air quality conditions.
 
 To do this we need *another* variable resistor, so that we can vary the amount of voltage that we siphon off to ground. We could use a [potentiometer](http://en.wikipedia.org/wiki/Potentiometer) for this but you would always need to manually tune it to the background air before it could be used. This is not ideal if you want to set the trap and wait for an unsuspecting victim. The background air quality can change naturally in the mean time and thus the alarm might go off without a fart. Awkward.
 
 It would be a lot better to have control of this from within our code. Then we can program it to keep adjusting to the background air quality and the trap would not need manual intervention if the air quality changed.
+
+A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/wiki/Resistor_ladder). This is where we have a set of repeating resistors that we can independently turn on and off in our code. If each resistor has a different value in ohms we can use different combinations of them to give us something which approximates the behaviour of a variable resistor / potentiometer.
 
 ![](images/ladder_schematic.png)
 
