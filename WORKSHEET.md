@@ -178,8 +178,9 @@ R1 | R2 | R3 | R4
 --- | --- | --- | ---
 R | R/2 | R/4 | R/8
 
-The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain them. They do not perfectly mirror the binary digit position values but they will be good enough for what we want. Remember `R0` is the one hard wired to ground.
+The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror the binary digit position values but they will be good enough for us. Remember `R0` is the one hard wired to ground.
 
 R0 | R1 | R2 | R3 | R4 |
 --- | --- | --- | --- | ---
 47k | 47k | 22k | 10k | 4.7k 
+
