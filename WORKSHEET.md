@@ -1,6 +1,6 @@
 ## Introduction
 
-![](./images/dude.png)
+![](images/dude.png)
 
 ### How can we detect a fart?
 
@@ -12,7 +12,7 @@ To detect a fart with the Raspberry Pi we need to use a sensor that is responsiv
 
 Here is a close-up of it:
 
-![](./images/figaro.png)
+![](images/figaro.png)
 
 Firstly it is important for us to understand how this sensor works. The sensor is designed to measure air quality or rather how *contaminated* the air is. The datasheet for those of you who want it can be found [here](http://www.figarosensor.com/products/2600pdf.pdf).
 
@@ -20,7 +20,7 @@ To summarise it has six holes to allow air to go inside. The air is then energis
 
 ### Analogue vs Digital
 
-![](./images/analogue_digital.png)
+![](images/analogue_digital.png)
 
 We also need to understand that the air quality sensor gives us an *analogue* signal. So let's look at what analogue means as opposed to digital as a concept. Digital signals are essentially binary 1 or 0, on or off. Analogue signals have the full range *between* on or off. Think of a car steering wheel. The wheel is analogue because you have a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only, like steering using the indicator stick.
 
@@ -30,7 +30,7 @@ I expect you can think of further examples of analogue and digital beyond just t
 
 ### But the Raspberry Pi is digital?
 
-![](./images/gpio_b_plus.png)
+![](images/gpio_b_plus.png)
 
 So the challenge we face is being able to read an *analogue* signal on a *digital* computer. The Raspberry Pi GPIO pins can be used as inputs or outputs. Output mode is for when you want to supply voltage to something like an LED or a buzzer. If we use input mode, a GPIO pin has a value that we can read in our code. If the pin has voltage going into it, the reading will be `1` (*HIGH*); if the pin was connected directly to ground (no voltage), the reading will be `0` (*LOW*). So they are digital allowing only `1` or `0`.
 
@@ -77,7 +77,7 @@ First check that you have all the parts you need to get your Raspberry Pi set up
 
 ## Step 1: Wire up the Air Quality sensor
 
-![](./images/pinout.png)
+![](images/pinout.png)
 
 This is the **bottom** view... the pin numbers have the following functions:
 
@@ -86,11 +86,11 @@ This is the **bottom** view... the pin numbers have the following functions:
 1. Sensor electrode (+)
 1. Heater (+)
 
-So there are two distinct circuits that we need to accommodate. First is the *heater* which is used to energise the air and the other is the sensor itself. The output (-) side of which is where we'll be doing our hacky trick. Take the breadboard and push the four pins of the sensor into it so that it straddles the central gap as shown below. You may need to bend the pins a little, this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
+So there are two distinct circuits that we need to accommodate. First is the *heater* (pins 1 and 4) which is used to energise the air and the other is the *sensor* itself (pins 2 and 3). The output (-) side of the sensor is where we'll be doing our hacky trick with a GPIO pin threshold. Take the breadboard and push the four pins of the sensor into it so that it straddles the central gap as shown below. You may need to bend the pins a little, this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
 
 *Note:* On a breadboard like this the holes on the outside are connected *vertically* and on the inside they're connected *horizontally*. Look at the green highlighting in the diagram.
 
-![](./images/fzz_a.png)
+![](images/fzz_a.png)
 
 The sensor can run on 5 volts but we're going to run it on 3.3 volts here since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above, this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive electrodes). The colour of the wire you use doesn't matter. Next connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
 
@@ -100,7 +100,7 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 Next let's connect the output of the sensor to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper wire and make the white connection shown below.
 
-![](./images/fzz_b.png)
+![](images/fzz_b.png)
 
 Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
 
@@ -112,5 +112,5 @@ To do this we need *another* variable resistor, so that we can vary the amount o
 
 It would be a lot better to have control of this from within our code. Then we can program it to keep adjusting to the background air quality and the trap would not need manual intervention if the air quality changed.
 
-![](./images/ladder_schematic.png)
+![](images/ladder_schematic.png)
 
