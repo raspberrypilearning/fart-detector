@@ -114,5 +114,7 @@ It would be a lot better to have control of this from within our code. Then we c
 
 A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/wiki/Resistor_ladder). This is where we have a set of repeating resistors that we can independently turn on and off in our code. If each resistor has a different value in ohms we can use different combinations of them to give us something which approximates the behaviour of a variable resistor / potentiometer.
 
+Look at the diagram below. This *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. So essentially the output voltage of the sensor is coming out of pin number `2` and this is connected to `GPIO 4` however in between that we have several places where we can siphon off voltage to ground to bring the voltage down to the GPIO pin threshold. 
+
 ![](images/ladder_schematic.png)
 
