@@ -118,4 +118,62 @@ Look at the diagram below. This *schematically* shows how a resistor ladder woul
 
 ![](images/ladder_schematic.png)
 
-So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors are connected to a GPIO pin. This gives us digital control over whether that resistor is on or off.  If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the pin not connected to anything.  However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (R1 to R4) are connected in parallel to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the GPIO pin not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+
+Since the ladder is controlled digitally by turning resistors on and off with the output being a variable level of resistance (that effects an analogue voltage) the circuit can be called a *digital to analogue converter* or DAC for short. This is the opposite of an ADC mentioned earlier.
+
+### Some theory
+
+Ideally we need to vary the resistance in a linear way and have a good number of possible on/off combinations that will accommodate the range of the air quality sensor output voltage. Consider what would happen if all the resistors had the same value in ohms, how many possible combinations of resistance values could there be?
+
+The answer is only 5. Look at the table below:
+
+R1 | R2 | R3 | R4 
+--- | --- | --- | ---
+x | x | x | x
+ON | x | x | x
+ON | ON | x | x
+ON | ON | ON | x
+ON | ON | ON | ON
+
+This is problematic since it doesn't give us much of a range to choose from, there are only 5 possible steps. It might work but it would be quite hard to bring the voltage down to the GPIO threshold correctly every time. However if we used *different* resistance values for R1 to R4 then we could combine them many more ways affording more combinations. We could borrow from the [binary counting system](http://en.wikipedia.org/wiki/Binary_number#Counting_in_binary) here? So that each resistor represents a binary digit with an associated magnitude.
+
+8's | 4's | 2's | 1's
+--- | --- | --- | ---
+`0` | `0` | `0` | `0`
+
+In binary each digit position has twice the value of the position to the right. So the right most column is 1's, the next colum is 2's, then 4's and so on. Look at the table above. So to represent the number *3* you need one lot of 2 and one lot of 1, so the decimal number 3 in binary is `0011`. The decimal number *9* is one lot of 8 and one lot of 1 giving `1001`.
+
+This would then give us 16 on/off combinations (if we include zero). Look at the table below:
+
+Decimal | Binary
+--- | ---
+0 | `0000`
+1 | `0001`
+2 | `0010`
+3 | `0011`
+4 | `0100`
+5 | `0101`
+6 | `0110`
+7 | `0111`
+8 | `1000`
+9 | `1001`
+10 | `1010`
+11 | `1011`
+12 | `1100`
+13 | `1101`
+14 | `1110`
+15 | `1111`
+
+In a perfect world the resistance values we use should mirror the binary digit position values. For example:
+
+R0 | R1 | R2 | R3 | R4
+--- | --- | --- | --- | ---
+Rx8 | Rx8 | Rx4 | Rx2 | R 
+
+or
+
+R0 | R1 | R2 | R3 | R4
+--- | --- | --- | --- | ---
+R | R | R/2 | R/4 | R/8 
+
