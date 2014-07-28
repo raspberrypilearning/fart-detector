@@ -2,7 +2,7 @@
 
 Bust people for farting with your Raspberry Pi
 
-![](./images/cover.png)
+![](images/cover.png)
 
 All kids understand that farts are funny. As we grow older some of us lose our sense of humour in this area. You'll be glad to hear we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home you'll be able to provide the advanced warning necessary to evacuate the room.
 
