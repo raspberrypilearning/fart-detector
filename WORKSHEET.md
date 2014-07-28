@@ -167,17 +167,17 @@ Decimal | Binary
 
 In a perfect world the resistance values for `R0` to `R4` should mirror binary digit position values. For example:
 
-R0 | R1 | R2 | R3 | R4
---- | --- | --- | --- | ---
-Rx8 | Rx8 | Rx4 | Rx2 | R 
+R1 | R2 | R3 | R4
+--- | --- | --- | ---
+Rx8 | Rx4 | Rx2 | R 
 
 Or, which is probably easier to make:
 
-R0 | R1 | R2 | R3 | R4
---- | --- | --- | --- | ---
-R | R | R/2 | R/4 | R/8
+R1 | R2 | R3 | R4
+--- | --- | --- | ---
+R | R/2 | R/4 | R/8
 
-The actual values we're going to use, however, are as follows.  This does not perfectly mirror the binary digit position values but it will be good enough for what we want.
+The actual values we're going to use, however, are as follows.  This does not perfectly mirror the binary digit position values but it will be good enough for what we want. Remember `R0` is the one hard wired to ground.
 
 R0 | R1 | R2 | R3 | R4 |
 --- | --- | --- | --- | ---
