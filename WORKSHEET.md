@@ -116,13 +116,13 @@ A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/
 
 Look at the diagram below. This *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. So essentially the output voltage of the sensor is coming out of pin number `2` and this is connected to GPIO 4. However in between that we have several places where we can siphon off voltage to bring the voltage down to the GPIO pin threshold as required.
 
+### Some theory
+
 ![](images/ladder_schematic.png)
 
 So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (R1 to R4) are connected in parallel to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the GPIO pin not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
 
 Since the ladder is controlled digitally by turning resistors on and off with the output being a variable level of resistance (that effects an analogue voltage) the circuit can be called a *digital to analogue converter* or DAC for short. This is the opposite of an ADC mentioned earlier.
-
-### Some theory
 
 Ideally we need to vary the resistance in a linear way and have a good number of possible on/off combinations that will accommodate the range of the air quality sensor output voltage. Consider what would happen if all the resistors had the same value in ohms, how many possible combinations of resistance values could there be?
 
