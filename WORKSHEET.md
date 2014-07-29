@@ -188,7 +188,7 @@ Take another look at the schematic diagram above, you'll see that there is a row
 So the algorithm will be something like:
 
 - Loop for each number between 0 to 15
-    - Configure the laddder to number in binary form
+    - Configure the laddder to binary form of the number
         - if GPIO 4 is LOW
             - Exit loop
 - Wait for GPIO 4 to go HIGH
@@ -196,6 +196,14 @@ So the algorithm will be something like:
 
 ### The practise
 
+Okay so let's go ahead and wire up the resistor ladder on our breadboard. Here is a quick reference table for the resistor values that you need to use and what pins they are connected to:
+
+R0 | R1 | R2 | R3 | R4
+--- | --- | --- | --- | ---
+47k | 47k | 22k | 10k | 4.7k
+GND | GPIO 17 | GPIO 18 | GPIO 22 | GPIO 23
+
+The colour bands will also match those on the diagram below.
+
 ![](images/fzz_c.png)
 
-Okay so let's go ahead and wire up the resistor ladder on our breadboard.
