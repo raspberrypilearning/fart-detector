@@ -211,4 +211,45 @@ When you're done you should have something like this. You'll notice that for som
 
 ![](images/breadboard_done.jpg)
 
-## Step 4: Write code to calibrate the ladder
+## Step 4: Play a test alarm sound
+
+If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
+
+`sudo amixer cset numid=3 1`
+
+Next we're going to use the Python pygame library to make some alarm noises. First verify that the package is installed using the following command:
+
+`sudo apt-get install python-pygame -y`
+
+If your SD card is up to date you should see the message:
+
+`python-pygame is already the newest version`
+
+Okay, now let's do some programming. Enter the following command to start editing a blank file:
+
+`nano farts.py`
+
+Now either copy and paste or enter the following code:
+```python
+#!/usr/bin/python
+import time
+from pygame import mixer
+mixer.init()
+mixer.music.load("evacuate.mp3")
+
+mixer.music.play(-1) # -1 to loop the sound
+time.sleep(10) #let it play for 10 seconds
+mixer.music.stop()
+```
+This code uses the pygame mixer to load a sound file and play it in a loop for 10 seconds.
+Press `Ctrl - O` then `Enter` to save followed by `Ctrl - X` to quit.
+
+Next, mark the file as executable with the following command:
+
+`chmod +x farts.py`
+
+Now we can run the code; when you do, the alarm should play for 10 seconds and then stop.
+
+`./farts.py`
+
+## Step 5: Write code to calibrate the ladder
