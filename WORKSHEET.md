@@ -196,17 +196,19 @@ So the algorithm will be something like:
 
 ### The practise
 
-Okay so let's go ahead and wire up the resistor ladder on our breadboard. Here is a quick reference table for the resistor values that you need to use and what pins they are connected to:
+Okay so let's go ahead and wire up the resistor ladder on our breadboard. Here is a quick reference table for the resistor values that you need to use and what pins they should be connected to:
 
 R0 | R1 | R2 | R3 | R4
 --- | --- | --- | --- | ---
 47k | 47k | 22k | 10k | 4.7k
 GND | GPIO 17 | GPIO 18 | GPIO 22 | GPIO 23
 
-The resistor [colour bands](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) will also match those on the diagram below. Use the jumper cables to make the connections shown, the colour of the wires does not matter. You'll notice a jumper needs to go between H1 and F8 on the breadboard. This is just to expand the number of holes that are connected to pin 2 of the air quality sensor and allows us to t-off each of the resistors that make up the ladder.
+The resistor [colour bands](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) will match those on the diagram below. Use the jumper cables to make the connections shown and remember the colour of the wire does not matter. You'll notice a jumper needs to go between H1 and F8 on the breadboard. This is just to expand the number of holes that are connected to pin 2 of the air quality sensor and allows us to t-off each of the resistors that make up the ladder.
 
 ![](images/fzz_c.png)
 
-When you're done you should have something like this. You'll notice that for some of the connections we have just used bare wire (instead of a jumper) pushed flat to the breadboard. This can be a nice way of keeping things tidy.
+When you're done you should have something like this. You'll notice that for some of the connections we have just used bare wire (instead of a jumper) pushed flat to the breadboard. This can be a nice way of keeping things tidy but either way will work fine.
 
 ![](images/breadboard_done.jpg)
+
+## Step 4: Write code to calibrate the ladder
