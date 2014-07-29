@@ -118,14 +118,15 @@ A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/
 
 Look at the diagram below. This *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. So essentially the output voltage of the sensor is coming out of pin number `2` and this is connected to GPIO 4. However in between that we have several places where we can siphon off voltage to bring the voltage down to the GPIO pin threshold as required.
 
-
 ![](images/ladder_schematic.png)
 
-So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (R1 to R4) are connected in parallel to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the GPIO pin not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (R1 to R4) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the GPIO pin not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
 
-Since the ladder is controlled digitally by turning resistors on and off with the output being a variable level of resistance (that effects an analogue voltage) the circuit can be called a *digital to analogue converter* or DAC for short. This is the opposite of an ADC mentioned earlier.
+A note about [parallel resistors](http://en.wikipedia.org/wiki/Series_and_parallel_circuits#Resistors_2). The total resistance of the ladder is *not* the sum of all the resistors that are turned on. It would be if you wired the resistors in series though, that's because the voltage would need to flow through each resistor in turn. In parallel the flow of voltage will divide equally among each resistor and the effect is that the total resistance *is less*. So the more resistors we turn on the lower the total resistence will be and the more voltage gets siphoned off to ground.
 
-Ideally we need to vary the resistance in a linear way and have a good number of possible on/off combinations that will accommodate the range of the air quality sensor output voltage. Consider what would happen if all the resistors had the same value in ohms, how many possible combinations of resistance values could there be?
+Since the ladder is controlled digitally by turning resistors on and off with the output being a variable level of resistance (that effects an analogue voltage) the circuit can be called a [digital to analogue converter](http://en.wikipedia.org/wiki/Digital-to-analog_converter) or DAC for short. This is the opposite of an ADC mentioned earlier.
+
+Ideally we need to vary the resistance in a linear way and have a good number of possible on/off combinations that will accommodate the range of the air quality sensor output voltage. Consider what would happen if all the resistors had the same value in ohms, how many possible *unique* combinations of resistance values could there be?
 
 The answer is only 5. Look at the table below:
 
