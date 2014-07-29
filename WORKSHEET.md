@@ -140,7 +140,7 @@ ON | ON | x | x
 ON | ON | ON | x
 ON | ON | ON | ON
 
-This is problematic since it doesn't give us much of a range to choose from, there are only 5 possible steps. It might work but it would be quite hard to bring the voltage down to the GPIO threshold correctly every time. However if we used *different* resistance values for R1 to R4 then we could combine them many more ways affording more combinations. We could borrow from the [binary counting system](http://en.wikipedia.org/wiki/Binary_number#Counting_in_binary) here? So that each resistor represents a binary digit with an associated bit significance/magnitude in ohms.
+This is problematic since it doesn't give us much of a range to choose from, there are only 5 possible steps. It might work but it would be quite hard to bring the voltage down to the GPIO threshold correctly every time. However if we used *different* resistance values for `R1` to `R4` then we could combine them many more ways affording more combinations. We could borrow from the [binary counting system](http://en.wikipedia.org/wiki/Binary_number#Counting_in_binary) here? So that each resistor represents a binary digit with an associated bit significance/magnitude in ohms.
 
 8's | 4's | 2's | 1's
 --- | --- | --- | ---
@@ -193,3 +193,9 @@ So the algorithm will be something like:
             - Exit loop
 - Wait for GPIO 4 to go HIGH
     - Sound fart alarm
+
+### The practise
+
+![](images/fzz_c.png)
+
+Okay so let's go ahead and wire up the resistor ladder on our breadboard.
