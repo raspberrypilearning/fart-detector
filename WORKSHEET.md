@@ -239,6 +239,7 @@ Now either copy and paste or enter the following code:
 ```python
 #!/usr/bin/python
 import time
+
 from pygame import mixer
 mixer.init()
 mixer.music.load("evacuate.mp3")
@@ -270,11 +271,22 @@ mixer.music.play(-1) # -1 to loop the sound
 time.sleep(10) #let it play for 10 seconds
 mixer.music.stop()
 ```
-Next we need to import the GPIO library. Add `RPi.GPIO as GPIO` at the top as shown below:
+Next we need to import the GPIO library. This allows us to configure the GPIO pins as desired.
+Add `RPi.GPIO as GPIO` at the top of the file as shown below:
 ```python
 #!/usr/bin/python
 import time, RPi.GPIO as GPIO
+
 from pygame import mixer
 mixer.init()
 mixer.music.load("evacuate.mp3")
 ```
+We now need to set up the trigger pin (GPIO 4) as an input. We can create variable called `TRIGGER` which will hold the the number 4, we can then refer to this variable everywhere else in the code when we access the trigger pin.
+```python
+TRIGGER = 4
+
+GPIO.setmode(GPIO.BCM) #use BCM pin layout
+GPIO.setup(TRIGGER, GPIO.IN)
+```
+The `GPIO.setmode` line above configures the GPIO library to use the Broadcom pin layout which matches the graphic in the breadboard diagrams above. Then the `GPIO.setup` line actually configures the trigger pin to be an `INPUT`, that allows us to read the state of it to test if it is `HIGH` or `LOW`.
+
