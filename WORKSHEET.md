@@ -259,3 +259,22 @@ Now we can run the code; when you do, the alarm should play for 10 seconds and t
 `./farts.py`
 
 ## Step 5: Write code to calibrate the ladder
+
+Lets continue editing our program. Enter the following command:
+
+`nano farts.py`
+
+Remove the three lines below, these are no longer needed but will be used again later.
+```python
+mixer.music.play(-1) # -1 to loop the sound
+time.sleep(10) #let it play for 10 seconds
+mixer.music.stop()
+```
+Next we need to import the GPIO library. Add `RPi.GPIO as GPIO` at the top as shown below:
+```python
+#!/usr/bin/python
+import time, RPi.GPIO as GPIO
+from pygame import mixer
+mixer.init()
+mixer.music.load("evacuate.mp3")
+```
