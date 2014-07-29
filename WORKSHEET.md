@@ -116,11 +116,13 @@ A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/
 
 ### The theory of resistor ladders
 
+This next section might seem a bit boring but the topics covered will tremendously help your understand of the project so I advise to not skip it!
+
 Look at the diagram below. This *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. So essentially the output voltage of the sensor is coming out of pin number `2` and this is connected to GPIO 4. However in between that we have several places where we can siphon off voltage to bring the voltage down to the GPIO pin threshold as required.
 
 ![](images/ladder_schematic.png)
 
-So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (R1 to R4) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin in our code to be in `INPUT` mode this switches the resistor off because the GPIO pin not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (`R1` to `R4`) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin, in our code, to use `INPUT` mode this switches the resistor off because the GPIO pin is not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
 
 A note about [parallel resistors](http://en.wikipedia.org/wiki/Series_and_parallel_circuits#Resistors_2). The total resistance of the ladder is *not* the sum of all the resistors that are turned on. It would be if you wired the resistors in series though, that's because the voltage would need to flow through each resistor in turn. In parallel the flow of voltage will divide equally among each resistor and the effect is that the total resistance *is less*. So the more resistors we turn on the lower the total resistence will be and the more voltage gets siphoned off to ground.
 
@@ -169,37 +171,25 @@ Decimal | Binary
 
 In a perfect world the resistance values for `R1` to `R4` should mirror binary bit significance. The term *bit significance* refers to the value or magnitude that each bit position has. For example in a 4 bit number the right most bit has a value of only 1 and is called the [least significant bit](http://en.wikipedia.org/wiki/Least_significant_bit) or **LSB** for short. The left most bit has a value of 8 and is the [most significant bit](http://en.wikipedia.org/wiki/Most_significant_bit) or **MSB** for short.
 
-We need to think carefully now. Consider the amount of voltage that each resistor lets through. The higher the resistance in ohms the *less* voltage is let through and conversely the lower the resistance value the *more* voltage is let through. Remember a normal wire has no resistance and lets all voltage though. Given this we ought to assign the least significant bit to have the *highest* resistance since this lets through the least voltage and the *lowest* resistance to the most significant bit since this lets through the most voltage. For example:
+We need to think carefully now. Consider the amount of voltage that each resistor lets through. The higher the resistance in ohms the *less* voltage is let through and conversely the lower the resistance value the *more* voltage is let through. Remember a normal wire has almost no resistance and lets *all* voltage though. Given this we ought to assign the least significant bit to have the *highest* resistance since this lets through the least voltage and the *lowest* resistance to the most significant bit since this lets through the most voltage. For example:
 
 8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
 R/8 | R/4 | R/2 | R
 
-The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror binary bit significance but they will be good enough for this project.
+The actual values we're going to use are below. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror binary bit significance but they will be good enough for this project.
 
 8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
 4.7k | 10k | 22k | 47k 
 
+Take another look at the schematic diagram above, you'll see that there is a row of 1's to represent the four bit binary number that will be the on/off state of the ladder (it shows `1111` which is 15). So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold and so the trigger pin (GPIO 4) will read `HIGH`. We then incrementally work our way up to 1111. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground) and check to see if GPIO 4 has gone from `HIGH` to `LOW`. Once we have found this level the air quality sensor is then calibrated to normal air and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back into `HIGH`. We then just need to wait for this to happen in our code.
 
+So the algorithm will be something like:
 
-
-
-Decimal | R0 47k | R4 4.7k | R3 10k | R2 22k | R1 47k | Total
---- | --- | --- | --- | --- | --- | ---
-0 | Fixed | `0` | `0` | `0` | `0` | 47k
-1 | Fixed | `0` | `0` | `0` | `1` | k
-2 | Fixed | `0` | `0` | `1` | `0` | k
-3 | Fixed | `0` | `0` | `1` | `1` | k
-4 | Fixed | `0` | `1` | `0` | `0` | k
-5 | Fixed | `0` | `1` | `0` | `1` | k
-6 | Fixed | `0` | `1` | `1` | `0` | k
-7 | Fixed | `0` | `1` | `1` | `1` | k
-8 | Fixed | `1` | `0` | `0` | `0` | k
-9 | Fixed | `1` | `0` | `0` | `1` | k
-10 | Fixed | `1` | `0` | `1` | `0` | k
-11 | Fixed | `1` | `0` | `1` | `1` | k
-12 | Fixed | `1` | `1` | `0` | `0` | k
-13 | Fixed | `1` | `1` | `0` | `1` | k
-14 | Fixed | `1` | `1` | `1` | `0` | k
-15 | Fixed | `1` | `1` | `1` | `1` | k
+- Loop for each number between 0 to 15
+    - Configure the laddder to number in binary form
+        - if GPIO 4 is LOW
+            - Exit loop
+- Wait for GPIO 4 to go HIGH
+    - Sound fart alarm
