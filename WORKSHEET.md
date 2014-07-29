@@ -167,27 +167,19 @@ Decimal | Binary
 14 | `1110`
 15 | `1111`
 
-In a perfect world the resistance values for `R1` to `R4` should mirror binary bit significance. The term *bit significance* refers to the value or magnitude that each bit position has. For example the right most bit has a value of only 1 and is called the [least significant bit](http://en.wikipedia.org/wiki/Least_significant_bit) or LSB for short. The left most bit has a value of 8 and is the [most significant bit](http://en.wikipedia.org/wiki/Most_significant_bit) or MSB for short.
+In a perfect world the resistance values for `R1` to `R4` should mirror binary bit significance. The term *bit significance* refers to the value or magnitude that each bit position has. For example in a 4 bit number the right most bit has a value of only 1 and is called the [least significant bit](http://en.wikipedia.org/wiki/Least_significant_bit) or **LSB** for short. The left most bit has a value of 8 and is the [most significant bit](http://en.wikipedia.org/wiki/Most_significant_bit) or **MSB** for short.
 
-
-
-For example:
-
-8's MSB | 4's | 2's | 1's LSB
---- | --- | --- | ---
-R | Rx2 | Rx4 | Rx8 
-
-Or, which is probably easier to make:
+We need to think carefully now. Consider the amount of voltage that each resistor lets through. The higher the resistance in ohms the *less* voltage is let through and conversely the lower the resistance value the *more* voltage is let through. Remember a normal wire has no resistance and lets all voltage though. Given this we ought to assign the least significant bit to have the *highest* resistance since this lets through the least voltage and the *lowest* resistance to the most significant bit since this lets through the most voltage. For example:
 
 8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
 R/8 | R/4 | R/2 | R
 
-The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror the binary digit position values (in terms of the two tables above) but they will be good enough for this project.
+The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror binary bit significance but they will be good enough for this project.
 
 8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
-47k | 22k | 10k | 4.7k 
+4.7k | 10k | 22k | 47k 
 
 
 
