@@ -211,13 +211,15 @@ When you're done you should have something like this. You'll notice that for som
 
 ![](images/breadboard_done.jpg)
 
+We have now completed the hardware side of the project, we just need to bring it to life with some programming!
+
 ## Step 4: Play a test alarm sound
 
 If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
 
 `sudo amixer cset numid=3 1`
 
-Next we're going to use the Python pygame library to make some alarm noises. First verify that the package is installed using the following command:
+Next we're going to use the Python pygame library to make some alarm sounds. First verify that the package is installed using the following command:
 
 `sudo apt-get install python-pygame -y`
 
