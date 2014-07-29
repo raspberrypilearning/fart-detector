@@ -138,7 +138,7 @@ ON | ON | x | x
 ON | ON | ON | x
 ON | ON | ON | ON
 
-This is problematic since it doesn't give us much of a range to choose from, there are only 5 possible steps. It might work but it would be quite hard to bring the voltage down to the GPIO threshold correctly every time. However if we used *different* resistance values for R1 to R4 then we could combine them many more ways affording more combinations. We could borrow from the [binary counting system](http://en.wikipedia.org/wiki/Binary_number#Counting_in_binary) here? So that each resistor represents a binary digit with an associated magnitude in ohms.
+This is problematic since it doesn't give us much of a range to choose from, there are only 5 possible steps. It might work but it would be quite hard to bring the voltage down to the GPIO threshold correctly every time. However if we used *different* resistance values for R1 to R4 then we could combine them many more ways affording more combinations. We could borrow from the [binary counting system](http://en.wikipedia.org/wiki/Binary_number#Counting_in_binary) here? So that each resistor represents a binary digit with an associated bit significance/magnitude in ohms.
 
 8's | 4's | 2's | 1's
 --- | --- | --- | ---
@@ -167,21 +167,25 @@ Decimal | Binary
 14 | `1110`
 15 | `1111`
 
-In a perfect world the resistance values for `R1` to `R4` should mirror binary digit position values. For example:
+In a perfect world the resistance values for `R1` to `R4` should mirror binary bit significance. The term *bit significance* refers to the value or magnitude that each bit position has. For example the right most bit has a value of only 1 and is called the [least significant bit](http://en.wikipedia.org/wiki/Least_significant_bit) or LSB for short. The left most bit has a value of 8 and is the [most significant bit](http://en.wikipedia.org/wiki/Most_significant_bit) or MSB for short.
 
-8's | 4's | 2's | 1's
+
+
+For example:
+
+8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
-Rx8 | Rx4 | Rx2 | R 
+R | Rx2 | Rx4 | Rx8 
 
 Or, which is probably easier to make:
 
-8's | 4's | 2's | 1's
+8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
-R | R/2 | R/4 | R/8
+R/8 | R/4 | R/2 | R
 
 The actual values we're going to use are as follows. These have been chosen for their ubiquity and to make it easier for you to buy / obtain the physical resistors. You'll notice that they do not *perfectly* mirror the binary digit position values (in terms of the two tables above) but they will be good enough for this project.
 
-8's | 4's | 2's | 1's
+8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
 47k | 22k | 10k | 4.7k 
 
