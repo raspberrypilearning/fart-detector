@@ -114,7 +114,7 @@ It would be a lot better to have control of this from within our code. Then we c
 
 A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/wiki/Resistor_ladder). This is where we have a set of repeating resistors that we can independently turn on and off in our code. If each resistor has a different value in ohms we can use different combinations of them to give us something which approximates the behaviour of a variable resistor / potentiometer.
 
-### The theory of resistor ladders
+### The theory
 
 This next section might seem a bit boring but the topics covered will tremendously help your understand of the project so I advise to not skip it!
 
@@ -188,7 +188,7 @@ Take another look at the schematic diagram above, you'll see that there is a row
 So the algorithm will be something like:
 
 - Loop for each number between 0 to 15
-    - Configure the laddder to binary form of the number
+    - Configure the laddder to the binary form of the number
         - if GPIO 4 is LOW
             - Exit loop
 - Wait for GPIO 4 to go HIGH
@@ -203,7 +203,10 @@ R0 | R1 | R2 | R3 | R4
 47k | 47k | 22k | 10k | 4.7k
 GND | GPIO 17 | GPIO 18 | GPIO 22 | GPIO 23
 
-The colour bands will also match those on the diagram below.
+The resistor [colour bands](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) will also match those on the diagram below. Use the jumper cables to make the connections shown, the colour of the wires does not matter. You'll notice a jumper needs to go between H1 and F8 on the breadboard. This is just to expand the number of holes that are connected to pin 2 of the air quality sensor and allows us to t-off each of the resistors that make up the ladder.
 
 ![](images/fzz_c.png)
 
+When you're done you should have something like this. You'll notice that for some of the connections we have just used bare wire (instead of a jumper) pushed flat to the breadboard. This can be a nice way of keeping things tidy.
+
+![](images/breadboard_done.jpg)
