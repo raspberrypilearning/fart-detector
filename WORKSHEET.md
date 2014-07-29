@@ -227,6 +227,10 @@ If your SD card is up to date you should see the message:
 
 `python-pygame is already the newest version`
 
+Lets first download a sound file that will be the alarm. This is essentially a robotic voice saying "evacuate", enter the following terminal command to download it.
+
+`wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate`
+
 Okay, now let's do some programming. Enter the following command to start editing a blank file:
 
 `nano farts.py`
