@@ -98,6 +98,10 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 ## Step 2: Wire up the trigger pin
 
+Shut down the Raspberry Pi and unplug the power for now, we'll plug it back in again later.
+
+`sudo halt`
+
 Next let's connect the output of the sensor to one of the GPIO pins, this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper wire and make the white connection shown below.
 
 ![](images/fzz_b.png)
@@ -206,7 +210,7 @@ We have now completed the hardware side of the project, we just need to bring it
 
 ## Step 4: Play a test alarm sound
 
-If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
+Plug your Raspberry Pi back in, boot up and log in as per usual. If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
 
 `sudo amixer cset numid=3 1`
 
@@ -292,12 +296,11 @@ So the algorithm will be something like:
 - Wait for GPIO 4 to go HIGH
     - Sound fart alarm
 
-If we break this task down there are four things we need to do.
+If we break this task down there are three things we need to do.
 
 - Turn resistors/pins on and off
 - Set all resistors/pins in the ladder to a binary value
 - Loop through all the binary combinations testing the trigger pin
-- Monitor for farts
 
 ###  Turn resistors/pins on and off
 
@@ -383,28 +386,33 @@ Inside the loop then we pass `i` into `set_dac`, we then print out what ladder s
 
 It is possible that the air quality could be so *bad* that the threshold is never found (it can get this way if you abuse the deodorant can or fart in a confined space). In this case `result` will still be `-1` and will end up being the return value of the function. This allows the main code to know if the calibration was successful or not. When the calibration is unsuccessful you can only wait for the air to clear and try again. You can always print a message about the fart lingering though!
 
-### Monitor for farts
+Right, now let's program the main code that will use the `calibrate` function!
 
-Right, now let's program the logic that will call the `calibrate` function, wait for a fart to occur and then play the alarm sound!
-
+Enter or copy and paste this code at the very bottom of your file.
 ```python
 fresh_air = calibrate(trace = True, sleep_time = .5)
 
 if fresh_air != -1:
-    print "Waiting for fart..."
-
-    while not GPIO.input(TRIGGER): #wait as long as trigger is LOW
-        time.sleep(.1)
-
-    fart = calibrate(sleep_time = .1) #get the fart level
-
-    if fart > fresh_air:
-        print "Fart detected, evacuate!"
-        mixer.music.play(-1) # -1 to loop the sound
-        time.sleep(10) #let it play for 10 seconds
-        mixer.music.stop()
+    print "Calibrated to", fresh_air
 else:
     "Could not calibrate"
+```
+This calls the calibrate function and stores the result in a variable called `fresh_air`, under normal conditions this should be somewhere below 6 or 7. We can then use an `if` statement to test if `fresh_air` is equal to `-1` or not. So if not equal `!=` to `-1` then we have a successful calibration, otherwise it failed.
 
-GPIO.cleanup()
+*Note:* it's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later you may need to wait a few minutes for the heater to warm up from cold before you can get a successful calibration.
+
+Lets run the code. Press `Ctrl - O` then `Enter` to save followed by `Ctrl - X` to quit from editing.
+
+GPIO functions require root access on your Pi, so from now on you must use the `sudo` command to run your code. If you don't use sudo you'll see the following error: `No access to dev/mem. Try running as root!`
+
+`sudo ./farts.py`
+
+The output should look something like this:
+```
+0 0
+1 1
+2 10
+3 11
+4 100
+Calibrated to 4
 ```
