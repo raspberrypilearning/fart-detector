@@ -298,9 +298,9 @@ If we break this task down there are three things we need to do.
 - Set all resistors/pins in the ladder to a binary value
 - Loop through all the binary combinations testing GPIO 4
 
-Let's create a separate function in our code for each one (this will keep the code neat and tidy). In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pins is not connected to anything and nothing will flow through it.
+Let's create a separate function in our code for each one (this will keep the code neat and tidy). In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
 
-We can define a function as follows to do this, enter or copy and paste this into your code.
+We can define a function called `set_pin` as follows to do this, enter or copy and paste this into your code.
 ```python
 def set_pin(pin, ison):
     if ison:
@@ -309,14 +309,13 @@ def set_pin(pin, ison):
     else:
         GPIO.setup(pin, GPIO.IN)
 ```
-The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a True/False variable to say if we which way we want the resistor/pin. We then just use an `if` statement and call the appropriate `GPIO.setup` command.
+The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which way we want the resistor/pin. We then just use an `if` statement and call the appropriate GPIO commands. When we call the function we can write `set_pin(18, True)` for example.
 
-
+Next we need a function to call `set_pin` multiple times for each of the ladder GPIO pins (17, 18, 22 and 23).
 ```python
 def set_dac(bitwise):
     set_pin(17, bitwise & 1)
     set_pin(18, bitwise & 2)
     set_pin(22, bitwise & 4)
     set_pin(23, bitwise & 8)
-
 ```
