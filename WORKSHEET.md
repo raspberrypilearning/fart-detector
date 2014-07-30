@@ -296,7 +296,7 @@ If we break this task down there are three things we need to do.
 
 - Turn resistors/pins on and off
 - Set all resistors/pins in the ladder to a binary value
-- Loop through all the binary combinations testing GPIO 4
+- Loop through all the binary combinations testing the trigger pin
 
 Let's create a separate function in our code for each one (this will keep the code neat and tidy).
 
@@ -326,14 +326,14 @@ def set_dac(bitwise):
     set_pin(22, bitwise & 4 == 4)
     set_pin(23, bitwise & 8 == 8)
 ```
-The function takes one parameter called `bitwise`. Because each resistor/pin represents a binary bit position we now need to call the `set_pin` function accordinly based on whether or not the corresponding binary bit is set in the `bitwise` Integer.
+The function takes one parameter called `bitwise`. Because each resistor/pin represents a binary bit position we now need to call the `set_pin` function accordinly based on whether or not the corresponding binary bit is set to `1` in `bitwise`.
 
 8's MSB | 4's | 2's | 1's LSB
 --- | --- | --- | ---
 GPIO 23 | GPIO 22 | GPIO 18 | GPIO 17
 4.7k | 10k | 22k | 47k
 
-For example if `bitwise` was 9, this is `1001` in binary so working from LSB to MSB:
+For example if `bitwise` was 9, this is `1001` in binary so working from LSB to MSB (right to left):
 - `1` = `GPIO 17` ON
 - `0` = `GPIO 18` OFF
 - `0` = `GPIO 22` OFF
@@ -356,3 +356,24 @@ AND 1000 (decimal 8)
 We can use [bitwise operators](https://wiki.python.org/moin/BitwiseOperators#The_Operators:) to do this in our code. So if we use `bitwise & x == x` (bitwise and x is equal to x) this will give a boolean (True/False) result depending on whether the bit `x` is set or not. Take another look at the `set_dac` function now and you'll notice that we use this trick to call the `set_pin` function multiple times for each bit value/position. This ensures that the `ison` parameter inside the `set_pin` function will always be True or False.
 
 When we call the `set_dac` function we can write `set_dac(x)` for instance. Where x is a number between 0 and 15.
+
+### Loop through all the binary combinations testing the trigger pin
+
+Okay so now that we have the ability to configure the DAC as desired we need some code that will loop from 0 to 15 testing the trigger to see if it has dropped from `HIGH` to `LOW`.
+
+Let's call this function `calibrate`, enter or copy and paste this into your code.
+```python
+def calibrate(trace = False, sleep_time = 0):
+    result = -1
+    for i in range(0, 16):
+        set_dac(i)
+        if trace:
+            print i, "{0:b}".format(i)
+        time.sleep(sleep_time)
+        if not GPIO.input(TRIGGER):
+            result = i
+            break
+            
+    return result
+```
+
