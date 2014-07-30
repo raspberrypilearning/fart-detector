@@ -359,7 +359,7 @@ When we call the `set_dac` function we can write `set_dac(x)` for instance. Wher
 
 ### Loop through all the binary combinations testing the trigger pin
 
-Okay so now that we have the ability to configure the DAC we need some code that will loop from 0 to 15 calling `set_dac` and testing the trigger to find/calibrate the `HIGH` to `LOW` threshold.
+Okay so now that we have the ability to configure the DAC we need some code that will loop from 0 to 15 calling `set_dac` and testing the input trigger pin to find the `HIGH` to `LOW` threshold.
 
 Let's call this function `calibrate`, enter or copy and paste this into your code.
 ```python
@@ -376,10 +376,10 @@ def calibrate(trace = False, sleep_time = 0):
             
     return result
 ```
-The function takes two parameters, `trace` and `sleep_time`. The `trace` parameter is a boolean (True/False) value to say if we want to trace/print the ladder steps we're working through. The `sleep_time` parameter specifies how long the code should pause for between configuring the DAC and taking the measurement from the trigger pin. You'll notice that they are both *optional* parameters since we provide a default value for both.
+The function takes two parameters, `trace` and `sleep_time`. The `trace` parameter is a boolean (True/False) value to say if we want to trace/print the ladder steps we're working through. The `sleep_time` parameter specifies how long the code should pause for between configuring the DAC and taking the measurement from the trigger pin. You'll notice that they are both *optional* parameters since we provide a default value for them.
 
-Inside the function then we define a variable called `result`. This will be returned at the end of the function so that the main program can know which step on the ladder (between 0 and 15) the threshold was found at. Next is a `for` loop for the range 0 to 16. Why 16? In python you specify the number to start at and the number to stop at, so stopping at 16 means 15 will be the last time around the loop.
+Inside the function then we define a variable called `result`. This will be returned at the end of the function so that the main program can know which step on the ladder (between 0 and 15) the threshold was found. Next is a `for` loop for the range 0 to 16. Why 16? In python you specify the number to start at and the number to stop at, so stopping at 16 means 15 will be the last time around the loop. The syntax `for i in range` means that the variable `i` changes each time around the loop.
 
+Inside the loop then we pass `i` into `set_dac`, we then print out what ladder step we're on (in both decimal and binary), sleep as necessary and then test the value of the trigger pin using the `GPIO.input` command. This command will return `1` or `0` depending on the state of the trigger pin. We can then use the `if not` syntax to test whether `0` was returned. If we get `0` then we've found the `HIGH` to `LOW` threshold so we set `result = i` and `break` out of the loop.
 
-
-
+It is possible that the air quality could be so *bad* that the threshold is never found (it can get this way if you abuse the deodorant can). In this case `result` will still be `-1` and will end up being the return value of the function. This allows the main code to know if the calibration was successful or not.
