@@ -313,7 +313,7 @@ def set_pin(pin, ison):
     else:
         GPIO.setup(pin, GPIO.IN)
 ```
-The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which way we want the resistor/pin. We then just use an `if` statement and call the appropriate GPIO commands passing in `pin`. When we call the function we can write `set_pin(18, True)` for example.
+The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which state (on or off) the resistor/pin should be. We then just use an `if` statement and call the appropriate GPIO commands passing in `pin`. When we call the function we can write `set_pin(18, True)` for example.
 
 ### Set all resistors/pins in the ladder to a binary value
 
@@ -353,4 +353,6 @@ Another example, testing for the right most bit (MSB):
 AND 1000 (decimal 8)
   = 1000 (decimal 8)
 ```
-We can use Python [bitwise operators](https://wiki.python.org/moin/BitwiseOperators#The_Operators:) to do this in our code. So if we use `bitwise & x == x` (bitwise and x is equal to x) this will give a boolean true or false result depending on whether the bit `x` is set or not. Take another look at the `set_dac` function now and you'll notice that we use this trick to call the `set_pin` function multiple times for each bit position.
+We can use [bitwise operators](https://wiki.python.org/moin/BitwiseOperators#The_Operators:) to do this in our code. So if we use `bitwise & x == x` (bitwise and x is equal to x) this will give a boolean (True/False) result depending on whether the bit `x` is set or not. Take another look at the `set_dac` function now and you'll notice that we use this trick to call the `set_pin` function multiple times for each bit value/position. This ensures that the `ison` parameter inside the `set_pin` function will always be True or False.
+
+When we call the `set_dac` function we can write `set_dac(x)` for instance. Where x is a number between 0 and 15.
