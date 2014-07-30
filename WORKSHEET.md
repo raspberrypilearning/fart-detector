@@ -430,7 +430,6 @@ If you want the calibration to run more slowly, to give you more time to see the
 
 Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
+When you're doing this bear in mind that the `HIGH` vs `LOW` threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts, when you run the calibration code, with it dropping in stages until it reaches the threshold. When the GPIO pin goes `LOW` you should see the `Calibrated to x` message on the screen.
+
 ## Step 6: Monitoring for farts and raising the alarm
-
-
-
