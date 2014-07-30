@@ -399,8 +399,6 @@ else:
 ```
 This calls the calibrate function and stores the result in a variable called `fresh_air`, under normal conditions this should be somewhere below 6 or 7. We can then use an `if` statement to test if `fresh_air` is equal to `-1` or not. So if not equal `!=` to `-1` then we have a successful calibration, otherwise it failed.
 
-*Note:* it's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later you may need to wait a few minutes for the heater to warm up from cold before you can get a successful calibration.
-
 Lets run the code. Press `Ctrl - O` then `Enter` to save followed by `Ctrl - X` to quit from editing.
 
 GPIO functions require root access on your Pi, so from now on you must use the `sudo` command to run your code. If you don't use sudo you'll see the following error: `No access to dev/mem. Try running as root!`
@@ -416,3 +414,11 @@ The output should look something like this:
 4 100
 Calibrated to 4
 ```
+*Note:* it's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later you may need to wait a few minutes for the heater to warm up from cold before you can get a successful calibration.
+
+If it goes all the way up to 15 and you see the `Could not calibrate` message then just wait a minute or two and run the code again.
+
+## Step 6: Monitoring for farts and raising the alarm
+
+
+
