@@ -298,9 +298,11 @@ If we break this task down there are three things we need to do.
 - Set all resistors/pins in the ladder to a binary value
 - Loop through all the binary combinations testing GPIO 4
 
+Let's create a separate function in our code for each one (this will keep the code neat and tidy).
+
 ###  Turn resistors/pins on and off
 
-Let's create a separate function in our code for each one (this will keep the code neat and tidy). In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
+In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
 
 We can define a function called `set_pin` as follows to do this, enter or copy and paste this into your code.
 ```python
