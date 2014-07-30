@@ -183,16 +183,7 @@ The actual values we're going to use are below. These have been chosen for their
 --- | --- | --- | ---
 4.7k | 10k | 22k | 47k 
 
-Take another look at the schematic diagram above, you'll see that there is a row of 1's to represent the four bit binary number that will be the on/off state of the ladder (it shows `1111` which is 15). So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold and so the trigger pin (GPIO 4) will read `HIGH`. We then incrementally work our way up to 1111. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground) and check to see if GPIO 4 has gone from `HIGH` to `LOW`. Once we have found this level the air quality sensor is then calibrated to normal air and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back into `HIGH`. We then just need to wait for this to happen in our code.
-
-So the algorithm will be something like:
-
-- Loop for each number between 0 to 15
-    - Configure the laddder to the binary form of the number
-        - if GPIO 4 is LOW
-            - Exit loop
-- Wait for GPIO 4 to go HIGH
-    - Sound fart alarm
+Take another look at the schematic diagram above, you'll see that there is a row of 1's to represent the four bit binary number that will be the on/off state of the ladder (it shows `1111` which is 15). So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold and so the trigger pin (GPIO 4) will read `HIGH`. We then incrementally work our way up to 15 `1111`. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground) and check to see if GPIO 4 has gone from `HIGH` to `LOW`. Once we have found the HIGH/LOW threshold the air quality sensor is then calibrated to normal air and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back from `LOW` into `HIGH`. We then just need to wait for this to happen in our code and then sound the alarm!
 
 ### The practise
 
@@ -261,6 +252,8 @@ Now we can run the code; when you do, the alarm should play for 10 seconds and t
 
 ## Step 5: Write code to calibrate the ladder
 
+As stated above we need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin so that it reads `LOW`. That way any increase in output voltage caused by a fart will tip the trigger from `LOW` into `HIGH` (which we can easily detect in code).
+
 Lets continue editing our program. Enter the following command:
 
 `nano farts.py`
@@ -288,5 +281,15 @@ TRIGGER = 4
 GPIO.setmode(GPIO.BCM) #use BCM pin layout
 GPIO.setup(TRIGGER, GPIO.IN)
 ```
-The `GPIO.setmode` line above configures the GPIO library to use the Broadcom pin layout which matches the graphic in the breadboard diagrams above. Then the `GPIO.setup` line actually configures the trigger pin to be an `INPUT`, that allows us to read the state of it to test if it is `HIGH` or `LOW`.
+The `GPIO.setmode` line above configures the GPIO library to use the Broadcom pin layout which matches the graphic in the breadboard diagrams above. Then the `GPIO.setup` line actually configures the trigger pin to be an `INPUT`, that allows us to read the state of it to test if it is `HIGH` or `LOW`. The next task is for us to loop through all the possible on/off combinations for the ladder (0 to 15 in binary) and locate the threshold of this trigger pin.
 
+So the algorithm will be something like:
+
+- Loop for each number between 0 to 15
+    - Configure the laddder to the binary form of the number
+        - if GPIO 4 is LOW
+            - Exit loop
+- Wait for GPIO 4 to go HIGH
+    - Sound fart alarm
+
+So firstly we need some code to configure the ladder, then we can add the code that does the looping and waiting for the fart.
