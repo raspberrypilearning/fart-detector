@@ -418,18 +418,17 @@ Calibrated to 4
 
 If it goes all the way up to 15 and you see the `Could not calibrate` message then just wait a minute or two and run the code again.
 
-### Supplementary activity using a multimeter
+### Optional activity using a multimeter
 
-If you connect a Multimeter to the breadboard as shown (and configure it to display voltage) you will be able to observe the voltage level changing in real time as the calibration code runs. You may need to use some Male to Male jumper wires and then the help of a friend to hold the multimeter terminals onto the bare end of the jumper wires.
+If you connect a Multimeter to the breadboard as shown (and configure it to display voltage) you will be able to observe the voltage level changing in real time as the calibration code runs. You may need to use some Male to Male jumper wires and then the help of a friend to hold the multimeter terminals onto the bare ends of the jumper wires.
 
 ![](images/fzz_multimeter.png)
 
-If you want the calibration code to run more slowly to give you more time to see the values on the multimeter then you can just modify the `sleep_time` parameter to the `calibrate` function on the line below in your code:
+If you want the calibration to run more slowly, to give you more time to see the values on the multimeter, then you can just increase the `sleep_time` parameter to the `calibrate` function on the line below:
 
 `fresh_air = calibrate(trace = True, sleep_time = .5)`
 
-Run the code again with:
-
+Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
 ## Step 6: Monitoring for farts and raising the alarm
 
