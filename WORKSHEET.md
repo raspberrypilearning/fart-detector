@@ -298,6 +298,8 @@ If we break this task down there are three things we need to do.
 - Set all resistors/pins in the ladder to a binary value
 - Loop through all the binary combinations testing GPIO 4
 
+###  Turn resistors/pins on and off
+
 Let's create a separate function in our code for each one (this will keep the code neat and tidy). In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
 
 We can define a function called `set_pin` as follows to do this, enter or copy and paste this into your code.
@@ -309,13 +311,44 @@ def set_pin(pin, ison):
     else:
         GPIO.setup(pin, GPIO.IN)
 ```
-The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which way we want the resistor/pin. We then just use an `if` statement and call the appropriate GPIO commands. When we call the function we can write `set_pin(18, True)` for example.
+The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which way we want the resistor/pin. We then just use an `if` statement and call the appropriate GPIO commands passing in `pin`. When we call the function we can write `set_pin(18, True)` for example.
+
+### Set all resistors/pins in the ladder to a binary value
 
 Next we need a function to call `set_pin` multiple times for each of the ladder GPIO pins (17, 18, 22 and 23).
+Since we're setting the entire ladder DAC we can define a function called `set_dac` to do this, enter or copy and paste this into your code.
 ```python
 def set_dac(bitwise):
-    set_pin(17, bitwise & 1)
-    set_pin(18, bitwise & 2)
-    set_pin(22, bitwise & 4)
-    set_pin(23, bitwise & 8)
+    set_pin(17, bitwise & 1 == 1)
+    set_pin(18, bitwise & 2 == 2)
+    set_pin(22, bitwise & 4 == 4)
+    set_pin(23, bitwise & 8 == 8)
 ```
+The function takes one parameter called `bitwise`. Because each resistor/pin represents a binary bit position we now need to call the `set_pin` function accordinly based on whether or not the corresponding binary bit is set in the `bitwise` Integer.
+
+8's MSB | 4's | 2's | 1's LSB
+--- | --- | --- | ---
+GPIO 23 | GPIO 22 | GPIO 18 | GPIO 17
+4.7k | 10k | 22k | 47k
+
+For example if `bitwise` was 9, this is `1001` in binary so working from LSB to MSB:
+- `1` = `GPIO 17` ON
+- `0` = `GPIO 18` OFF
+- `0` = `GPIO 22` OFF
+- `1` = `GPIO 23` ON
+
+If we do a logical [and](http://en.wikipedia.org/wiki/Bitwise_operation#AND) between `bitwise` and the value of the bit position we can test to see if a bit is set to `1` or not. It works by comparing the bit positions of both numbers, if they are `1` in both then the answer will also be `1` otherwise its `0`.
+
+For example, testing the number 5 for the first bit (LSB):
+```
+    0101 (decimal 5)
+AND 0001 (decimal 1)
+  = 0001 (decimal 1)
+```
+Another example, testing for the right most bit (MSB):
+```
+    1101 (decimal 13)
+AND 1000 (decimal 8)
+  = 1000 (decimal 8)
+```
+We can use Python [bitwise operators](https://wiki.python.org/moin/BitwiseOperators#The_Operators:) to do this in our code. So if we use `bitwise & x == x` (bitwise and x is equal to x) this will give a boolean true or false result depending on whether the bit `x` is set or not. Take another look at the `set_dac` function now and you'll notice that we use this trick to call the `set_pin` function multiple times for each bit position.
