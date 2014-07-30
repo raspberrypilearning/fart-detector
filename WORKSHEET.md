@@ -390,7 +390,7 @@ Right, now let's program the main code that will use the `calibrate` function!
 
 Enter or copy and paste this code at the very bottom of your file.
 ```python
-fresh_air = calibrate(trace = True, sleep_time = .5)
+fresh_air = calibrate(trace = True, sleep_time = 0.5)
 
 if fresh_air != -1:
     print "Calibrated to", fresh_air
@@ -424,9 +424,9 @@ If you connect a Multimeter to the breadboard as shown (and configure it to disp
 
 ![](images/fzz_multimeter.png)
 
-If you want the calibration to run more slowly, to give you more time to see the values on the multimeter, then you can just increase the `sleep_time` parameter to the `calibrate` function on the line below:
+If you want the calibration to run more slowly, to give you more time to see the values on the multimeter, then you can just increase the `sleep_time` parameter on the call to the `calibrate` function on the line below:
 
-`fresh_air = calibrate(trace = True, sleep_time = .5)`
+`fresh_air = calibrate(trace = True, sleep_time = 0.5)`
 
 Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
