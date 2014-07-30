@@ -298,11 +298,11 @@ So the algorithm will be something like:
 
 If we break this task down there are three things we need to do.
 
-- Turn resistors/pins on and off
-- Set all resistors/pins in the ladder to a binary value
-- Loop through all the binary combinations testing the trigger pin
+- Turn resistor pins on and off
+- Set all resistor pins in the ladder to represent a binary value
+- Loop between 0 and 15 to calibrate the ladder DAC
 
-###  Turn resistors/pins on and off
+### Turn resistor pins on and off
 
 In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
 
@@ -317,7 +317,7 @@ def set_pin(pin, ison):
 ```
 The function takes two parameters `pin` and `ison`. The `pin` parameter will be the GPIO pin number and `ison` will be a boolean (True/False) variable to say which state (on or off) the resistor/pin should be. We then just use an `if` statement and call the appropriate GPIO commands passing in `pin`. When we call the function we can write `set_pin(18, True)` for example.
 
-### Set all resistors/pins in the ladder to a binary value
+### Set all resistor pins in the ladder to represent a binary value
 
 Next we need a function to call `set_pin` multiple times for each of the ladder GPIO pins (17, 18, 22 and 23).
 Since we're setting the entire ladder DAC we can define a function called `set_dac` to do this, enter or copy and paste this into your code.
@@ -359,7 +359,7 @@ We can use [bitwise operators](https://wiki.python.org/moin/BitwiseOperators#The
 
 When we call the `set_dac` function we can write `set_dac(x)` for instance. Where x is a number between 0 and 15.
 
-### Loop through all the binary combinations testing the trigger pin
+### Loop between 0 and 15 to calibrate the ladder DAC
 
 Okay so now that we have the ability to configure the DAC we need some code that will loop from 0 to 15 calling `set_dac` and testing the input trigger pin to find the `HIGH` to `LOW` threshold.
 
@@ -417,6 +417,19 @@ Calibrated to 4
 *Note:* it's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later you may need to wait a few minutes for the heater to warm up from cold before you can get a successful calibration.
 
 If it goes all the way up to 15 and you see the `Could not calibrate` message then just wait a minute or two and run the code again.
+
+### Supplementary activity using a multimeter
+
+If you connect a Multimeter to the breadboard as shown (and configure it to display voltage) you will be able to observe the voltage level changing in real time as the calibration code runs. You may need to use some Male to Male jumper wires and then the help of a friend to hold the multimeter terminals onto the bare end of the jumper wires.
+
+![](images/fzz_multimeter.png)
+
+If you want the calibration code to run more slowly to give you more time to see the values on the multimeter then you can just modify the `sleep_time` parameter to the `calibrate` function on the line below in your code:
+
+`fresh_air = calibrate(trace = True, sleep_time = .5)`
+
+Run the code again with:
+
 
 ## Step 6: Monitoring for farts and raising the alarm
 
