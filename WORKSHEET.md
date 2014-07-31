@@ -690,6 +690,6 @@ while True:
         print "Could not calibrate"
         time.sleep(5)
 ```
-There is one other trick you could do but I'm not sure your neighbours or parents are going to like it. This is to make the alarm *carry on* until the fart as dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required which could be several minutes. **Use this power wisely!**
+There is one other trick you could do but I'm not sure your neighbours or parents are going to like it. This is to make the alarm *carry on* until the fart has dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required which could be several minutes. **Use this power wisely!**
 
 You're now probably ready to start doing some real *testing*. Good luck!
