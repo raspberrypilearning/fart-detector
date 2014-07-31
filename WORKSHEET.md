@@ -482,9 +482,11 @@ The output should look something like this:
 Calibrated to 4
 Waiting for fart...
 ```
-I would suggest to use a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called Isobutane which you should find listed under the ingredients on the side of the can. Fortunately the TGS2600 sensor is very sensitive to Isobutane (see the [data sheet](http://www.figarosensor.com/products/2600pdf.pdf)) so this gives us a pretty good way to simulate farts on demand. In addition to Isobutane the sensor is also sensitive to Hydrogen as well as Methane. Hydrogen in particular can be up to 50% of the gas that makes up a fart.
+I would suggest to use a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called Isobutane which you should find listed under the ingredients on the side of the can. Fortunately the TGS2600 sensor is very sensitive to Isobutane (see the [data sheet](http://www.figarosensor.com/products/2600pdf.pdf)) so this gives us a pretty good way to simulate farts on demand. In addition to Isobutane the TGS2600 is also sensitive to Hydrogen as well as Methane. Hydrogen in particular can be up to 50% of the gas that makes up a fart.
 
 ![](images/spray.png)
 
 You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much, you may need to wait a bit to be able to successfully calibrate the next time you run the code.
+
+## Step 7: Continuous monitoring and recalibration
 
