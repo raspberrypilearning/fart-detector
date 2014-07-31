@@ -693,3 +693,13 @@ while True:
 There is one other trick you could do but I'm not sure your neighbours or parents are going to like it. This is to make the alarm *carry on* until the fart has dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required which could be several minutes. **Use this power wisely!**
 
 You're now probably ready to start doing some real *testing*. Good luck!
+
+## Licence
+
+Unless otherwise specified, everything in this repository is covered by the following licence:
+
+![Creative Commons License](http://i.creativecommons.org/l/by-sa/4.0/88x31.png)
+
+***Fart Detector*** by the [Raspberry Pi Foundation](http://raspberrypi.org) is licenced under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+Based on a work at https://github.com/raspberrypilearning/fart-detector
