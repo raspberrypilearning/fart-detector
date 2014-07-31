@@ -4,13 +4,13 @@ Bust people for farting with your Raspberry Pi
 
 ![](images/cover.png)
 
-All kids understand that farts are funny. As we grow older some of us lose our sense of humour in this area. You'll be glad to hear we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home you'll be able to provide the advanced warning necessary to evacuate the room.
+All kids understand that farts are funny. As we grow older, some of us lose our sense of humour in this area. You'll be glad to hear we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home, you'll be able to provide the advanced warning necessary to evacuate the room.
 
 ## Lesson objectives
 
 - Understand the difference between analogue and digital
 - Understand binary counting
-- Understand voltage, current and resistence
+- Understand voltage, current and resistance
 - Understand how an air quality sensor works
 - Understand fart potency
 
@@ -50,7 +50,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 ### Extras
 
 - A digital multimeter (try [Pimoroni](http://shop.pimoroni.com/products/digital-multimeter) or [Maplin](http://www.maplin.co.uk/p/uni-trend-ut30b-digital-compact-multimeter-n15by))
-- A can of deoderant or pefume (to simulate farts)
+- A can of deodorant or perfume (to simulate farts)
 
 ### Time required
 
