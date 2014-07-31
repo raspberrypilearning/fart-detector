@@ -39,7 +39,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 -	2 x 47k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
 -	1 x 22k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
-- 2 x 10k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
+- 1 x 10k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
 - 1 x 4.7k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
 -	Air quality sensor (try [RS Components](http://uk.rs-online.com/web/p/gas-detection/5389960))
 
@@ -61,7 +61,15 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 ## Worksheet & included files
 
 - [The worksheet](WORKSHEET.md)
+- (Optional) Final version of Python code [farts-final.py](./farts-final.py)
+    - Download to your Pi with the following commands:
 
+    ```bash
+    wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate
+    wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/farts-final.py --no-check-certificate
+    chmod +x farts-final.py
+    sudo ./farts-final.py
+    ```
 ## Licence
 
 Unless otherwise specified, everything in this repository is covered by the following licence:
