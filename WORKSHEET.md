@@ -601,7 +601,7 @@ alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
 
 print alarm_template.format("Fart level", fart, "detected!")
 ```
-We create a string variable to hold the template called `alarm_template` which itself contains the ANSI escape codes that we want to use. Within the string there are some numbered markers `{0} {1} {2}` which specify the parts of the string that should be replaced when you use the `format` command.
+We create a string variable which contains the ANSI escape codes that we want to use as a template. Within the template there are some numbered markers `{0} {1} {2}` which specify the parts of the string that should be replaced when you use the `format` command.
 
 Secondly you could use a `if...elif...elif` statment to show different messages depending on the fart potency. So essentially saying if `fart` is greater than this number and less than that number then show this message else show that message. Something like this:
 ```python
