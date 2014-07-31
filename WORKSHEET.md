@@ -580,6 +580,9 @@ I know that looks like gibberish but the format can be broken down like this:
 - Display text: `The text you want to show`
 - End sequence: `\033[0m`
 
+Here is a table of the codes you might want to use:
+**Use this power wisely!**
+
 Text color | Code | Text style | Code | Background color | Code
 --- | --- | --- | --- | --- | ---
 Black | 30 | No effect | 0 | Black | 40
@@ -591,7 +594,7 @@ Purple| 35 | Hidden | 8 | Purple | 45
 Cyan | 36 | | | Cyan | 46
 White | 37 | | | White | 47
 
-I have found that some of the text styles do not work. But you should be able to put something good together with the others. **Use this power wisely!**
+I have found that some of the text styles do not work. But you should be able to put something good together with the others.
 
 A good way to simplify using this is to use python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings and has a number of advantages over using the older *%s* method. For example:
 ```python
@@ -600,3 +603,15 @@ alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
 print alarm_template.format("Fart level", fart, "detected!")
 ```
 We create a string variable to hold the template called `alarm_template` which itself contains the ANSI escape codes that we want to use. Within the string there are some numbered markers `{0} {1} {2}` which specify the parts of the string that should be replaced when you use the `format` command.
+
+Secondly you could use a `if...elif...elif` statment to show different messages depending on the fart level. So essentially saying if `fart` is greater than this number and less than that number then show this message. Something like this:
+```python
+if fart >= 0 and fart < 5:
+    print alarm_template.format("Huh only level", fart, "detected, call that a fart?")
+elif fart >= 5 and fart < 10:
+    print alarm_template.format("Fart level", fart, "detected!")
+elif fart >= 10 and fart < 15:
+    print alarm_template.format("DANGER! Fart level", fart, "detected!")
+elif fart == -1:
+    print alarm_template.format("GAS GAS GAS! FART LEVEL", "DEATH", "DETECTED EVACUATE THE BUILDING!")
+```
