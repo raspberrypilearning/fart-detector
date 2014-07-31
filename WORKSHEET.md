@@ -38,17 +38,17 @@ How can we solve this? One way would be to use an ADC chip ([Analogue to Digital
 
 However this does complicate matters slightly. You would only need to use an ADC if a really accurate reading from the sensor was needed, for example if you wanted to know how many [parts per million](http://en.wikipedia.org/wiki/Parts-per_notation) of methane was present. In practise we just want to make an alarm go off when a fart has been detected so everyone can run! So if you think about it... this is a digital detection. There *is* a fart. There *is no* fart. On or off, binary 1 or 0. We can get away without having to worry about the analogue fidelity coming from the air quality sensor.
 
-We already know that the sensor is like a variable resistor, the worse the air quality the lower the resistance and the more voltage is let through. So logically when the sensor comes into contact with a fart the output voltage should spike. Therefore we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from `LOW` to `HIGH`, we can then detect this change in our code and play an alarm sound file!
+We already know that the sensor is like a variable resistor, the worse the air quality the lower the resistance and the more voltage is let through. So logically when the sensor comes into contact with a fart the output voltage should spike. Therefore we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from LOW to HIGH, we can then detect this change in our code and play an alarm sound file!
 
 ### The high and low threshold
 
-You now might be wondering how the Raspberry Pi knows if a GPIO pin is `HIGH` or `LOW`?
+You now might be wondering how the Raspberry Pi knows if a GPIO pin is HIGH or LOW?
 
-The answer to this question is actually part of our solution. You may already know that the GPIO pins work at 3.3 volts. So if you set a pin to be `HIGH` in output mode that pin will give/supply 3.3 volts. If you set it to output `LOW` though it will be connected to ground but could form the return path for completing a circuit.
+The answer to this question is actually part of our solution. You may already know that the GPIO pins work at 3.3 volts. So if you set a pin to be HIGH in output mode that pin will give/supply 3.3 volts. If you set it to output LOW though it will be connected to ground but could form the return path for completing a circuit.
 
-In input mode things work slightly differently. Naturally you would assume that the reading of the pin would be `HIGH` if it was connected to 3.3 volts and `LOW` if connected to ground. There is actually a voltage *threshold* that lies somewhere around 1.1 to 1.4 volts. The actual threshold varies slightly between different hardware revisions of the Raspberry Pi (but we can cope with this). Below the threshold is `LOW` and above it is `HIGH`. So for example 1.0 volt would read `LOW`, despite there actually being some voltage there where as 1.6 volts would read `HIGH` despite this being a lot less than 3.3.
+In input mode things work slightly differently. Naturally you would assume that the reading of the pin would be HIGH if it was connected to 3.3 volts and LOW if connected to ground. There is actually a voltage *threshold* that lies somewhere around 1.1 to 1.4 volts. The actual threshold varies slightly between different hardware revisions of the Raspberry Pi (but we can cope with this). Below the threshold is LOW and above it is HIGH. So for example 1.0 volt would read LOW, despite there actually being some voltage there where as 1.6 volts would read HIGH despite this being a lot less than 3.3.
 
-This is quite a hacky way to do it but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold then the spike caused by a fart will tip it over from `LOW` to `HIGH` and we have our digital fart detection.
+This is quite a hacky way to do it but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold then the spike caused by a fart will tip it over from LOW to HIGH and we have our digital fart detection.
 
 ## Step 0: Setting up your Pi
 
@@ -126,7 +126,7 @@ Look at the diagram below. This *schematically* shows how a resistor ladder woul
 
 ![](images/ladder_schematic.png)
 
-So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (`R1` to `R4`) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin to use `INPUT` mode this switches the resistor off because the GPIO pin is not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin `LOW` this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (`R1` to `R4`) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin to use `INPUT` mode this switches the resistor off because the GPIO pin is not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin LOW this will connect the resistor to ground and thus some voltage will be siphoned off through it.
 
 A note about [parallel resistors](http://en.wikipedia.org/wiki/Series_and_parallel_circuits#Resistors_2). The total resistance of the ladder is *not* the sum of all the resistors that are turned on. It would be if you wired the resistors in series though, that's because the voltage would need to flow through each resistor in turn. In parallel the flow of voltage will divide equally among each resistor and the effect is that the total resistance *is less*. So the more resistors we turn on the lower the total resistence will be and the more voltage gets siphoned off to ground.
 
@@ -187,7 +187,7 @@ The actual values we're going to use are below. These have been chosen for their
 --- | --- | --- | ---
 4.7k | 10k | 22k | 47k 
 
-Take another look at the schematic diagram above, you'll see that there is a row of 1's to represent the four bit binary number that will be the on/off state of the ladder (it shows `1111` which is 15). So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold and so the trigger pin (GPIO 4) will read `HIGH`. We then incrementally work our way up to 15 `1111`. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground) and check to see if GPIO 4 has gone from `HIGH` to `LOW`. Once we have found the HIGH/LOW threshold the air quality sensor is then calibrated to normal air and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back from `LOW` into `HIGH`. We then just need to wait for this to happen in our code and then sound the alarm!
+Take another look at the schematic diagram above, you'll see that there is a row of 1's to represent the four bit binary number that will be the on/off state of the ladder (it shows `1111` which is 15). So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold and so the trigger pin (GPIO 4) will read HIGH. We then incrementally work our way up to 15 `1111`. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground) and check to see if GPIO 4 has gone from HIGH to LOW. Once we have found the HIGH/LOW threshold the air quality sensor is then calibrated to normal air and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back from LOW into HIGH. We then just need to wait for this to happen in our code and then sound the alarm!
 
 ### The practise
 
@@ -256,7 +256,7 @@ Now we can run the code; when you do, the alarm should play for 10 seconds and t
 
 ## Step 5: Write code to calibrate the ladder
 
-As stated above we need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin so that it reads `LOW`. That way any increase in output voltage caused by a fart will tip the trigger from `LOW` into `HIGH` (which we can easily detect in code).
+As stated above we need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin so that it reads LOW. That way any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH (which we can easily detect in code).
 
 Lets continue editing our program. Enter the following command:
 
@@ -285,7 +285,7 @@ TRIGGER = 4
 GPIO.setmode(GPIO.BCM) #use BCM pin layout
 GPIO.setup(TRIGGER, GPIO.IN)
 ```
-The `GPIO.setmode` line above configures the GPIO library to use the Broadcom pin layout which matches the graphic in the breadboard diagrams above. Then the `GPIO.setup` line actually configures the trigger pin to be an `INPUT`, that allows us to read the state of it to test if it is `HIGH` or `LOW`. The next task is for us to loop through all the possible on/off combinations for the ladder (0 to 15 in binary) and locate the threshold of this trigger pin.
+The `GPIO.setmode` line above configures the GPIO library to use the Broadcom pin layout which matches the graphic in the breadboard diagrams above. Then the `GPIO.setup` line actually configures the trigger pin to be an `INPUT`, that allows us to read the state of it to test if it is HIGH or LOW. The next task is for us to loop through all the possible on/off combinations for the ladder (0 to 15 in binary) and locate the threshold of this trigger pin.
 
 So the algorithm will be something like:
 
@@ -304,7 +304,7 @@ If we break this task down there are three things we need to do.
 
 ### Turn resistor pins on and off
 
-In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it `LOW`. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
+In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it LOW. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode which means the pin is not connected to anything and nothing will flow through it.
 
 We can define a function called `set_pin` as follows to do this, enter or copy and paste this into your code.
 ```python
@@ -361,7 +361,7 @@ When we call the `set_dac` function we can write `set_dac(x)` for instance. Wher
 
 ### Loop between 0 and 15 to calibrate the ladder DAC
 
-Okay so now that we have the ability to configure the DAC we need some code that will loop from 0 to 15 calling `set_dac` and testing the input trigger pin to find the `HIGH` to `LOW` threshold.
+Okay so now that we have the ability to configure the DAC we need some code that will loop from 0 to 15 calling `set_dac` and testing the input trigger pin to find the HIGH to LOW threshold.
 
 Let's call this function `calibrate`, enter or copy and paste this into your code.
 ```python
@@ -382,7 +382,7 @@ The function takes two parameters, `trace` and `sleep_time`. The `trace` paramet
 
 Inside the function then we define a variable called `result`. This will be returned at the end of the function so that the main program can know which step on the ladder (between 0 and 15) the threshold was found. Next is a `for` loop for the range 0 to 16. Why 16? In python you specify the number to start at and the number to stop at, so stopping at 16 means 15 will be the last time around the loop. The syntax `for i in range` means that the variable `i` changes each time around the loop.
 
-Inside the loop then we pass `i` into `set_dac`, we then print out what ladder step we're on (in both decimal and binary), sleep as necessary and then test the value of the trigger pin using the `GPIO.input` command. This command will return `1` for `HIGH` or `0` for `LOW`. We can then use the `if not` syntax to test whether `0` was returned. If we get `0` then we've found the `HIGH` to `LOW` threshold step so we set `result = i` and `break` out of the loop.
+Inside the loop then we pass `i` into `set_dac`, we then print out what ladder step we're on (in both decimal and binary), sleep as necessary and then test the value of the trigger pin using the `GPIO.input` command. This command will return `1` for HIGH or `0` for LOW. We can then use the `if not` syntax to test whether `0` was returned. If we get `0` then we've found the HIGH to LOW threshold step so we set `result = i` and `break` out of the loop.
 
 It is possible that the air quality could be so *bad* that the threshold is never found (it can get this way if you abuse the deodorant can or fart in a confined space). In this case `result` will still be `-1` and will end up being the return value of the function. This allows the main code to know if the calibration was successful or not. When the calibration is unsuccessful you can only wait for the air to clear and try again. You can always print a message about the fart lingering though!
 
@@ -430,6 +430,6 @@ If you want the calibration to run more slowly, to give you more time to see the
 
 Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
-When you're doing this bear in mind that the `HIGH` vs `LOW` threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts, when you run the calibration code, with it dropping in stages until it reaches the threshold. When the GPIO pin goes `LOW` you should see the `Calibrated to x` message on the screen.
+When you're doing this bear in mind that the HIGH vs LOW threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts, when you run the calibration code, with it dropping in stages until it reaches the threshold. When the GPIO pin goes LOW you should see the `Calibrated to x` message on the screen.
 
 ## Step 6: Monitoring for farts and raising the alarm
