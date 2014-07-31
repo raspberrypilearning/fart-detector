@@ -560,3 +560,5 @@ Calibrated to 4
 Waiting for fart...
 ```
 Get the deodorant can out again, spray some at the sensor and ensure that the alarm functionality is still working. After the alarm has gone off you may find that you will see multiple `Could not calibrate` messages before you get a sucessful calibration. Just allow some time for the air to return to normal, perhaps open a window.
+
+You can also press `Ctrl - C` to abort the program.
