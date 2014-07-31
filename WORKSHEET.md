@@ -498,9 +498,7 @@ Lets continue editing our program.
 
 `nano farts.py`
 
-The first problem is easily to solve, all we have to do is enclose our current code in a `while True` loop and perhaps add a 5 second sleep under the else clause where we were unable to calibrate (to wait for the air to clear or the sensor heater to warm up).
-
-*Note:* When you wrap an existing block of code in a `while` loop or `if` statement you must make sure everything is correctly indented. Indentation in python is important.
+The first problem is easily to solve, all we have to do is enclose our current code in a while loop and perhaps add a 5 second sleep where we were unable to calibrate (to wait for the air to clear or the sensor heater to warm up).
 
 Then we need to limit how long we wait while the trigger pin is LOW. To measure time in code you have to record the time now, wait for something to happen, and then subtract the time you recorded from the current time. Take a look at the code below:
 ```python
@@ -517,7 +515,7 @@ while True:
             time.sleep(.1)
 
         if GPIO.input(TRIGGER) == GPIO.HIGH: #make sure this is not just a timeout
-            fart = calibrate(sleep_time = .1) #quickly recalibrate to get the fart level
+            fart = calibrate(sleep_time = 0.1) #quickly recalibrate to get the fart level
 
             if fart > fresh_air or fart == -1:
                 print "Fart detected level", fart, "detected!"
@@ -528,3 +526,10 @@ while True:
         print "Could not calibrate"
         time.sleep(5)
 ```
+Let's go through this. Firstly we have just added the `while True` syntax just above the fresh air calibration. All of the existing code has been intended by four spaces to make it belong to this while loop. We then put a `time.sleep(5)` under the else clause where the calibration was unsuccessful.
+
+*Note:* When you wrap an existing block of code in a `while` loop or `if` statement you must make sure everything is correctly indented. [Indentation](http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Indentation) in python is important.
+
+You'll notice that we have added the line `start_time = time.time()` just after a calibration has been sucessful. This is to record the time of the calibration so we can measure how much time has elapsed since. Then there is a change to the while loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120` meaning while the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds have gone by the loop will exit.
+
+We now need to be careful. We must be sure that we only set off the alarm if the trigger pin is HIGH since we will arrive at this point in the code whenever the 120 second timeout occurs. So to cope with this we can just use an if statement using the syntax `if GPIO.input(TRIGGER) == GPIO.HIGH` with the fart calibration and alarm code indented by four spaces.
