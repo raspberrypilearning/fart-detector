@@ -532,11 +532,31 @@ Let's go through this. Firstly we have just added the `while True` syntax just a
 
 *Note:* When you wrap an existing block of code in a `while` loop or `if` statement you must make sure everything is correctly indented. [Indentation](http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Indentation) in python is important.
 
-You'll notice that we have added the line `start_time = time.time()` just after a calibration has been sucessful. This is to record the time of the calibration so we can measure how much time has elapsed since. Then there is a change to the while loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120` meaning while the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds have gone by the loop will exit.
+You'll notice that we have added the line `start_time = time.time()` just after a calibration has been sucessful. This is to record the time of the calibration so we can measure how much time has elapsed since. Then there is a change to the while loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120` meaning while the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds the loop will exit.
 
-We now need to be careful, we will arrive at this point in the code every time the 120 second timeout occurs. So we should only measure for farts and sound the alarm if the 120 seconds has not fully elapsed. This would imply that the trigger pin must have gone HIGH to cause the while loop to exit. To do this we can just measure the elapsed time again using an if statement with the syntax `if time.time() - start_time < 120`. We can also add an `else` clause to explicitly indicate that a timeout has happened.
+We now need to be careful, we will arrive at this point every time the 120 second timeout occurs. So we should only test for farts and sound the alarm if the 120 seconds has not fully elapsed. This would imply that the trigger pin must have gone HIGH to cause the while loop to exit. To do this we can just measure the elapsed time again using an if statement with the syntax `if time.time() - start_time < 120`. We can also add an `else` clause to explicitly indicate that a timeout has happened.
 
 Lets run the code. Press `Ctrl - O` then `Enter` to save followed by `Ctrl - X` to quit from editing.
 Remember to use the `sudo` command when you run the code.
 
 `sudo ./farts.py`
+
+Wait for two minutes and the output should look something like this:
+```
+0 0
+1 1
+2 10
+3 11
+4 100
+Calibrated to 4
+Waiting for fart...
+Time out, recalibrating...
+0 0
+1 1
+2 10
+3 11
+4 100
+Calibrated to 4
+Waiting for fart...
+```
+Get the deodorant can out again, spray some at the sensor and ensure that the alarm functionality is still working. After the alarm has gone off you may find that you will see multiple `Could not calibrate` messages before you get a sucessful calibration. Just allow some time for the air to return to normal, perhaps open a window.
