@@ -430,7 +430,7 @@ If you want the calibration to run more slowly, to give you more time to see the
 
 Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
-When you're doing this bear in mind that the HIGH vs LOW threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts, when you run the calibration code, with it dropping in stages until it reaches the threshold. When the GPIO pin goes LOW you should see the `Calibrated to x` message on the screen.
+When you're doing this bear in mind that the HIGH vs LOW threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts with it dropping in stages until it reaches the threshold. When the GPIO pin goes LOW you should see the `Calibrated to x` message on the screen.
 
 ## Step 6: Monitoring for farts and raising the alarm
 
@@ -489,4 +489,12 @@ I would suggest to use a deodorant can to test that the air quality sensor is wo
 You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much, you may need to wait a bit to be able to successfully calibrate the next time you run the code.
 
 ## Step 7: Continuous monitoring and recalibration
+
+You'll notice that currently the program will only wait for one fart, sound the alarm and then exit. It may be that you want to set this up in a semi permanent way to provide an early warning system in the home? It would be better if the program would sound the alarm for a while and then try to recalibrate to wait for another fart.
+
+The [data sheet](http://www.figarosensor.com/products/2600pdf.pdf) also says that the sensor has a dependency to temperature and humidity. This will manifest as the output voltage of the air quality sensor shifting under normal air conditions. What could potentially happen is that our ladder calibration level becomes wrong as conditions change throughout the day causing the alarm to go off on its own without a fart. To mitigate this we can put a timeout in our code to force a recalibration to run every two minutes.
+
+Lets continue editing our program.
+
+`nano farts.py`
 
