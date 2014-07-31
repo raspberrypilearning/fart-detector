@@ -498,3 +498,33 @@ Lets continue editing our program.
 
 `nano farts.py`
 
+The first problem is easily to solve, all we have to do is enclose our current code in a `while True` loop and perhaps add a 5 second sleep under the else clause where we were unable to calibrate (to wait for the air to clear or the sensor heater to warm up).
+
+*Note:* When you wrap an existing block of code in a `while` loop or `if` statement you must make sure everything is correctly indented. Indentation in python is important.
+
+Then we need to limit how long we wait while the trigger pin is LOW. To measure time in code you have to record the time now, wait for something to happen, and then subtract the time you recorded from the current time. Take a look at the code below:
+```python
+while True:
+    fresh_air = calibrate(trace = True, sleep_time = 0.5)
+
+    if fresh_air != -1:
+        print "Calibrated to", fresh_air
+        start_time = time.time()
+
+        print "Waiting for fart..."
+
+        while not GPIO.input(TRIGGER) and time.time() - start_time < 120: #wait as long as trigger LOW and < 2 min
+            time.sleep(.1)
+
+        if GPIO.input(TRIGGER) == GPIO.HIGH: #make sure this is not just a timeout
+            fart = calibrate(sleep_time = .1) #quickly recalibrate to get the fart level
+
+            if fart > fresh_air or fart == -1:
+                print "Fart detected level", fart, "detected!"
+                mixer.music.play(-1) # -1 to loop the sound
+                time.sleep(10) #let it play for 10 seconds
+                mixer.music.stop()
+    else:
+        print "Could not calibrate"
+        time.sleep(5)
+```
