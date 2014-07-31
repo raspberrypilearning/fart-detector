@@ -106,7 +106,7 @@ Next let's connect the output of the sensor to one of the GPIO pins, this will b
 
 ![](images/fzz_b.png)
 
-Next take a 47k ohm resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to the (1.1 to 1.4 volt) region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
+Next take a 47kΩ resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will essentially siphon off a portion of the voltage coming from the sensor output to help bring it down to the (1.1 to 1.4 volt) region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, read on.
 
 ## Step 3: Build a resistor ladder DAC
 
@@ -126,7 +126,7 @@ Look at the diagram below. This *schematically* shows how a resistor ladder woul
 
 ![](images/ladder_schematic.png)
 
-So far only the 47k ohm `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (`R1` to `R4`) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin to use `INPUT` mode this switches the resistor off because the GPIO pin is not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin LOW this will connect the resistor to ground and thus some voltage will be siphoned off through it.
+So far only the 47kΩ `R0` is present on your breadboard which is hard wired directly to ground. The other resistors (`R1` to `R4`) are each connected *in parallel* to a different GPIO pin. This gives us digital control over whether each resistor is on or off. If we configure the GPIO pin to use `INPUT` mode this switches the resistor off because the GPIO pin is not internally connected to anything. However if we set it to use `OUTPUT` mode and then drive the pin LOW this will connect the resistor to ground and thus some voltage will be siphoned off through it.
 
 A note about [parallel resistors](http://en.wikipedia.org/wiki/Series_and_parallel_circuits#Resistors_2). The total resistance of the ladder is *not* the sum of all the resistors that are turned on. It would be if you wired the resistors in series though, that's because the voltage would need to flow through each resistor in turn. In parallel the flow of voltage will divide equally among each resistor and the effect is that the total resistance *is less*. So the more resistors we turn on the lower the total resistence will be and the more voltage gets siphoned off to ground.
 
