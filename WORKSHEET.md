@@ -559,6 +559,30 @@ Time out, recalibrating...
 Calibrated to 4
 Waiting for fart...
 ```
-Get the deodorant can out again, spray some at the sensor and ensure that the alarm functionality is still working. After the alarm has gone off you may find that you will see multiple `Could not calibrate` messages before you get a sucessful calibration. Just allow some time for the air to return to normal, perhaps open a window.
+Get the deodorant can out again, spray some at the sensor and ensure that the alarm is still working. After the alarm has gone off you may find that you will see several `Could not calibrate` messages before you get a sucessful calibration. Just allow some time for the air to return to normal, perhaps open a window, and you should eventually get another `Waiting for fart...` message. Thus we now have continuous fart monitoring solution that will recalibrate to natural changes in temperature and humidity during the day.
 
-You can also press `Ctrl - C` to abort the program.
+You can press `Ctrl - C` to abort the program.
+
+## Step 8: Make the output even more amusing
+
+Here are some nice little tricks you can use in your code to make it more funny. First is to show the *fart detected* message in colour. There are a number of [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code) that we can use in conjunction with the `print` command to change the background and foreground colour of the terminal.
+
+For example:
+```python
+print "\033[0;32mGREEN TEXT\033[0m"
+```
+I know that looks like gibberish but the format can be broken down like this:
+
+`START_SEQ``x;y;zm``DISPLAY_TEXT``END_SEQ`
+
+- Starting sequence: `\033[`
+- x;y;z: `ANSI color codes`
+- Display text: `Text you want to display`
+- Ending sequence: `\033[0m`
+
+
+```python
+alarm_template = "\033[5;43;31m{0}\033[0m"
+
+print alarm_template.format("DANGER!")
+```
