@@ -581,7 +581,6 @@ I know that looks like gibberish but the format can be broken down like this:
 - End sequence: `\033[0m`
 
 Here is a table of the codes you might want to use:
-**Use this power wisely!**
 
 Text color | Code | Text style | Code | Background color | Code
 --- | --- | --- | --- | --- | ---
@@ -594,7 +593,7 @@ Purple| 35 | Hidden | 8 | Purple | 45
 Cyan | 36 | | | Cyan | 46
 White | 37 | | | White | 47
 
-I have found that some of the text styles do not work. But you should be able to put something good together with the others.
+I have found that some of the text styles do not work. But you should be able to put something good together with the others. **Use this power wisely!**
 
 A good way to simplify using this is to use python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings and has a number of advantages over using the older *%s* method. For example:
 ```python
@@ -691,3 +690,6 @@ while True:
         print "Could not calibrate"
         time.sleep(5)
 ```
+There is one other trick you could do but I'm not sure your neighbours or parents are going to like it. This is to make the alarm *carry on* until the fart as dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required which could be several minutes. **Use this power wisely!**
+
+You're now probably ready to start doing some real *testing*. Good luck!
