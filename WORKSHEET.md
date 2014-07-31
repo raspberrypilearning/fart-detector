@@ -500,7 +500,7 @@ Lets continue editing our program.
 
 The first problem is easily to solve, all we have to do is enclose our current code in a while loop and perhaps add a 5 second sleep where we were unable to calibrate (to wait for the air to clear or the sensor heater to warm up).
 
-Then we need to limit how long we wait while the trigger pin is LOW. To measure time in code you have to record the time now, wait for something to happen, and then subtract the time you recorded from the current time. Take a look at the code below:
+Then we need to limit how long we wait while the trigger pin is LOW. To measure time in code you have to record the time now, wait for something to happen, and then subtract the time you recorded from the current time. Take a look at the code below and modify yours to match it:
 ```python
 while True:
     fresh_air = calibrate(trace = True, sleep_time = 0.5)
