@@ -595,7 +595,7 @@ White | 37 | | | White | 47
 
 I have found that some of the text styles do not work. But you should be able to put something good together with the others. **Use this power wisely!**
 
-A good way to simplify using this is to use python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings and has a number of advantages over using the older *%s* method. For example:
+A good way to simplify this is to use python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings and has a number of advantages over using the older *%s* method. For example:
 ```python
 alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
 
