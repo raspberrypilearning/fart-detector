@@ -511,17 +511,19 @@ while True:
 
         print "Waiting for fart..."
 
-        while not GPIO.input(TRIGGER) and time.time() - start_time < 120: #wait as long as trigger LOW and < 2 min
+        while not GPIO.input(TRIGGER) and time.time() - start_time < 120: #wait as long as trigger is LOW or < 2 min
             time.sleep(.1)
 
-        if GPIO.input(TRIGGER) == GPIO.HIGH: #make sure this is not just a timeout
-            fart = calibrate(sleep_time = 0.1) #quickly recalibrate to get the fart level
+        if time.time() - start_time < 120: #make sure this is not just a timeout
+            fart = calibrate(sleep_time = .1) #quickly recalibrate to get the fart level
 
             if fart > fresh_air or fart == -1:
-                print "Fart detected level", fart, "detected!"
+                print "Fart level", fart, "detected!"
                 mixer.music.play(-1) # -1 to loop the sound
                 time.sleep(10) #let it play for 10 seconds
                 mixer.music.stop()
+        else:
+            print "Time out, recalibrating..."
     else:
         print "Could not calibrate"
         time.sleep(5)
@@ -532,4 +534,9 @@ Let's go through this. Firstly we have just added the `while True` syntax just a
 
 You'll notice that we have added the line `start_time = time.time()` just after a calibration has been sucessful. This is to record the time of the calibration so we can measure how much time has elapsed since. Then there is a change to the while loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120` meaning while the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds have gone by the loop will exit.
 
-We now need to be careful. We must be sure that we only set off the alarm if the trigger pin is HIGH since we will arrive at this point in the code whenever the 120 second timeout occurs. So to cope with this we can just use an if statement using the syntax `if GPIO.input(TRIGGER) == GPIO.HIGH` with the fart calibration and alarm code indented by four spaces.
+We now need to be careful, we will arrive at this point in the code every time the 120 second timeout occurs. So we should only measure for farts and sound the alarm if the 120 seconds has not fully elapsed. This would imply that the trigger pin must have gone HIGH to cause the while loop to exit. To do this we can just measure the elapsed time again using an if statement with the syntax `if time.time() - start_time < 120`. We can also add an `else` clause to explicitly indicate that a timeout has happened.
+
+Lets run the code. Press `Ctrl - O` then `Enter` to save followed by `Ctrl - X` to quit from editing.
+Remember to use the `sudo` command when you run the code.
+
+`sudo ./farts.py`
