@@ -58,6 +58,16 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 
 ## Steps
 
+1. Setting up your Pi
+1. Wire up the Air Quality sensor
+1. Wire up the trigger pin
+1. Build a resistor ladder DAC
+1. Play a test alarm sound
+1. Write code to calibrate the ladder
+1. Monitoring for farts and raising the alarm
+1. Continuous monitoring and recalibration
+1. Make the output even more amusing
+
 ## Worksheet & included files
 
 - [The worksheet](WORKSHEET.md)
