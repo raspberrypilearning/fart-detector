@@ -71,7 +71,7 @@ All kids understand that farts are funny. As we grow older some of us lose our s
 ## Worksheet & included files
 
 - [The worksheet](WORKSHEET.md)
-- (Optional) Final version of Python code [farts-final.py](./farts-final.py)
+- (Optional) Final version of Python code [farts-final.py](farts-final.py)
     - Download to your Pi with the following commands:
 
     ```bash
