@@ -61,7 +61,7 @@ while True:
                 elif fart >= 10 and fart < 15:
                     print alarm_template.format("DANGER! Fart level", fart, "detected!")
                 elif fart == -1:
-                    print alarm_template.format("GAS GAS GAS! FART LEVEL", "DEATH", "DETECTED! EVACUATE EVACUATE EVACUATE!")
+                    print alarm_template.format("GAS GAS GAS! FART LEVEL", "EXTREME", "DETECTED! EVACUATE EVACUATE EVACUATE!")
 
                 mixer.music.play(-1) # -1 to loop the sound
                 time.sleep(10) #let it play for 10 seconds
