@@ -575,14 +575,28 @@ I know that looks like gibberish but the format can be broken down like this:
 
 `START_SEQ``x;y;zm``DISPLAY_TEXT``END_SEQ`
 
-- Starting sequence: `\033[`
-- x;y;z: `ANSI color codes`
-- Display text: `Text you want to display`
-- Ending sequence: `\033[0m`
+- Start sequence: `\033[`
+- x; y; z m: `ANSI colour codes delimited by a semicolon` followed by `m`
+- Display text: `The text you want to show`
+- End sequence: `\033[0m`
 
+Text color | Code | Text style | Code | Background color | Code
+--- | --- | --- | --- | --- | ---
+Black | 30 | No effect | 0 | Black | 40
+Red | 31 | Bold | 1 | Red | 41
+Green | 32 | Underline | 4| Green | 42
+Yellow | 33 | Blink | 5 | Yellow | 43
+Blue | 34 | Inverse | 7 | Blue | 44
+Purple| 35 | Hidden | 8 | Purple | 45
+Cyan | 36 | | | Cyan | 46
+White | 37 | | | White | 47
 
+I have found that some of the text styles do not work. But you should be able to put something good together with the others. **Use this power wisely!**
+
+A good way to simplify using this is to use python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings and has a number of advantages over using the older *%s* method. For example:
 ```python
-alarm_template = "\033[5;43;31m{0}\033[0m"
+alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
 
-print alarm_template.format("DANGER!")
+print alarm_template.format("Fart level", fart, "detected!")
 ```
+We create a string variable to hold the template called `alarm_template` which itself contains the ANSI escape codes that we want to use. Within the string there are some numbered markers `{0} {1} {2}` which specify the parts of the string that should be replaced when you use the `format` command.
