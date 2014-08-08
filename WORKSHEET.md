@@ -415,7 +415,7 @@ fresh_air = calibrate(trace = True, sleep_time = 0.5)
 if fresh_air != -1:
     print "Calibrated to", fresh_air
 else:
-    "Could not calibrate"
+    print "Could not calibrate"
 ```
 
 This calls the `calibrate` function and stores the result in a variable called `fresh_air`; under normal conditions this should be somewhere below 6 or 7. We can then use an `if` statement to test if `fresh_air` is equal to `-1` or not. So if not equal `!=` to `-1` then we have a successful calibration, otherwise it failed.
