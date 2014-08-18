@@ -758,6 +758,10 @@ Find the following line and change the `120` to `60` in your code.
 ```python
 while not GPIO.input(TRIGGER) and time.time() - start_time < 120:
 ```
+You'll also need to change the `120` on the following line below the `while` statement (consider using a variable for this):
+```python
+if time.time() - start_time < 120:
+```
 If that doesn't help there is one other option. This is to force the ladder DAC into a lower resistance (higher binary number) configuration than was returned by the `calibrate` function in your code. This will make the fart detector slightly less sensitive meaning it should no longer give false alarms but it will consequently need a stronger fart to set it off.
 
 We will have to respect the upper limit of 15 which is `1111` in binary. So firstly we can use an if statmenet to check the calibration level. If it is less than 15 then we can add 1 to `fresh_air` and call the `set_dac` function again.
