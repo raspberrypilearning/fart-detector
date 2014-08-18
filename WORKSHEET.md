@@ -741,13 +741,13 @@ We've tried to anticipate the problems you may encounter and have listed the mos
 
 The heater in the Air Quality sensor requires some time to warm up from cold before it will work. So please wait a while and try again, in some cases it can take up to 20 minutes before you'll get a successful calibration. It depends largely on the background air quality, temperature and humidity.
 
-If you are still unable to get a successful calibration then it's a good idea to do the *Optional activity using a multimeter* described above (refer to the end of step 5). This will allow you to observe the voltage level that is reaching the trigger pin as the calibration code runs. You can then confirm that the voltage level never gets down to the 1.1 to 1.4 region required to make the trigger go LOW.
+If you are still unable to get a successful calibration then it's a good idea to do the *Optional activity using a multimeter* described above (refer to the end of step 5). This will allow you to observe the voltage level that is reaching the trigger pin as the calibration code runs. You can then confirm that the voltage level never gets down to the 1.1 to 1.4 region required to make the trigger pin go LOW.
 
 If that *is* the case I recommend to replace only the 47kΩ `R0` resistor with a lesser 10kΩ resistor (refer to the diagram at the end of step 3). This will siphon off a greater amount of voltage by default and should allow you to get a successful calibration.
 
 ### 2. Alarm goes off in normal air
 
-If the alarm goes off in normal air without any farts or deodorant being sprayed one of two things is probably happening.
+If the alarm goes off in normal air without any farts or deodorant one of two things is probably happening:
 
 1. There is some unseen or unknown air contaminant which is setting it off, did someone drop an SBD?
 1. The background temperature and or humidity has changed causing the calibration to become wrong
@@ -760,13 +760,13 @@ while not GPIO.input(TRIGGER) and time.time() - start_time < 120:
 ```
 If that doesn't help there is one other option. This is to force the ladder DAC into a lower resistance (higher binary number) configuration than was returned by the `calibrate` function in your code. This will make the fart detector slightly less sensitive meaning it should no longer give false alarms but it will consequently need a stronger fart to set it off.
 
-We will have to respect the upper limit of 15 which `1111` in binary. So firstly we can use an if statmenet to check the calibration level. If it is less than 15 then we can add 1 to `fresh_air` and call the `set_dac` function one more time.
+We will have to respect the upper limit of 15 which is `1111` in binary. So firstly we can use an if statmenet to check the calibration level. If it is less than 15 then we can add 1 to `fresh_air` and call the `set_dac` function again.
 ```python
 if fresh_air < 15:
     fresh_air += 1
     set_dac(fresh_air)
 ```
-We then need to put that if statement at the opportune place in our code. It should go just before the line `print "Calibrated to", fresh_air` line like so:
+We then need to put this if statement into the right place in our code. It should go just before the `print "Calibrated to", fresh_air` line like so:
 ```python
 while True:
     fresh_air = calibrate(trace = True, sleep_time = 0.5)
@@ -784,7 +784,7 @@ The consequence of this change is that you are making the fart detector *less se
 
 If you farted and the alarm didn't go off then consider yourself blessed. It is likely that the fart didn't smell either (which happens more often than you might think). We need to look into the composition of fart gasses to understand why this might happen.
 
-The chemical composition of fart gasses varies greatly from person to person, it is largely a product of what you eat and drink. For example if you're a vegan with a very strictly controlled diet you may have difficulty producing a smelly fart. If however you like greasy fry ups, drink lots of beer and finish your night of with a dirty kebab you'll probably be able to set it off 20 feet away. What this means is that it depends on the biochemistry in your gut and how the bacteria that live there produce fermentation of the food you eat.
+The chemical composition of fart gasses varies greatly from person to person, it is largely a product of your health and what you eat or drink. For example if you're a vegan with a very strictly controlled diet you may have difficulty producing a smelly fart. If however you like greasy fry ups, drink lots of beer and finish your night of with a dirty kebab you'll probably be able to set it off 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there produce fermentation of the food you eat.
 
 Farts consist primarily of nitrogen (the main gas in normal air) along with a large amount of carbon dioxide (a gas that you also exhale). A typical breakdown of the chemical composition of a fart is:
 
@@ -794,9 +794,9 @@ Farts consist primarily of nitrogen (the main gas in normal air) along with a la
 - Oxygen: 0-10%
 - Methane: 0-10% (detectable)
 
-If you take another look at the [datasheet](http://www.figarosensor.com/products/2600pdf.pdf) for the TGS2600 air quality sensor you'll notice that it is sensitive to hydrogen and methane. A lot more sensitive to hydrogen than methane too.
+If you take another look at the [datasheet](http://www.figarosensor.com/products/2600pdf.pdf) for the TGS2600 air quality sensor you'll notice that it is sensitive to hydrogen and methane. A lot *more* sensitive to hydrogen than methane too.
 
-So given this knowledge you can appreciate that some farts may not set it off. If you were to down a  whole bottle of fizzy pop and refuse to let yourself burn you're probably going to fart mostly nitrogen and carbon dioxide.
+So given this knowledge you can appreciate that some farts may not set it off. If you were to drink a whole bottle of fizzy pop and refuse to let yourself burp you're probably going to fart only nitrogen and carbon dioxide.
 
 What you need to do is eat something that will ferment in the gut and produce hydrogen and methane. Some carbohydrates cannot be digested and absorbed by the intestines and so pass down into your colon where they ferment and produce these gasses.
 
@@ -814,7 +814,7 @@ Foods that contain a high amount of unabsorbable carbohydrates include:
 - apples
 - brussels sprouts
 
-Need I say more?
+Need I say more? Good luck and remember to open a window.
 
 ## Licence
 
