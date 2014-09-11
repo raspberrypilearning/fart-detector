@@ -27,7 +27,7 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 
 - Raspberry Pi (any model)
 - Micro USB power adaptor
-- An SD Card with Raspbian already set up through NOOBS
+- An SD Card with Raspbian already set up through NOOBS ([setup guide](http://www.raspberrypi.org/help/noobs-setup/))
 - USB keyboard
 - USB mouse
 - HDMI cable
