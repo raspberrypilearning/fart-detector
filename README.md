@@ -75,8 +75,8 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
     - Download to your Pi with the following commands:
 
     ```bash
-    wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate
-    wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/farts-final.py --no-check-certificate
+    wget http://goo.gl/DrvYfl -O evacuate.mp3 --no-check-certificate
+    wget http://goo.gl/OJBFEf -O farts-final.py --no-check-certificate
     chmod +x farts-final.py
     sudo ./farts-final.py
     ```
