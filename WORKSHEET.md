@@ -517,7 +517,7 @@ I would suggest using a deodorant can to test that the air quality sensor is wor
 
 You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much; you may need to wait a bit to be able to successfully calibrate the next time you run the code.
 
-Whatever you do **don't** completely annihilate the sensor by spraying deodorant onto it. If too much isobutane goes inside the sensor it may well not calibrate again for several hours. *You only need a tiny little squirt.* You can often get away with just holding the nozzle of the deterrent can near the top of the sensor too.
+Whatever you do **don't** completely annihilate the sensor by spraying deodorant onto it. If too much isobutane goes inside the sensor it may well not calibrate again for several hours. *You only need a tiny little squirt.* You can often get away with just holding the nozzle of the deodorant can near the top of the sensor too.
 
 ## Step 7: Continuous monitoring and recalibration
 
