@@ -74,12 +74,13 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 - (Optional) Final version of Python code [farts-final.py](farts-final.py)
     - Download to your Pi with the following commands:
 
-    ```bash
-    wget http://goo.gl/DrvYfl -O evacuate.mp3 --no-check-certificate
-    wget http://goo.gl/OJBFEf -O farts-final.py --no-check-certificate
-    chmod +x farts-final.py
-    sudo ./farts-final.py
-    ```
+        ```bash
+        wget http://goo.gl/DrvYfl -O evacuate.mp3 --no-check-certificate
+        wget http://goo.gl/OJBFEf -O farts-final.py --no-check-certificate
+        chmod +x farts-final.py
+        sudo ./farts-final.py
+        ```
+
 ## Licence
 
 Unless otherwise specified, everything in this repository is covered by the following licence:
