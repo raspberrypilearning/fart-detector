@@ -37,10 +37,10 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 - Breadboard (try [Pimoroni](http://shop.pimoroni.com/products/solderless-breadboard-400-point) or [Maplin](http://www.maplin.co.uk/p/ad-102-breadboard-ag10l))
 - **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
--	2 x 47k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
--	1 x 22k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
-- 1 x 10k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
-- 1 x 4.7k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistors) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
+-	2 x 47k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistor-grab-bag) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
+-	1 x 22k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistor-grab-bag) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
+- 1 x 10k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistor-grab-bag) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
+- 1 x 4.7k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistor-grab-bag) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
 -	Air quality sensor (try [RS Components](http://uk.rs-online.com/web/p/gas-detection/5389960))
 
 ### Software
