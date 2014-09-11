@@ -218,7 +218,9 @@ Plug your Raspberry Pi back in, boot up, and log in as per usual. If you are usi
 
 `sudo amixer cset numid=3 1`
 
-Next we're going to use the Python pygame library to make some alarm sounds. First, verify that the package is installed using the following command:
+Next we're going to use the Python pygame library to make some alarm sounds. First, verify that the package is installed. Your Pi will need to be *online* for this so connect it to your home hub/router using an Ethernet cable.
+
+Use the following command:
 
 `sudo apt-get install python-pygame -y`
 
