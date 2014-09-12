@@ -338,7 +338,7 @@ The function takes two parameters `pin` and `ison`. The `pin` parameter will be 
 Next, we need a function to call `set_pin` multiple times for each of the ladder GPIO pins (17, 18, 22 and 23).
 Since we're setting the entire ladder DAC we can define a function called `set_dac` to do this; enter or copy and paste this into your code.
 
-```python
+```
 def set_dac(bitwise):
     set_pin(17, bitwise & 1 == 1)
     set_pin(18, bitwise & 2 == 2)
@@ -661,7 +661,7 @@ elif fart == -1:
 
 So, given these changes, the final code will be this:
 
-```python
+```
 #!/usr/bin/python
 import time, RPi.GPIO as GPIO
 
