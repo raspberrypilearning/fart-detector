@@ -804,7 +804,7 @@ The consequence of this change is that you are making the fart detector *less se
 
 If you farted and the alarm didn't go off then consider yourself blessed. It is likely that the fart didn't smell, which happens more often than you might think. We need to look into the composition of fart gases to understand why this might happen.
 
-The chemical composition of fart gases varies greatly from person to person; it is largely a product of your health and what you eat or drink. For example, if you're a vegan with a very strictly-controlled diet you may have difficulty producing a smelly fart. If however you like greasy fry ups, drink lots of beer and finish your night of with a dirty kebab, you'll probably be able to set it off 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there produce fermentation of the food you eat.
+The chemical composition of fart gases varies greatly from person to person; it is largely a product of your health and what you eat or drink. For example, if you're a vegan with a very strictly-controlled diet you may have difficulty producing a smelly fart. If however you like greasy fry ups, drink lots of beer and finish your night off with a dirty kebab, you'll probably be able to set it off 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there produce fermentation of the food you eat.
 
 Farts consist primarily of nitrogen (the main gas in normal air), along with a large amount of carbon dioxide (a gas that you also exhale). A typical breakdown of the chemical composition of a fart is:
 
