@@ -4,7 +4,7 @@ Bust people for farting with your Raspberry Pi
 
 ![](images/cover.png)
 
-All kids understand that farts are funny. As we grow older, some of us lose our sense of humour in this area. You'll be glad to hear we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home, you'll be able to provide the advanced warning necessary to evacuate the room.
+All kids understand that farts are funny. As we grow older, some of us lose our sense of humour in this area. You'll be glad to hear that we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home, you'll be able to provide the advance warning necessary to evacuate the room.
 
 ## Lesson objectives
 
@@ -32,7 +32,7 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 - USB mouse
 - HDMI cable
 - Ethernet cable
-- LAN with Internet connection
+- LAN with internet connection
 - A monitor or TV
 - Breadboard (try [Pimoroni](http://shop.pimoroni.com/products/solderless-breadboard-400-point) or [Maplin](http://www.maplin.co.uk/p/ad-102-breadboard-ag10l))
 - **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
@@ -50,7 +50,7 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 ### Extras
 
 - A digital multimeter (try [Pimoroni](http://shop.pimoroni.com/products/digital-multimeter) or [Maplin](http://www.maplin.co.uk/p/uni-trend-ut30b-digital-compact-multimeter-n15by))
-- A can of deodorant or perfume (to simulate farts)
+- A can of deodorant (to simulate farts)
 
 ### Time required
 
@@ -59,7 +59,7 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 ## Steps
 
 1. Setting up your Pi
-1. Wire up the Air Quality sensor
+1. Wire up the air quality sensor
 1. Wire up the trigger pin
 1. Build a resistor ladder DAC
 1. Play a test alarm sound
