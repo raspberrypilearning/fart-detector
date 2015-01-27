@@ -1,0 +1,51 @@
+- name: Raspberry Pi (any model)
+  img: raspberry-pi
+  url:
+- name: Micro USB power adaptor
+  img: micro-usb-power-adaptor
+  url:
+- name: An SD Card with Raspbian already set up through NOOBS
+  img: sd-card
+  url:
+- name: USB keyboard
+  img: usb-keyboard
+  url:
+- name: USB mouse
+  img: usb-mouse
+  url:
+- name: HDMI cable
+  img: hdmi-cable
+  url:
+- name: Ethernet cable
+  img: ethernet-cable
+  url:
+- name: LAN with internet connection
+  img: lan
+  url:
+- name: A monitor or TV
+  img: monitor
+  url:
+- name: Breadboard
+  img: breadboard
+  url: http://shop.pimoroni.com/products/solderless-breadboard-400-point
+- name: Male to Female jumper wires, at least 8
+  img: http://shop.pimoroni.com/products/jumper-jerky
+  url: male-to-female-jumper-wires
+- name: Male to Male jumper wires, at least 6
+  img: http://shop.pimoroni.com/products/jumper-jerky
+  url: male-to-male-jumper-wires
+- name: 2 x 47k ohm resistor, through hole 
+  img: 47k-ohm-resistor
+  url: http://shop.pimoroni.com/products/resistor-grab-bag
+- name: 1 x 22k ohm resistor, through hole 
+  img: 22k-ohm-resistor
+  url: http://shop.pimoroni.com/products/resistor-grab-bag
+- name: 1 x 10k ohm resistor, through hole 
+  img: 10k-ohm-resistor
+  url: http://shop.pimoroni.com/products/resistor-grab-bag
+- name: 1 x 4.7k ohm resistor, through hole
+  img: 4.7k-ohm-resistor
+  url: http://shop.pimoroni.com/products/resistor-grab-bag
+- name: Air quality sensor
+  img: air-quality-sensor
+  url: http://uk.rs-online.com/web/p/gas-detection/5389960
