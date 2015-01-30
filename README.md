@@ -70,7 +70,7 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 
 ## Worksheet & included files
 
-- [The worksheet](WORKSHEET.md)
+- [The worksheet](worksheet.md)
 - (Optional) Final version of Python code [farts-final.py](farts-final.py)
     - Download to your Pi with the following commands:
 
