@@ -3,21 +3,21 @@
   url: http://shop.pimoroni.com/products/solderless-breadboard-400-point
 - name: Male to Female jumper wires, at least 8
   img: http://shop.pimoroni.com/products/jumper-jerky
-  url: male-to-female-jumper-wires
+  url: jumper-male-to-female
 - name: Male to Male jumper wires, at least 6
   img: http://shop.pimoroni.com/products/jumper-jerky
-  url: male-to-male-jumper-wires
+  url: jumper-male-to-male
 - name: 2 x 47k ohm resistor, through hole 
-  img: 47k-ohm-resistor
+  img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 22k ohm resistor, through hole 
-  img: 22k-ohm-resistor
+  img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 10k ohm resistor, through hole 
-  img: 10k-ohm-resistor
+  img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 4.7k ohm resistor, through hole
-  img: 4.7k-ohm-resistor
+  img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: Air quality sensor
   img: air-quality-sensor
