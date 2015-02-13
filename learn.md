@@ -5,7 +5,6 @@ By building a working fart detector with your Raspberry Pi you will:
 - Understand voltage, current and resistance
 - Understand how an air quality sensor works
 - Understand fart potency
-- Built and programmed a working fart detector
-- Made a rudimentary DAC (digital to analogue converter) 
-- Gained experience in Python programming
-- Gained experience using the Raspberry Pi GPIO pins
+- Make a rudimentary DAC (digital to analogue converter) 
+- Gain experience in Python programming
+- Gain experience using the Raspberry Pi GPIO pins
