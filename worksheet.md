@@ -2,8 +2,6 @@
 
 ![](images/dude.png)
 
-## How can we detect a fart?
-
 Flatulence or *farts* are essentially gases that are produced in the stomach and bowels by bacterial fermentation during the process of digestion. The scientific study of farts and fart gases is known as *flatology*; a future career for some of you, perhaps? It is perfectly normal for human beings to pass wind every day, although the amount varies greatly between individuals; it can range from a tiny amount, up to, and in excess of, two litres.
 
 You'll be surprised to learn that 99% of fart gases do not smell at all. These include oxygen, nitrogen, carbon dioxide, hydrogen, and methane. The remaining 1% is what gives farts their smell, and these are mostly volatile sulphuric compounds, the same stuff that makes rotten eggs smell.
@@ -605,7 +603,7 @@ Get the deodorant can out again, spray some at the sensor and ensure that the al
 
 You can press `Ctrl - C` to abort the program.
 
-## Step 8: Make the output even more amusing
+## Make the output even more amusing
 
 Here are some nice little tricks you can use in your code to make it more funny. The first is to show the *fart detected* message in colour. There are a number of [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code) that we can use in conjunction with the `print` command to change the background and foreground colour of the terminal.
 
@@ -839,13 +837,3 @@ Foods that contain a high amount of unabsorbable carbohydrates include:
 - brussels sprouts
 
 Need I say more? Good luck, and remember to open a window.
-
-## Licence
-
-Unless otherwise specified, everything in this repository is covered by the following licence:
-
-![Creative Commons License](http://i.creativecommons.org/l/by-sa/4.0/88x31.png)
-
-***Fart Detector*** by the [Raspberry Pi Foundation](http://raspberrypi.org) is licenced under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
-
-Based on a work at https://github.com/raspberrypilearning/fart-detector
