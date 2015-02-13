@@ -16,7 +16,7 @@ Firstly, it is important for us to understand how this sensor works. The sensor 
 
 To summarise, the sensor has six holes to allow air to go inside. The air is then energised by a small heater which allows its electrical resistance to be measured. This is done by passing a low level of electricity across a small gap of energised air. Generally speaking, the more contaminated the air is, the less resistance it has and the better it will conduct electricity (like a variable resistor). The output of the sensor is therefore an analogue voltage that goes up and down according to how contaminated the air is. The more contaminants, the higher the voltage output.
 
-## Analogue vs Digital
+### Analogue vs Digital
 
 ![](images/analogue_digital.png)
 
