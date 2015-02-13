@@ -2,11 +2,11 @@
   img: breadboard
   url: http://shop.pimoroni.com/products/solderless-breadboard-400-point
 - name: Male to Female jumper wires, at least 8
-  img: http://shop.pimoroni.com/products/jumper-jerky
-  url: jumper-male-to-female
+  img: jumper-male-to-female
+  url: http://shop.pimoroni.com/products/jumper-jerky
 - name: Male to Male jumper wires, at least 6
-  img: http://shop.pimoroni.com/products/jumper-jerky
-  url: jumper-male-to-male
+  img: jumper-male-to-male
+  url: http://shop.pimoroni.com/products/jumper-jerky
 - name: 2 x 47k ohm resistor, through hole 
   img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
