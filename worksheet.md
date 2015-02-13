@@ -193,25 +193,21 @@ We have now completed the hardware side of the project; we just need to bring it
 
 Plug your Raspberry Pi back in, boot up, and log in as per usual. If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
 
-`sudo amixer cset numid=3 1`
-
-Next, we're going to use the Python pygame library to make some alarm sounds. First, verify that the package is installed. Your Pi will need to be *online* for this, so connect it to your home hub/router using an Ethernet cable.
-
-Use the following command:
-
-`sudo apt-get install python-pygame -y`
-
-If your SD card is up to date you should see this message:
-
-`python-pygame is already the newest version`
+```bash
+sudo amixer cset numid=3 1
+```
 
 Let's first download a sound file that will be the alarm: we've chosen a robotic voice saying "evacuate". Enter the following terminal command to download it:
 
-`wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate`
+```bash
+wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate
+```
 
 Now let's do some programming. Enter the following command to start editing a blank file:
 
-`nano farts.py`
+```bash
+nano farts.py
+```
 
 Now either copy and paste or enter the following code by hand:
 
@@ -233,11 +229,15 @@ Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
 
 Next, mark the file as executable with the following command:
 
-`chmod +x farts.py`
+```bash
+chmod +x farts.py
+```
 
 Now we can run the code. When you do, the alarm should play for 10 seconds and then stop.
 
-`./farts.py`
+```bash
+./farts.py
+```
 
 ## Write code to calibrate the ladder
 
@@ -245,7 +245,9 @@ As noted above, we need to calibrate the ladder to bring the output voltage of t
 
 Let's continue editing our program. Enter the following command:
 
-`nano farts.py`
+```bash
+nano farts.py
+```
 
 Remove the three lines below. These are no longer needed, but will be used again later.
 
@@ -407,7 +409,9 @@ Lets run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X`
 
 GPIO functions require root access on your Pi, so from now on you must use the `sudo` command to run your code. If you don't use `sudo` you'll see the following error: `No access to dev/mem. Try running as root!`
 
-`sudo ./farts.py`
+```bash
+sudo ./farts.py
+```
 
 The output should look something like this:
 
@@ -432,7 +436,9 @@ If you connect a multimeter to the breadboard as shown, and configure it to disp
 
 If you want the calibration to run more slowly to give you more time to see the values on the multimeter, then you can just increase the `sleep_time` parameter on the call to the `calibrate` function on the line below:
 
-`fresh_air = calibrate(trace = True, sleep_time = 0.5)`
+```python
+fresh_air = calibrate(trace = True, sleep_time = 0.5)
+```
 
 Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo ./farts.py` when you're ready.
 
@@ -442,7 +448,9 @@ When you're doing this, bear in mind that the HIGH vs LOW threshold for a GPIO p
 
 Now that we have successfully calibrated the sensor in normal air, we can add some code to wait for the trigger pin to go from LOW to HIGH, then we can play the alarm sound. Let's continue editing our program.
 
-`nano farts.py`
+```bash
+nano farts.py
+```
 
 We should add code directly after the line `print "Calibrated to", fresh_air` so that it will only run if we have a successful calibration. Look at the code below and modify yours to match it.
 
@@ -478,7 +486,9 @@ To do this we call the `calibrate` function again but we pass in a 0.1 second `s
 Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
 Remember to use the `sudo` command when you run the code.
 
-`sudo ./farts.py`
+```bash
+sudo ./farts.py
+```
 
 The output should look something like this:
 
@@ -508,7 +518,9 @@ The [data sheet](http://www.figarosensor.com/products/2600pdf.pdf) also says tha
 
 Let's continue editing our program.
 
-`nano farts.py`
+```bash
+nano farts.py
+```
 
 The first problem is easy to solve. All we have to do is enclose our current code in a `while` loop and perhaps add a five-second `sleep` where we were unable to calibrate, to wait for the air to clear or the sensor heater to warm up.
 
@@ -553,7 +565,9 @@ We now need to be careful, as we will arrive at this point every time the 120-se
 Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
 Remember to use the `sudo` command when you run the code.
 
-`sudo ./farts.py`
+```
+sudo ./farts.py
+```
 
 Wait for two minutes and the output should look something like this:
 
