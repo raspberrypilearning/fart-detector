@@ -48,32 +48,7 @@ In input mode things work slightly differently. Naturally, you would assume that
 
 This is quite a hacky way to do it, but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold, then the spike caused by a fart will tip it over from LOW to HIGH, and we have our digital fart detection.
 
-## Step 0: Setting up your Pi
-
-First check that you have all the parts you need to get your Raspberry Pi set up and working.
-
-- Raspberry Pi
-- Micro USB power adaptor
-- An SD card with Raspbian already set up through NOOBS
-- USB keyboard
-- USB mouse
-- HDMI cable
-- A monitor or TV
-
-### Activity checklist:
-
-1. Place the SD card into the slot of your Raspberry Pi.
-1. Next connect the HDMI cable from the monitor or TV.
-1. Plug in the USB keyboard and mouse.
-1. Plug in the micro USB power supply.
-1. When prompted to log in, type:
-
-    ```bash
-    Login: pi
-    Password: raspberry
-    ```
-
-## Step 1: Wire up the air quality sensor
+## Wire up the air quality sensor
 
 ![](images/pinout.png)
 
@@ -98,14 +73,15 @@ The sensor can run on 5 volts but we're going to run it on 3.3 volts here, since
 
 We still need to do something with the negative side of the sensor, row 1 in the top right corner of the breadboard. See below.
 
-## Step 2: Wire up the trigger pin
+## Wire up the trigger pin
 
-Shut down the Raspberry Pi. 
+Shut down the Raspberry Pi if not already turned off. 
 
-`sudo halt`
+```bash
+sudo halt
+```
 
 Unplug the power for now; we'll plug it back in again later.
-
 
 Next, let's connect the output of the sensor to one of the GPIO pins; this will be the *trigger* pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this (or pin number 7 if you're counting horizontally from the top). Take a jumper wire and make the white connection shown below.
 
@@ -113,7 +89,7 @@ Next, let's connect the output of the sensor to one of the GPIO pins; this will 
 
 Next take a 47kΩ resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will siphon off a portion of the voltage coming from the sensor output, to help bring it down to the 1.1 to 1.4 volt region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, so read on.
 
-## Step 3: Build a resistor ladder DAC
+## Build a resistor ladder DAC
 
 The problem we now have is that despite the addition of the 47kΩ resistor, the air quality sensor has quite a large output voltage range. 0 volts would be what we'd find in a vacuum (no air, as in space); whereas the maximum 3.3 would be what we'd see from a terrible, eye-watering, silent-but-deadly fart. Depending on the background quality of the air, the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold, under different air quality conditions.
 
@@ -213,7 +189,7 @@ When you're done you should have something like this. You'll notice that for som
 
 We have now completed the hardware side of the project; we just need to bring it to life with some programming!
 
-## Step 4: Play a test alarm sound
+## Play a test alarm sound
 
 Plug your Raspberry Pi back in, boot up, and log in as per usual. If you are using headphones or a speaker on the Raspberry Pi, you will need to run the following terminal command to redirect sound to the headphone socket:
 
@@ -263,7 +239,7 @@ Now we can run the code. When you do, the alarm should play for 10 seconds and t
 
 `./farts.py`
 
-## Step 5: Write code to calibrate the ladder
+## Write code to calibrate the ladder
 
 As noted above, we need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin, so that it reads LOW. That way, any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH, which we can easily detect in code.
 
@@ -462,7 +438,7 @@ Try `1.5` instead of `0.5` and see how that looks. Run the code again with `sudo
 
 When you're doing this, bear in mind that the HIGH vs LOW threshold for a GPIO pin is around 1.1 to 1.4 volts. The expected result is for the voltage to start around 2 to 3 volts, then drop in stages until it reaches the threshold. When the GPIO pin goes LOW you should see the `Calibrated to x` message on the screen.
 
-## Step 6: Monitoring for farts and raising the alarm
+## Monitoring for farts and raising the alarm
 
 Now that we have successfully calibrated the sensor in normal air, we can add some code to wait for the trigger pin to go from LOW to HIGH, then we can play the alarm sound. Let's continue editing our program.
 
@@ -524,7 +500,7 @@ You only need a very small squirt to set it off, so spray some in the general di
 
 Whatever you do, **don't** completely annihilate the sensor by spraying deodorant directly onto it. If too much isobutane gets inside the sensor, it may well not calibrate again for several hours. *You only need a tiny little squirt.* You can often get away with just holding the nozzle of the deodorant can near the top of the sensor too.
 
-## Step 7: Continuous monitoring and recalibration
+## Continuous monitoring and recalibration
 
 You'll notice that currently the program will only wait for one fart, sound the alarm and then exit. It may be that you want to set this up in a semi-permanent way to provide an early warning system in the home. It would be better in this case if the program could sound the alarm for a while, and then recalibrate to wait for another fart.
 
