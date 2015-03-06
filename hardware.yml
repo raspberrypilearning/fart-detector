@@ -1,22 +1,22 @@
 - name: Breadboard
   img: breadboard
   url: http://shop.pimoroni.com/products/solderless-breadboard-400-point
-- name: Male to Female jumper wires, at least 8
+- name: 8 (or more) x Male-to-Female jumper wires
   img: jumper-male-to-female
   url: http://shop.pimoroni.com/products/jumper-jerky
-- name: Male to Male jumper wires, at least 6
+- name: 6 (or more) x Male-to-Male jumper wires
   img: jumper-male-to-male
   url: http://shop.pimoroni.com/products/jumper-jerky
-- name: 2 x 47k ohm resistor, through hole 
+- name: 2 x 47k ohm resistor
   img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
-- name: 1 x 22k ohm resistor, through hole 
+- name: 1 x 22k ohm resistor
   img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
-- name: 1 x 10k ohm resistor, through hole 
+- name: 1 x 10k ohm resistor
   img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
-- name: 1 x 4.7k ohm resistor, through hole
+- name: 1 x 4.7k ohm resistor
   img: resistor
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: Air quality sensor
