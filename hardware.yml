@@ -8,16 +8,16 @@
   img: jumper-male-to-male
   url: http://shop.pimoroni.com/products/jumper-jerky
 - name: 2 x 47k ohm resistors
-  img: resistor
+  img: resistor-47k
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 22k ohm resistor
-  img: resistor
+  img: resistor-22k
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 10k ohm resistor
-  img: resistor
+  img: resistor-10k
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x 4.7k ohm resistor
-  img: resistor
+  img: resistor-4k7
   url: http://shop.pimoroni.com/products/resistor-grab-bag
 - name: 1 x Air quality sensor
   img: air-quality-sensor
