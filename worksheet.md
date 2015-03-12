@@ -1,4 +1,4 @@
-# Introduction
+# Fart Detector
 
 ![](images/dude.png)
 
@@ -16,7 +16,7 @@ Firstly, it is important for us to understand how this sensor works. The sensor 
 
 To summarise, the sensor has six holes to allow air to go inside. The air is then energised by a small heater which allows its electrical resistance to be measured. This is done by passing a low level of electricity across a small gap of energised air. Generally speaking, the more contaminated the air is, the less resistance it has and the better it will conduct electricity (like a variable resistor). The output of the sensor is therefore an analogue voltage that goes up and down according to how contaminated the air is. The more contaminants, the higher the voltage output.
 
-### Analogue vs Digital
+**Analogue vs Digital**
 
 ![](images/analogue_digital.png)
 
@@ -26,7 +26,7 @@ Those of you who play computer games may have experienced this before. Look at y
 
 I expect you can think of further examples of analogue and digital beyond just these.
 
-### But the Raspberry Pi is digital?
+**But the Raspberry Pi is digital?**
 
 ![](images/gpio_b_plus.png)
 
@@ -38,7 +38,7 @@ However, this does complicate matters slightly. You would only need to use an AD
 
 We already know that the sensor is like a variable resistor; the worse the air quality, the lower the resistance and the more voltage is let through. So logically, when the sensor comes into contact with a fart, the output voltage should spike. Therefore, we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from LOW to HIGH; we can then detect this change in our code and play an alarm sound file!
 
-### The high and low threshold
+**The high and low threshold**
 
 You now might be wondering how the Raspberry Pi knows if a GPIO pin is HIGH or LOW.
 
