@@ -2,7 +2,7 @@
 
 Bust people for farting with your Raspberry Pi
 
-![](images/cover.png)
+![](cover.png)
 
 All kids understand that farts are funny. As we grow older, some of us lose our sense of humour in this area. You'll be glad to hear that we believe that building a real working fart detector has both educational and comedic value. If you have a relative or dog who frequently likes to stink up the family home, you'll be able to provide the advance warning necessary to evacuate the room.
 
@@ -25,15 +25,6 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 
 ### Hardware
 
-- Raspberry Pi (any model)
-- Micro USB power adaptor
-- An SD Card with Raspbian already set up through NOOBS ([setup guide](http://www.raspberrypi.org/help/noobs-setup/))
-- USB keyboard
-- USB mouse
-- HDMI cable
-- Ethernet cable
-- LAN with internet connection
-- A monitor or TV
 - Breadboard (try [Pimoroni](http://shop.pimoroni.com/products/solderless-breadboard-400-point) or [Maplin](http://www.maplin.co.uk/p/ad-102-breadboard-ag10l))
 - **Male** to **Female** jumper wires, at least 8 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
 - **Male** to **Male** jumper wires, at least 6 (try [Pimoroni](http://shop.pimoroni.com/products/jumper-jerky))
@@ -43,30 +34,10 @@ All kids understand that farts are funny. As we grow older, some of us lose our 
 - 1 x 4.7k ohm resistor, through hole (try [Pimoroni](http://shop.pimoroni.com/products/resistor-grab-bag) or [Maplin](http://www.maplin.co.uk/c/components/resistors))
 -	Air quality sensor (try [RS Components](http://uk.rs-online.com/web/p/gas-detection/5389960))
 
-### Software
-
-- python-pygame
-
 ### Extras
 
 - A digital multimeter (try [Pimoroni](http://shop.pimoroni.com/products/digital-multimeter) or [Maplin](http://www.maplin.co.uk/p/uni-trend-ut30b-digital-compact-multimeter-n15by))
 - A can of deodorant (to simulate farts)
-
-### Time required
-
-- 2 to 3 hours
-
-## Steps
-
-1. Setting up your Pi
-1. Wire up the air quality sensor
-1. Wire up the trigger pin
-1. Build a resistor ladder DAC
-1. Play a test alarm sound
-1. Write code to calibrate the ladder
-1. Monitoring for farts and raising the alarm
-1. Continuous monitoring and recalibration
-1. Make the output even more amusing
 
 ## Worksheet & included files
 
