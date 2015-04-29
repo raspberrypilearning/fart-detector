@@ -1,6 +1,6 @@
 # Fart Detector
 
-Connect a sensor to your Raspberry Pi to warn you when there are noxious gasses about!
+Connect a sensor to your Raspberry Pi to warn you when there are noxious gases about!
 
 ## Giving your Pi a 'nose': how it works
 
