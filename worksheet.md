@@ -34,7 +34,7 @@ If we use some resistors to bring the output voltage of the air quality sensor d
 
 ![](images/pinout.png)
 
-This is the **bottom** view. The pin numbers have the following functions:
+This is the **bottom** view of the air quality sensor. The pin numbers have the following functions:
 
 1. Heater (-)
 1. Sensor electrode (-)
