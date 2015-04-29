@@ -57,7 +57,7 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 ## Wire up the trigger pin
 
-Shut down the Raspberry Pi if not already turned off.
+Shut the Raspberry Pi down, if it is not already turned off, by entering the following:
 
 ```bash
 sudo halt
@@ -793,19 +793,6 @@ So, given this knowledge, you can appreciate that some farts may not set it off.
 
 What you need to do is eat something that will ferment in the gut and produce hydrogen and methane. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
 
-Foods that contain a high amount of unabsorbable carbohydrates include:
+Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more? 
 
-- beans
-- broccoli
-- cabbage
-- cauliflower
-- artichokes
-- raisins
-- pulses
-- lentils
-- onions
-- prunes
-- apples
-- brussels sprouts
-
-Need I say more? Good luck, and remember to open a window.
+Good luck, and remember to open a window.
