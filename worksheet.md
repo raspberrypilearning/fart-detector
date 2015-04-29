@@ -1,52 +1,34 @@
 # Fart Detector
 
-![](images/dude.png)
+Connect a sensor to your Raspberry Pi to warn you when there are noxious gases about!
 
-Flatulence or *farts* are essentially gases that are produced in the stomach and bowels by bacterial fermentation during the process of digestion. The scientific study of farts and fart gases is known as *flatology*; a future career for some of you, perhaps? It is perfectly normal for human beings to pass wind every day, although the amount varies greatly between individuals; it can range from a tiny amount, up to, and in excess of, two litres.
+## Giving your Pi a 'nose': how it works
 
-You'll be surprised to learn that 99% of fart gases do not smell at all. These include oxygen, nitrogen, carbon dioxide, hydrogen, and methane. The remaining 1% is what gives farts their smell, and these are mostly volatile sulphuric compounds, the same stuff that makes rotten eggs smell.
+To detect a fart with the Raspberry Pi, we need to use a sensor that is responsive to one or more of the volatile sulphuric compounds which make up 1% of flatulence (i.e. the compounds which make farts smell). Essentially, we need to give the Raspberry Pi a *nose*. The sensor recommended for this project is the Figaro TGS2600. The sensor has six holes to allow air to enter it. The air is then energised by a small heater which allows its electrical resistance to be measured. This is done by passing a low level of electricity across a small gap of energised air. The more contaminated the air is, the less resistance it has and the better it will conduct electricity (like a variable resistor). The output of the sensor is therefore an analogue voltage that goes up and down according to how contaminated the air is. The more contaminants, the higher the voltage output.
 
-To detect a fart with the Raspberry Pi, we need to use a sensor that is responsive to one or more of these gases. Essentially, we need to give the Raspberry Pi a *nose*. The sensor recommended for this project is the Figaro TGS2600 and costs around £10.
+###Analogue vs Digital
 
-Here is a close-up of it:
+We also need to understand that the air quality sensor gives us an *analogue* signal, and the difference between an analogue signal and a digital one. Digital signals are essentially binary: 1 or 0; on or off. Analogue signals, on the other hand, have the full range *between* on or off. Think of a car steering wheel: the wheel is analogue because there is a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock, or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only, like steering using the indicator stick.
 
-![](images/figaro.png)
+###Reading an analogue signal with a digital device
 
-Firstly, it is important for us to understand how this sensor works. The sensor is designed to measure air quality, or in other words how *contaminated* the air is. The datasheet for those of you who want it can be found [here](http://www.figarosensor.com/products/2600pdf.pdf).
+The challenge we face is being able to read an *analogue* signal on a *digital* computer. The Raspberry Pi GPIO pins can be used as inputs or outputs. Output mode is for when you want to supply voltage to something like an LED or a buzzer. If we use input mode, a GPIO pin has a value that we can read in our code. If the pin has voltage going into it, the reading will be `1` (*HIGH*); if the pin was connected directly to ground (no voltage), the reading would be `0` (*LOW*). So the pins are digital, allowing only `1` or `0`.
 
-To summarise, the sensor has six holes to allow air to go inside. The air is then energised by a small heater which allows its electrical resistance to be measured. This is done by passing a low level of electricity across a small gap of energised air. Generally speaking, the more contaminated the air is, the less resistance it has and the better it will conduct electricity (like a variable resistor). The output of the sensor is therefore an analogue voltage that goes up and down according to how contaminated the air is. The more contaminants, the higher the voltage output.
+How can we solve this? One way would be to use an ADC chip ([Analogue to Digital Converter](http://en.wikipedia.org/wiki/Analog-to-digital_converter)), which would convert the analogue voltage from the sensor to a digital number in our code.
 
-**Analogue vs Digital**
+However you would only need to use an ADC if a really accurate reading from the sensor was required. In practice, we just want to make an alarm go off when a fart has been detected, so everyone can run! So if you think about it, this *is* a digital detection. There *is* a fart or there *is no* fart: on or off, binary 1 or 0. We don't have to worry about the analogue fidelity coming from the air quality sensor.
 
-![](images/analogue_digital.png)
+We already know that the sensor is like a variable resistor: the worse the air quality, the lower the resistance and the more voltage is let through. Logically, when the sensor comes into contact with a fart, the output voltage should spike. Therefore, we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from LOW to HIGH; we can then detect this change in our code and play an alarm sound file!
 
-We also need to understand that the air quality sensor gives us an *analogue* signal. So let's look at what analogue means as a concept compared to digital. Digital signals are essentially binary: 1 or 0; on or off. Analogue signals, on the other hand, have the full range *between* on or off. Think of a car steering wheel; the wheel is analogue because there is a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock, or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only, like steering using the indicator stick.
+###The high and low threshold
 
-Those of you who play computer games may have experienced this before. Look at your control pad and consider the differences between the use of the analogue thumb joystick and the digital D-pad in the games that you play. Analogue and digital both have their place, and often one works better for a particular task than the other. For a game like a flight simulator you would want analogue control to aim the plane, whereas for something simple like a jump, run and shoot platform game digital control is better.
+How does the Raspberry Pi know if a GPIO pin is HIGH or LOW?
 
-I expect you can think of further examples of analogue and digital beyond just these.
+The answer to this question is actually part of our solution. The GPIO pins work at 3.3 volts. So if you set a pin to be HIGH in output mode, that pin will give/supply 3.3 volts. If you set it to output LOW, though, it will be connected to ground but could form the return path for completing a circuit.
 
-**But the Raspberry Pi is digital?**
+In input mode things work slightly differently. You might assume that the reading of the pin would be HIGH if it was connected to 3.3 volts and LOW if connected to ground. There is actually a voltage *threshold* that lies somewhere around 1.1 to 1.4 volts. Below the threshold is LOW and above it is HIGH; so for example 1.0 volt would read LOW, despite there actually being some voltage there, whereas 1.6 volts would read HIGH, despite this being a lot less than 3.3.
 
-![](images/gpio_b_plus.png)
-
-So the challenge we face is being able to read an *analogue* signal on a *digital* computer. The Raspberry Pi GPIO pins can be used as inputs or outputs. Output mode is for when you want to supply voltage to something like an LED or a buzzer. If we use input mode, a GPIO pin has a value that we can read in our code. If the pin has voltage going into it, the reading will be `1` (*HIGH*); if the pin was connected directly to ground (no voltage), the reading will be `0` (*LOW*). So they are digital, allowing only `1` or `0`.
-
-How can we solve this? One way would be to use an ADC chip ([Analogue to Digital Converter](http://en.wikipedia.org/wiki/Analog-to-digital_converter)) or something like an [Arduino](http://arduino.cc/en/Main/Products). By connecting the output of the air quality sensor to the input of an ADC, we can convert the analogue voltage from the sensor to a digital number in our code.
-
-However, this does complicate matters slightly. You would only need to use an ADC if a really accurate reading from the sensor was needed; for example, if you wanted to know how many [parts per million](http://en.wikipedia.org/wiki/Parts-per_notation) of methane was present. In practice we just want to make an alarm go off when a fart has been detected, so everyone can run! So if you think about it... this is a digital detection. There *is* a fart or there *is no* fart; on or off, binary 1 or 0. We don't have to worry about the analogue fidelity coming from the air quality sensor.
-
-We already know that the sensor is like a variable resistor; the worse the air quality, the lower the resistance and the more voltage is let through. So logically, when the sensor comes into contact with a fart, the output voltage should spike. Therefore, we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from LOW to HIGH; we can then detect this change in our code and play an alarm sound file!
-
-**The high and low threshold**
-
-You now might be wondering how the Raspberry Pi knows if a GPIO pin is HIGH or LOW.
-
-The answer to this question is actually part of our solution. You may already know that the GPIO pins work at 3.3 volts. So if you set a pin to be HIGH in output mode, that pin will give/supply 3.3 volts. If you set it to output LOW, though, it will be connected to ground but could form the return path for completing a circuit.
-
-In input mode things work slightly differently. Naturally, you would assume that the reading of the pin would be HIGH if it was connected to 3.3 volts and LOW if connected to ground. There is actually a voltage *threshold* that lies somewhere around 1.1 to 1.4 volts. The threshold varies slightly between different hardware revisions of the Raspberry Pi, but this doesn't matter for our purposes. Below the threshold is LOW and above it is HIGH; so for example 1.0 volt would read LOW, despite there actually being some voltage there, whereas 1.6 volts would read HIGH, despite this being a lot less than 3.3.
-
-This is quite a hacky way to do it, but if we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold, then the spike caused by a fart will tip it over from LOW to HIGH, and we have our digital fart detection.
+If we use some resistors to bring the output voltage of the air quality sensor down to *just below* this threshold, then the spike caused by a fart will tip it over from LOW to HIGH, and we have our digital fart detection.
 
 ## Wire up the air quality sensor
 
@@ -75,7 +57,7 @@ We still need to do something with the negative side of the sensor, row 1 in the
 
 ## Wire up the trigger pin
 
-Shut down the Raspberry Pi if not already turned off. 
+Shut down the Raspberry Pi if not already turned off.
 
 ```bash
 sudo halt
@@ -117,7 +99,7 @@ Ideally, we need to vary the resistance in a linear way and have a good number o
 
 The answer is only five. Look at the table below:
 
-R1 | R2 | R3 | R4 
+R1 | R2 | R3 | R4
 --- | --- | --- | ---
 x | x | x | x
 ON | x | x | x
@@ -166,7 +148,7 @@ The actual values we're going to use are below. These have been chosen for their
 
 8s MSB | 4s | 2s | 1s LSB
 --- | --- | --- | ---
-4.7k | 10k | 22k | 47k 
+4.7k | 10k | 22k | 47k
 
 Take another look at the schematic diagram above. You'll see that there is a row of 1s to represent the four-bit binary number that will be the on/off state of the ladder; it shows `1111`, which is 15. So in our code we'll start the ladder at `0000`. With all the resistors turned off the output voltage will be much higher than the GPIO threshold, and so the trigger pin (GPIO 4) will read HIGH. We then incrementally work our way up to 15 or `1111`. On each step we decrease the resistance (or increase the amount of voltage siphoned off to ground), and check to see if GPIO 4 has gone from HIGH to LOW. Once we have found the HIGH/LOW threshold, the air quality sensor is then calibrated to normal air, and any increase in output voltage (caused by a fart) should be enough to tip the trigger pin back from LOW into HIGH. We then just need to wait for this to happen in our code and then sound the alarm!
 
@@ -378,7 +360,7 @@ def calibrate(trace = False, sleep_time = 0):
         if not GPIO.input(TRIGGER):
             result = i
             break
-            
+
     return result
 ```
 
@@ -459,7 +441,7 @@ fresh_air = calibrate(trace = True, sleep_time = 0.5)
 
 if fresh_air != -1:
     print "Calibrated to", fresh_air
-    
+
     print "Waiting for fart..."
 
     while not GPIO.input(TRIGGER): #wait as long as trigger is LOW
@@ -469,7 +451,7 @@ if fresh_air != -1:
 
     if fart > fresh_air or fart == -1:
         print "Fart level", fart, "detected!"
-        
+
         mixer.music.play(-1) # -1 to loop the sound
         time.sleep(10) #let it play for 10 seconds
         mixer.music.stop()
@@ -785,7 +767,7 @@ while True:
         if fresh_air < 15:
             fresh_air += 1
             set_dac(fresh_air)
-            
+
         print "Calibrated to", fresh_air
 ```
 
