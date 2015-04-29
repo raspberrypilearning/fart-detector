@@ -387,7 +387,7 @@ else:
 
 This calls the `calibrate` function and stores the result in a variable called `fresh_air`; under normal conditions this should be somewhere below 6 or 7. We can then use an `if` statement to test if `fresh_air` is equal to `-1` or not. So if not equal `!=` to `-1` then we have a successful calibration, otherwise it failed.
 
-Lets run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
+Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
 
 GPIO functions require root access on your Pi, so from now on you must use the `sudo` command to run your code. If you don't use `sudo` you'll see the following error: `No access to dev/mem. Try running as root!`
 
