@@ -73,7 +73,7 @@ Next take a 47kΩ resistor (resistors are [colour coded](http://en.wikipedia.or
 
 ## Build a resistor ladder DAC
 
-The problem we now have is that despite the addition of the 47kΩ resistor, the air quality sensor has quite a large output voltage range. 0 volts would be what we'd find in a vacuum (no air, as in space); whereas the maximum 3.3 would be what we'd see from a terrible, eye-watering, silent-but-deadly fart. Depending on the background quality of the air, the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold, under different air quality conditions.
+The problem we now have is that despite the addition of the 47kΩ resistor, the air quality sensor has quite a large output voltage range. 0 volts would be what we'd find in a vacuum, whereas the maximum 3.3 would be what we'd see from a terrible, eye-watering, silent-but-deadly fart. Depending on the background quality of the air, the output voltage of the sensor can be anywhere within that range. So we need a reliable way to always bring that voltage down to just below the GPIO threshold, under different air quality conditions.
 
 To do this we need *another* variable resistor, so that we can vary the amount of voltage that we siphon off to ground. We could use a [potentiometer](http://en.wikipedia.org/wiki/Potentiometer) for this, but you would always need to manually tune it to the background air before it could be used. This is not ideal if you want to set the trap and wait for an unsuspecting victim. The background air quality can change naturally in the meantime, and make the alarm go off without a fart. Awkward.
 
@@ -85,7 +85,7 @@ A clever trick we can use here is the [resistor ladder](http://en.wikipedia.org/
 
 This next section might seem a bit boring, but the topics covered will tremendously help your understanding of the project, so I advise you not to skip it!
 
-Look at the diagram below. This *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. The output voltage of the sensor is coming out of pin number `2`, and this is connected to GPIO 4. However, in between that we have several places where we can siphon off voltage to bring the voltage down to the GPIO pin threshold as required.
+The diagram below *schematically* shows how a resistor ladder would be connected to the TGS2600 air quality sensor. The output voltage of the sensor is coming out of pin number `2`, and this is connected to GPIO 4. However, in between that we have several places where we can siphon off voltage to bring the voltage down to the GPIO pin threshold as required.
 
 ![](images/ladder_schematic.png)
 
