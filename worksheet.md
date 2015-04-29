@@ -223,9 +223,9 @@ Now we can run the code. When you do, the alarm should play for 10 seconds and t
 
 ## Write code to calibrate the ladder
 
-As noted above, we need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin, so that it reads LOW. That way, any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH, which we can easily detect in code.
+We need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin, so that it reads LOW. That way, any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH, which we can easily detect in code.
 
-Let's continue editing our program. Enter the following command:
+Enter the following command:
 
 ```bash
 nano farts.py
@@ -777,7 +777,7 @@ The consequence of this change is that you are making the fart detector *less se
 
 If you farted and the alarm didn't go off then consider yourself blessed. It is likely that the fart didn't smell, which happens more often than you might think. We need to look into the composition of fart gases to understand why this might happen.
 
-The chemical composition of fart gases varies greatly from person to person; it is largely a product of your health and what you eat or drink. For example, if you're a vegan with a very strictly controlled diet you may have difficulty producing a smelly fart. If, however, you like greasy fry ups, drink lots of beer and finish your night off with a dirty kebab, you'll probably be able to set it off from 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there ferment the food you eat.
+The chemical composition of fart gases varies greatly from person to person: it is largely a product of your health and what you eat or drink. For example, if you're a vegan with a very strictly controlled diet you may have difficulty producing a smelly fart. If, however, you like greasy fry ups, drink lots of beer and finish your night off with a dirty kebab, you'll probably be able to set it off from 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there ferment the food you eat.
 
 Farts consist primarily of nitrogen (the main gas in normal air), along with a large amount of carbon dioxide (a gas that you also exhale). A typical breakdown of the chemical composition of a fart is:
 
@@ -787,11 +787,9 @@ Farts consist primarily of nitrogen (the main gas in normal air), along with a l
 - Oxygen: 0-10%
 - Methane: 0-10% (detectable)
 
-If you take another look at the [datasheet](http://www.figarosensor.com/products/2600pdf.pdf) for the TGS2600 air quality sensor you'll notice that it is sensitive to hydrogen and methane. It is also lot *more* sensitive to hydrogen than methane.
+If you look at the [datasheet](http://www.figarosensor.com/products/2600pdf.pdf) for the TGS2600 air quality sensor you'll notice that it is sensitive to hydrogen and methane. It is also lot *more* sensitive to hydrogen than methane.
 
-So, given this knowledge, you can appreciate that some farts may not set it off. If you were to drink a whole bottle of fizzy pop and refuse to let yourself burp, you're probably going to fart only nitrogen and carbon dioxide.
-
-What you need to do is eat something that will ferment in the gut and produce hydrogen and methane. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
+To ensure that your farts can set the detector off, then, you need to eat something that will ferment in the gut and produce hydrogen and methane. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
 
 Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more? 
 
