@@ -8,9 +8,7 @@ To detect a fart with the Raspberry Pi, we need to use a sensor that is responsi
 
 ###Analogue vs Digital
 
-![](images/analogue_digital.png)
-
-We also need to understand that the air quality sensor gives us an *analogue* signal. What is the difference between an analogue signal and a digital one? Digital signals are essentially binary: 1 or 0; on or off. Analogue signals, on the other hand, have the full range *between* on or off. Think of a car steering wheel: the wheel is analogue because there is a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock, or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only, like steering using the indicator stick.
+We also need to understand that the air quality sensor gives us an *analogue* signal, and the difference between an analogue signal and a digital one. Digital signals are essentially binary: 1 or 0; on or off. Analogue signals, on the other hand, have the full range *between* on or off. Think of a car steering wheel: the wheel is analogue because there is a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock, or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only, like steering using the indicator stick.
 
 ###Reading an analogue signal with a digital device
 
