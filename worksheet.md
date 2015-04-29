@@ -53,7 +53,7 @@ So there are two distinct circuits that we need to accommodate. First is the *he
 
 The sensor can run on 5 volts but we're going to run it on 3.3 volts here, since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above; this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive electrodes). The colour of the wire you use doesn't matter. Next, connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
 
-We still need to do something with the negative side of the sensor, row 1 in the top right corner of the breadboard. See below.
+We still need to do something with the negative side of the sensor, row 1 in the top right corner of the breadboard.
 
 ## Wire up the trigger pin
 
