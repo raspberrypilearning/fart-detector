@@ -60,7 +60,7 @@ If we break this task down there are three things we need to do:
 
 ### Turn resistor pins on and off
 
-In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it LOW. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we just configure the pin to use `INPUT` mode, which means the pin is not connected to anything and nothing will flow through it.
+In order to switch a resistor on or off we just use the `GPIO.setup` command with different parameters. If the resistor/pin is *on* we configure the pin to use `OUTPUT` mode and drive it LOW. This will connect the pin to ground and some voltage will then flow from the sensor output through to ground. If the sensor is *off* we configure the pin to use `INPUT` mode, which means the pin is not connected to anything and nothing will flow through it.
 
 We can define a function called `set_pin` as follows to do this. Manually enter or copy and paste this into your code:
 
@@ -102,7 +102,7 @@ For example, if `bitwise` was 9, this would be `1001` in binary. So, working fro
 - `0` = `GPIO 22` OFF
 - `1` = `GPIO 23` ON
 
-If we do a logical [and](http://en.wikipedia.org/wiki/Bitwise_operation#AND) between `bitwise` and the value of the bit position, we can test to see if a bit is set to `1` or not. It works by comparing the bit positions of both numbers; if they are `1` in both then the answer will also be `1`, otherwise it's `0`.
+If we do a logical [and operation](http://en.wikipedia.org/wiki/Bitwise_operation#AND) between `bitwise` and the value of the bit position, we can test to see if a bit is set to `1` or not. It works by comparing the bit positions of both numbers: if they are `1` in both then the answer will also be `1`, otherwise it's `0`.
 
 For example, testing the number 5 for the first bit (LSB):
 
@@ -151,7 +151,7 @@ Inside the function we define a variable called `result`. This will be returned 
 
 Inside the loop we pass `i` into `set_dac`; we then print out what ladder step we're on (in both decimal and binary), sleep as necessary and then test the value of the trigger pin using the `GPIO.input` command. This command will return `1` for HIGH or `0` for LOW. We can then use the `if not` syntax to test whether `0` was returned. If we get `0` then we've found the HIGH to LOW threshold step, so we set `result = i` and `break` out of the loop.
 
-It is possible that the air quality could be so *bad* that the threshold is never found; it can get this way if you abuse the deodorant can or fart in a confined space. In this case, `result` will still be `-1` and will end up being the return value of the function. This allows the main code to know if the calibration was successful or not. When the calibration is unsuccessful you can only wait for the air to clear and try again. You can always print a message about the fart lingering though!
+It is possible that the air quality could be so bad that the threshold is never found: in this case, `result` will still be `-1` and will end up being the return value of the function. This allows the main code to know if the calibration was successful or not. When the calibration is unsuccessful you can only wait for the air to clear and try again.
 
 Now let's program the main code that will use the `calibrate` function!
 
@@ -187,9 +187,9 @@ The output should look something like this:
 Calibrated to 4
 ```
 
-*Note:* it's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later, you may need to wait a few minutes for the heater to warm up before you can get a successful calibration.
+It's important to remember that the heater in the air quality sensor needs to have warmed up before this will work. So if you turn off your Pi now and come back to this later, you may need to wait a few minutes for the heater to warm up before you can get a successful calibration.
 
-If it goes all the way up to 15 and you see the `Could not calibrate` message, then just wait a minute or two and run the code again. Depending on the background air quality, temperature and humidity it can take anywhere up to 20 minutes to calibrate. If you experience problems in this area see the *Troubleshooting* section at the end.
+If it goes all the way up to 15 and you see the `Could not calibrate` message, then just wait a minute or two and run the code again. Depending on the background air quality, temperature and humidity it can take anywhere up to 20 minutes to calibrate. If you experience problems in this area see the Troubleshooting section at the end.
 
 ### Optional activity using a multimeter
 
@@ -240,11 +240,9 @@ else:
      print "Could not calibrate"
 ```
 
-So first we use a `while` loop with the syntax `while not GPIO.input(TRIGGER)`, with a sleep inside the loop. This will hold up the code from progressing onto the lines below while the trigger pin reads `0` LOW. Cue a fart and the output voltage of the sensor should increase enough for the trigger pin to go back into HIGH, which will cause the loop to exit. We can then *reuse* the `calibrate` function as a clever way to measure the fart potency!
+So first we use a `while` loop with the syntax `while not GPIO.input(TRIGGER)`, with a sleep inside the loop. This will hold up the code from progressing onto the lines below while the trigger pin reads `0` LOW. Cue a fart and the output voltage of the sensor should increase enough for the trigger pin to go back into HIGH, which will cause the loop to exit. We can then reuse the `calibrate` function as a way to measure the fart potency!
 
 To do this we call the `calibrate` function again but we pass in a 0.1 second `sleep_time` parameter, because we want to do this quickly in order to sound the alarm. We store the result of this in a variable called `fart` so that we can compare it to `fresh_air`. We should only sound the alarm if `fart` is greater (worse air quality) than `fresh_air`, or if `fart` was a failed calibration meaning the air quality can't get any worse. So we use the `if fart > fresh_air or fart == -1` syntax to do this; inside the `if` statement we can print out the level of the fart, and put the three lines of code to play the alarm sound for ten seconds.
-
-(We have observed, on occasion, the trigger pin being precisely on the threshold and fluctuating between HIGH and LOW. So there is a possible scenario where the `while` loop will exit but `fart` turns out no higher than `fresh_air`. In this case the program will exit without playing the alarm.)
 
 Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
 Remember to use the `sudo` command when you run the code.
@@ -265,19 +263,17 @@ Calibrated to 4
 Waiting for fart...
 ```
 
-I would suggest using a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called isobutane, which you should find listed under the ingredients on the side of the can. Fortunately, the TGS2600 sensor is very sensitive to isobutane (see the [data sheet](http://www.figarosensor.com/products/2600pdf.pdf)) so this gives us a pretty good way to simulate farts on demand. In addition to isobutane, the TGS2600 is also sensitive to hydrogen as well as methane. Hydrogen, in particular, can be up to 50% of the gas that makes up a fart.
-
-![](images/spray.png)
+I would suggest using a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called isobutane: the sensor is very sensitive to isobutane, so this gives us a good way to simulate farts on demand.
 
 You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much; you may need to wait a bit to be able to successfully calibrate the next time you run the code.
 
-Whatever you do, **don't** completely annihilate the sensor by spraying deodorant directly onto it. If too much isobutane gets inside the sensor, it may well not calibrate again for several hours. *You only need a tiny little squirt.* You can often get away with just holding the nozzle of the deodorant can near the top of the sensor too.
+Make sure you don't spray the deodorant directly onto the sensor: if too much isobutane gets inside it, it may well not calibrate again for several hours.
 
 ## Continuous monitoring and recalibration
 
 You'll notice that currently the program will only wait for one fart, sound the alarm and then exit. It may be that you want to set this up in a semi-permanent way to provide an early warning system in the home. It would be better in this case if the program could sound the alarm for a while, and then recalibrate to wait for another fart.
 
-The [data sheet](http://www.figarosensor.com/products/2600pdf.pdf) also says that the sensor has a dependency on temperature and humidity. This will manifest as the output voltage of the air quality sensor shifting under normal air conditions. A potential failure mode could see our ladder calibration level becoming wrong as conditions change throughout the day, causing the alarm to go off on its own without a fart. To mitigate this, we can put a timeout in our code to force a recalibration to run every two minutes.
+The sensor also has a dependency on temperature and humidity, which will manifest as the output voltage of the air quality sensor shifting under normal air conditions. A potential failure mode could see our ladder calibration level becoming wrong as conditions change throughout the day, causing the alarm to go off on its own without a fart. To mitigate this, we can put a timeout in our code to force a recalibration to run every two minutes.
 
 Let's continue editing our program.
 
@@ -319,7 +315,7 @@ while True:
 
 Let's go through this. Firstly, we have added the `while True` syntax just above the fresh air calibration. All of the existing code has been indented by four spaces to make it belong to this `while` loop. We then put a `time.sleep(5)` under the `else` clause where the calibration was unsuccessful.
 
-*Note:* When you wrap an existing block of code in a `while` loop or `if` statement, you must make sure everything is correctly indented. [Indentation](http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Indentation) in Python is important.
+When you wrap an existing block of code in a `while` loop or `if` statement, you must make sure everything is correctly indented. [Indentation](http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Indentation) in Python is very important.
 
 You'll notice that we have added the line `start_time = time.time()` just after a calibration has been successful. This is to record the time of the calibration so we can measure how much time has elapsed since then. Next, there is a change to the `while` loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120`, for the condition when the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds, the loop will exit.
 
@@ -352,13 +348,13 @@ Calibrated to 4
 Waiting for fart...
 ```
 
-Get the deodorant can out again, spray some at the sensor and ensure that the alarm is still working. After the alarm has gone off, you may find that you will see several `Could not calibrate` messages before you get a successful calibration. Just allow some time for the air to return to normal, and perhaps open a window, then you should eventually get another `Waiting for fart...` message. Thus we now have a continuous fart monitoring solution that will recalibrate to natural changes in temperature and humidity during the day, and the comings and goings of *farts*.
+Get the deodorant can out again, spray some at the sensor and ensure that the alarm is still working. After the alarm has gone off, you may find that you will see several `Could not calibrate` messages before you get a successful calibration. Just allow some time for the air to return to normal, and perhaps open a window, then you should eventually get another `Waiting for fart...` message. Thus we now have a continuous fart monitoring solution that will recalibrate to natural changes in temperature and humidity during the day.
 
 You can press `Ctrl - C` to abort the program.
 
-## Make the output even more amusing
+## Customise the output
 
-Here are some nice little tricks you can use in your code to make it more funny. The first is to show the *fart detected* message in colour. There are a number of [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code) that we can use in conjunction with the `print` command to change the background and foreground colour of the terminal.
+Here are some tricks you can use in your code to make it more funny. The first is to show the *fart detected* message in colour. There are a number of [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code) that we can use in conjunction with the `print` command to change the background and foreground colour of the terminal.
 
 For example:
 
@@ -366,7 +362,7 @@ For example:
 print "\033[0;32mGREEN TEXT\033[0m"
 ```
 
-I know that looks like gibberish, but the format can be broken down like this:
+This may look complicated, but the format can be broken down like this:
 
 `START_SEQ``x;y;zm``DISPLAY_TEXT``END_SEQ`
 
@@ -387,8 +383,6 @@ Blue | 34 | Inverse | 7 | Blue | 44
 Purple| 35 | Hidden | 8 | Purple | 45
 Cyan | 36 | | | Cyan | 46
 White | 37 | | | White | 47
-
-I have found that some of the text styles do not work, but you should be able to put something good together with the others. **Use this power wisely!**
 
 A good way to simplify this is to use Python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings, and has a number of advantages over using the older *%s* method. For example:
 
@@ -491,15 +485,13 @@ while True:
         time.sleep(5)
 ```
 
-There is one other trick you could do, but I'm not sure your neighbours or parents are going to like it. This is to make the alarm *carry on* until the fart has dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required, which could be several minutes. **Use this power wisely!**
-
-You're now probably ready to start doing some real *testing*. Good luck!
+There is one other trick you could do, which is to make the alarm continue until the fart has dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required, which could be several minutes.
 
 ## Troubleshooting
 
 We've tried to anticipate the problems you may encounter and have listed the most common ones below.
 
-### 1. Will not calibrate
+### Will not calibrate
 
 The heater in the air quality sensor requires some time to warm up from cold before it will work, so please wait a while and try again. In some cases it can take up to 20 minutes before you'll get a successful calibration. It depends largely on the background air quality, temperature, and humidity.
 
@@ -507,7 +499,7 @@ If you are still unable to get a successful calibration then it's a good idea to
 
 If that *is* the case I recommend replacing only the 47kΩ `R0` resistor with a lesser 10kΩ resistor (refer to the diagram at the end of step 3). This will siphon off a greater amount of voltage by default and should allow you to get a successful calibration.
 
-### 2. Alarm goes off in normal air
+### Alarm goes off in normal air
 
 If the alarm goes off in normal air without any farts or deodorant, one of two things is probably happening:
 
@@ -554,24 +546,8 @@ while True:
 
 The consequence of this change is that you are making the fart detector *less sensitive*, but only by *one* position on its scale of 0 to 15. So it should still function as expected.
 
-### 3. My farts don't set it off
+### My farts don't set it off
 
-If you farted and the alarm didn't go off then consider yourself blessed. It is likely that the fart didn't smell, which happens more often than you might think. We need to look into the composition of fart gases to understand why this might happen.
+If you farted and the alarm didn't go off then it is likely that the fart didn't smell, which happens more often than you might think. To ensure that your farts can set the detector off, you need to eat something that will ferment in the gut and produce hydrogen and methane, which the sensor can easily detect. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
 
-The chemical composition of fart gases varies greatly from person to person: it is largely a product of your health and what you eat or drink. For example, if you're a vegan with a very strictly controlled diet you may have difficulty producing a smelly fart. If, however, you like greasy fry ups, drink lots of beer and finish your night off with a dirty kebab, you'll probably be able to set it off from 20 feet away! What this means is that it depends on the biochemistry in your gut and how the bacteria that live there ferment the food you eat.
-
-Farts consist primarily of nitrogen (the main gas in normal air), along with a large amount of carbon dioxide (a gas that you also exhale). A typical breakdown of the chemical composition of a fart is:
-
-- Nitrogen: 20-90%
-- Hydrogen: 0-50% (detectable)
-- Carbon dioxide: 10-30%
-- Oxygen: 0-10%
-- Methane: 0-10% (detectable)
-
-If you look at the [datasheet](http://www.figarosensor.com/products/2600pdf.pdf) for the TGS2600 air quality sensor you'll notice that it is sensitive to hydrogen and methane. It is also lot *more* sensitive to hydrogen than methane.
-
-To ensure that your farts can set the detector off, then, you need to eat something that will ferment in the gut and produce hydrogen and methane. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
-
-Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more? 
-
-Good luck, and remember to open a window.
+Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more?
