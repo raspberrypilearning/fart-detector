@@ -2,7 +2,7 @@
 
 Connect a sensor to your Raspberry Pi to warn you when there are noxious gases about!
 
-## Write code to calibrate the ladder
+## Write code to calibrate the ladder DAC
 
 We need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin, so that it reads LOW. That way, any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH, which we can easily detect in code.
 
