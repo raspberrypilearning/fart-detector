@@ -544,7 +544,7 @@ while True:
         print "Calibrated to", fresh_air
 ```
 
-The consequence of this change is that you are making the fart detector *less sensitive*, but only by *one* position on its scale of 0 to 15. So it should still function as expected.
+The consequence of this change is that you are making the fart detector less sensitive, but only by one position on its scale of 0 to 15, so it should still function as expected.
 
 ### My farts don't set it off
 
