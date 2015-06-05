@@ -548,6 +548,6 @@ The consequence of this change is that you are making the fart detector *less se
 
 ### My farts don't set it off
 
-If you farted and the alarm didn't go off then it is likely that the fart didn't smell, which happens more often than you might think. To ensure that your farts can set the detector off, you need to eat something that will ferment in the gut and produce hydrogen and methane, which the sensor can easily detect. Some carbohydrates cannot be digested and absorbed by the intestines, and so pass down into your colon where they ferment and produce these gases.
+If you farted and the alarm didn't go off then it is likely that the fart didn't smell, which happens more often than you might think. To ensure that your farts can set the detector off, you need to eat something that will ferment in the gut and produce hydrogen and methane, which the sensor can easily detect. Some carbohydrates cannot be digested and absorbed by the intestines, and so they pass down into your colon where they ferment and produce these gases.
 
 Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more?
