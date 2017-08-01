@@ -1,62 +1,135 @@
-## Monitoring for farts and raising the alarm
+## Customise the output
 
-Now that we have successfully calibrated the sensor in normal air, we can add some code to wait for the trigger pin to go from LOW to HIGH, then we can play the alarm sound. Let's continue editing our program.
+Here are some tricks you can use in your code to make it more funny. The first is to show the *fart detected* message in colour. There are a number of [ANSI escape codes](http://en.wikipedia.org/wiki/ANSI_escape_code) that we can use in conjunction with the `print` command to change the background and foreground colour of the terminal.
 
-```bash
-nano farts.py
-```
-
-We should add code directly after the line `print "Calibrated to", fresh_air` so that it will only run if we have a successful calibration. Look at the code below and modify yours to match it.
+For example:
 
 ```python
-fresh_air = calibrate(trace = True, sleep_time = 0.5)
-
-if fresh_air != -1:
-    print "Calibrated to", fresh_air
-
-    print "Waiting for fart..."
-
-    while not GPIO.input(TRIGGER): #wait as long as trigger is LOW
-        time.sleep(.1)
-
-    fart = calibrate(sleep_time = 0.1) #quickly recalibrate to get the fart level
-
-    if fart > fresh_air or fart == -1:
-        print "Fart level", fart, "detected!"
-
-        mixer.music.play(-1) # -1 to loop the sound
-        time.sleep(10) #let it play for 10 seconds
-        mixer.music.stop()
-else:
-     print "Could not calibrate"
+print "\033[0;32mGREEN TEXT\033[0m"
 ```
 
-So first we use a `while` loop with the syntax `while not GPIO.input(TRIGGER)`, with a sleep inside the loop. This will hold up the code from progressing onto the lines below while the trigger pin reads `0` LOW. Cue a fart and the output voltage of the sensor should increase enough for the trigger pin to go back into HIGH, which will cause the loop to exit. We can then reuse the `calibrate` function as a way to measure the fart potency!
+This may look complicated, but the format can be broken down like this:
 
-To do this we call the `calibrate` function again but we pass in a 0.1 second `sleep_time` parameter, because we want to do this quickly in order to sound the alarm. We store the result of this in a variable called `fart` so that we can compare it to `fresh_air`. We should only sound the alarm if `fart` is greater (worse air quality) than `fresh_air`, or if `fart` was a failed calibration meaning the air quality can't get any worse. So we use the `if fart > fresh_air or fart == -1` syntax to do this; inside the `if` statement we can print out the level of the fart, and put the three lines of code to play the alarm sound for ten seconds.
+`START_SEQ``x;y;zm``DISPLAY_TEXT``END_SEQ`
 
-Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
-Remember to use the `sudo` command when you run the code.
+- Start sequence: `\033[`
+- x; y; z m: `ANSI colour codes delimited by a semicolon` followed by `m`
+- Display text: `The text you want to show`
+- End sequence: `\033[0m`
 
-```bash
-sudo ./farts.py
+Here is a table of the codes you might want to use:
+
+Text color | Code | Text style | Code | Background color | Code
+--- | --- | --- | --- | --- | ---
+Black | 30 | No effect | 0 | Black | 40
+Red | 31 | Bold | 1 | Red | 41
+Green | 32 | Underline | 4| Green | 42
+Yellow | 33 | Blink | 5 | Yellow | 43
+Blue | 34 | Inverse | 7 | Blue | 44
+Purple| 35 | Hidden | 8 | Purple | 45
+Cyan | 36 | | | Cyan | 46
+White | 37 | | | White | 47
+
+A good way to simplify this is to use Python [string formatting](https://docs.python.org/2/library/string.html#string-formatting). This is quite a sophisticated way to manipulate strings, and has a number of advantages over using the older *%s* method. For example:
+
+```python
+alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
+
+print alarm_template.format("Fart level", fart, "detected!")
 ```
 
-The output should look something like this:
+We create a string variable, which contains the ANSI escape codes that we want to use as a template. Within the template there are some numbered markers `{0} {1} {2}`, which specify the parts of the string that should be replaced when you use the `format` command.
 
+Secondly, you could use a `if...elif...elif` statement to show different messages depending on the fart potency. So essentially, if `fart` is greater than one number and less than another number, then show one message; else show another message. It would look something like this:
+
+```python
+if fart >= 0 and fart < 5:
+    print alarm_template.format("Huh only level", fart, "detected, call that a fart?")
+elif fart >= 5 and fart < 10:
+    print alarm_template.format("Fart level", fart, "detected!")
+elif fart >= 10 and fart < 15:
+    print alarm_template.format("DANGER! Fart level", fart, "detected!")
+elif fart == -1:
+    print alarm_template.format("GAS GAS GAS! FART LEVEL", "EXTREME", "DETECTED! EVACUATE EVACUATE EVACUATE!")
 ```
-0 0
-1 1
-2 10
-3 11
-4 100
-Calibrated to 4
-Waiting for fart...
+
+So, given these changes, the final code will be this:
+
+```python
+#!/usr/bin/python
+import time, RPi.GPIO as GPIO
+
+from pygame import mixer
+mixer.init()
+mixer.music.load("evacuate.mp3")
+
+alarm_template = "\033[5;43;31m{0} {1} {2}\033[0m"
+
+TRIGGER = 4
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM) #use BCM pin layout
+GPIO.setup(TRIGGER, GPIO.IN)
+
+def set_pin(pin, ison):
+    if ison:
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, GPIO.LOW)
+    else:
+        GPIO.setup(pin, GPIO.IN)
+
+def set_dac(bitwise):
+    set_pin(17, bitwise & 1 == 1)
+    set_pin(18, bitwise & 2 == 2)
+    set_pin(22, bitwise & 4 == 4)
+    set_pin(23, bitwise & 8 == 8)
+
+def calibrate(trace = False, sleep_time = 0):
+    result = -1
+    for i in range(0, 16):
+        set_dac(i)
+        if trace:
+            print i, "{0:b}".format(i) #binary format
+        time.sleep(sleep_time)
+        if not GPIO.input(TRIGGER):
+            result = i
+            break
+
+    return result
+
+while True:
+    fresh_air = calibrate(trace = True, sleep_time = 0.5)
+
+    if fresh_air != -1:
+        print "Calibrated to", fresh_air
+        start_time = time.time()
+
+        print "Waiting for fart..."
+
+        while not GPIO.input(TRIGGER) and time.time() - start_time < 120: #wait as long as trigger is LOW or < 2 min
+            time.sleep(.1)
+
+        if time.time() - start_time < 120: #make sure this is not just a timeout
+            fart = calibrate(sleep_time = .1) #quickly recalibrate to get the fart level
+
+            if fart > fresh_air or fart == -1:
+                if fart >= 0 and fart < 5:
+                    print alarm_template.format("Huh only level", fart, "detected, call that a fart?")
+                elif fart >= 5 and fart < 10:
+                    print alarm_template.format("Fart level", fart, "detected!")
+                elif fart >= 10 and fart < 15:
+                    print alarm_template.format("DANGER! Fart level", fart, "detected!")
+                elif fart == -1:
+                    print alarm_template.format("GAS GAS GAS! FART LEVEL", "EXTREME", "DETECTED! EVACUATE EVACUATE EVACUATE!")
+
+                mixer.music.play(-1) # -1 to loop the sound
+                time.sleep(10) #let it play for 10 seconds
+                mixer.music.stop()
+        else:
+            print "Time out, recalibrating..."
+    else:
+        print "Could not calibrate"
+        time.sleep(5)
 ```
 
-I would suggest using a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called isobutane: the sensor is very sensitive to isobutane, so this gives us a good way to simulate farts on demand.
-
-You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much; you may need to wait a bit to be able to successfully calibrate the next time you run the code.
-
-Make sure you don't spray the deodorant directly onto the sensor: if too much isobutane gets inside it, it may well not calibrate again for several hours.
+There is one other trick you could do, which is to make the alarm continue until the fart has dissipated and a successful calibration has been made. All you need to do for this is to move the `mixer.music.stop()` line from its current location to just after you show the `Waiting for fart...` message. This means the alarm will sound for a minimum of 10 seconds and will continue for however many calibration attempts are required, which could be several minutes.
 

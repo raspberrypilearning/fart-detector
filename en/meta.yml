@@ -21,8 +21,6 @@ steps:
 - title: Wire up the trigger pin
 - title: Build a resistor ladder DAC
 - title: Play a test alarm sound
-- title: Continue
-- title: Fart Detector - Part 2
 - title: Write code to calibrate the ladder DAC
 - title: Monitoring for farts and raising the alarm
 - title: Continuous monitoring and recalibration

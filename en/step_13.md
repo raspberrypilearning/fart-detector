@@ -1,83 +1,65 @@
-## Continuous monitoring and recalibration
+## Troubleshooting
 
-You'll notice that currently the program will only wait for one fart, sound the alarm and then exit. It may be that you want to set this up in a semi-permanent way to provide an early warning system in the home. It would be better in this case if the program could sound the alarm for a while, and then recalibrate to wait for another fart.
+We've tried to anticipate the problems you may encounter and have listed the most common ones below.
 
-The sensor also has a dependency on temperature and humidity, which will manifest as the output voltage of the air quality sensor shifting under normal air conditions. A potential failure mode could see our ladder calibration level becoming wrong as conditions change throughout the day, causing the alarm to go off on its own without a fart. To mitigate this, we can put a timeout in our code to force a recalibration to run every two minutes.
+### Will not calibrate
 
-Let's continue editing our program.
+The heater in the air quality sensor requires some time to warm up from cold before it will work, so please wait a while and try again. In some cases it can take up to 20 minutes before you'll get a successful calibration. It depends largely on the background air quality, temperature, and humidity.
 
-```bash
-nano farts.py
+If you are still unable to get a successful calibration then it's a good idea to do the *Optional activity using a multimeter* described above (refer to the end of step 5). This will allow you to observe the voltage level that is reaching the trigger pin as the calibration code runs. You can then confirm that the voltage level never gets down to the 1.1 to 1.4 region required to make the trigger pin go LOW.
+
+If that *is* the case I recommend replacing only the 47kΩ `R0` resistor with a lesser 10kΩ resistor (refer to the diagram at the end of step 3). This will siphon off a greater amount of voltage by default and should allow you to get a successful calibration.
+
+### Alarm goes off in normal air
+
+If the alarm goes off in normal air without any farts or deodorant, one of two things is probably happening:
+
+- There is some unseen or unknown air contaminant which is setting it off. Did someone drop an SBD?
+- The background temperature and/or humidity has changed, causing the calibration to become wrong.
+
+Don't be too surprised if this happens. It happened to us when we were doing the testing for this resource quite a few times. There are a couple of things you can do to mitigate this though. First and easiest is to reduce the calibration timeout; this is currently set to 120 seconds. You could try and reduce this to 60 seconds in your code and see if that helps.
+
+Find the following line and change the `120` to `60` in your code.
+
+```python
+while not GPIO.input(TRIGGER) and time.time() - start_time < 120:
 ```
 
-The first problem is easy to solve. All we have to do is enclose our current code in a `while` loop and perhaps add a five-second `sleep` where we were unable to calibrate, to wait for the air to clear or the sensor heater to warm up.
+You'll also need to change the `120` on the following line below the `while` statement. Consider using a variable for this:
 
-Then we need to limit how long we wait while the trigger pin is LOW. To measure time in code you have to record the time now, wait for something to happen, and then subtract the time you recorded from the current time. Take a look at the code below and modify yours to match it:
+```python
+if time.time() - start_time < 120:
+```
+
+If that doesn't help there is one other option. This is to force the ladder DAC into a lower resistance or higher binary number configuration than was returned by the `calibrate` function in your code. This will make the fart detector slightly less sensitive, meaning it should no longer give false alarms; it will, consequently, need a stronger fart to set it off.
+
+We will have to respect the upper limit of 15 which is `1111` in binary. So firstly we can use an `if` statement to check the calibration level. If it is less than 15 then we can add 1 to `fresh_air` and call the `set_dac` function again.
+
+```python
+if fresh_air < 15:
+    fresh_air += 1
+    set_dac(fresh_air)
+```
+
+We then need to put this `if` statement into the right place in our code. It should go just before the `print "Calibrated to", fresh_air` line like so:
 
 ```python
 while True:
     fresh_air = calibrate(trace = True, sleep_time = 0.5)
 
     if fresh_air != -1:
+        if fresh_air < 15:
+            fresh_air += 1
+            set_dac(fresh_air)
+
         print "Calibrated to", fresh_air
-        start_time = time.time()
-
-        print "Waiting for fart..."
-
-        while not GPIO.input(TRIGGER) and time.time() - start_time < 120: #wait as long as trigger is LOW or < 2 min
-            time.sleep(.1)
-
-        if time.time() - start_time < 120: #make sure this is not just a timeout
-            fart = calibrate(sleep_time = .1) #quickly recalibrate to get the fart level
-
-            if fart > fresh_air or fart == -1:
-                print "Fart level", fart, "detected!"
-                mixer.music.play(-1) # -1 to loop the sound
-                time.sleep(10) #let it play for 10 seconds
-                mixer.music.stop()
-        else:
-            print "Time out, recalibrating..."
-    else:
-        print "Could not calibrate"
-        time.sleep(5)
 ```
 
-Let's go through this. Firstly, we have added the `while True` syntax just above the fresh air calibration. All of the existing code has been indented by four spaces to make it belong to this `while` loop. We then put a `time.sleep(5)` under the `else` clause where the calibration was unsuccessful.
+The consequence of this change is that you are making the fart detector less sensitive, but only by one position on its scale of 0 to 15, so it should still function as expected.
 
-When you wrap an existing block of code in a `while` loop or `if` statement, you must make sure everything is correctly indented. [Indentation](http://en.wikipedia.org/wiki/Python_syntax_and_semantics#Indentation) in Python is very important.
+### My farts don't set it off
 
-You'll notice that we have added the line `start_time = time.time()` just after a calibration has been successful. This is to record the time of the calibration so we can measure how much time has elapsed since then. Next, there is a change to the `while` loop where we monitor the trigger pin. We've added the syntax `and time.time() - start_time < 120`, for the condition when the trigger pin is LOW *and* less than 120 seconds have elapsed since the start. So after 120 seconds, the loop will exit.
+If you farted and the alarm didn't go off then it is likely that the fart didn't smell, which happens more often than you might think. To ensure that your farts can set the detector off, you need to eat something that will ferment in the gut and produce hydrogen and methane, which the sensor can easily detect. Some carbohydrates cannot be digested and absorbed by the intestines, and so they pass down into your colon where they ferment and produce these gases.
 
-We now need to be careful, as we will arrive at this point every time the 120-second timeout occurs. So we should only test for farts and sound the alarm if the 120 seconds has not fully elapsed. This would imply that the trigger pin must have gone HIGH to cause the `while` loop to exit. To do this we can just measure the elapsed time again, using an `if` statement with the syntax `if time.time() - start_time < 120`. We can also add an `else` clause to explicitly indicate that a timeout has happened.
-
-Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
-Remember to use the `sudo` command when you run the code.
-
-```
-sudo ./farts.py
-```
-
-Wait for two minutes and the output should look something like this:
-
-```
-0 0
-1 1
-2 10
-3 11
-4 100
-Calibrated to 4
-Waiting for fart...
-Time out, recalibrating...
-0 0
-1 1
-2 10
-3 11
-4 100
-Calibrated to 4
-Waiting for fart...
-```
-
-Get the deodorant can out again, spray some at the sensor and ensure that the alarm is still working. After the alarm has gone off, you may find that you will see several `Could not calibrate` messages before you get a successful calibration. Just allow some time for the air to return to normal, and perhaps open a window, then you should eventually get another `Waiting for fart...` message. Thus we now have a continuous fart monitoring solution that will recalibrate to natural changes in temperature and humidity during the day.
-
-You can press `Ctrl - C` to abort the program.
+Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more?
 
