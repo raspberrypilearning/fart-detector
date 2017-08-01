@@ -4,7 +4,7 @@ hero_image: images/banner.png
 description: Make an alarm that's triggered by certain potent gases
 original_url: https://raspberrypi.org/learning/fart-detector
 theme: red
-duration: 2
+duration: 3
 listed: true
 ingredient: false
 copyedit: true
