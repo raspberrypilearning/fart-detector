@@ -175,7 +175,7 @@ sudo amixer cset numid=3 1
 First, we need to download a sound file that will be the alarm: we've chosen a robotic voice saying "evacuate". Enter the following terminal command to download it:
 
 ```bash
-wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/sounds/evacuate.mp3 --no-check-certificate
+wget https://raw.githubusercontent.com/raspberrypilearning/fart-detector/master/data/evacuate.mp3 --no-check-certificate
 ```
 
 Now let's do some programming. Enter the following command to start editing a blank file:
