@@ -1,62 +1,65 @@
-## Monitoring for farts and raising the alarm
+## Troubleshooting
 
-Now that we have successfully calibrated the sensor in normal air, we can add some code to wait for the trigger pin to go from LOW to HIGH, then we can play the alarm sound. Let's continue editing our program.
+We've tried to anticipate the problems you may encounter and have listed the most common ones below.
 
-```bash
-nano farts.py
-```
+### Will not calibrate
 
-We should add code directly after the line `print "Calibrated to", fresh_air` so that it will only run if we have a successful calibration. Look at the code below and modify yours to match it.
+The heater in the air quality sensor requires some time to warm up from cold before it will work, so please wait a while and try again. In some cases it can take up to 20 minutes before you'll get a successful calibration. It depends largely on the background air quality, temperature, and humidity.
+
+If you are still unable to get a successful calibration then it's a good idea to do the *Optional activity using a multimeter* described above (refer to the end of step 5). This will allow you to observe the voltage level that is reaching the trigger pin as the calibration code runs. You can then confirm that the voltage level never gets down to the 1.1 to 1.4 region required to make the trigger pin go LOW.
+
+If that *is* the case I recommend replacing only the 47kΩ `R0` resistor with a lesser 10kΩ resistor (refer to the diagram at the end of step 3). This will siphon off a greater amount of voltage by default and should allow you to get a successful calibration.
+
+### Alarm goes off in normal air
+
+If the alarm goes off in normal air without any farts or deodorant, one of two things is probably happening:
+
+- There is some unseen or unknown air contaminant which is setting it off. Did someone drop an SBD?
+- The background temperature and/or humidity has changed, causing the calibration to become wrong.
+
+Don't be too surprised if this happens. It happened to us when we were doing the testing for this resource quite a few times. There are a couple of things you can do to mitigate this though. First and easiest is to reduce the calibration timeout; this is currently set to 120 seconds. You could try and reduce this to 60 seconds in your code and see if that helps.
+
+Find the following line and change the `120` to `60` in your code.
 
 ```python
-fresh_air = calibrate(trace = True, sleep_time = 0.5)
-
-if fresh_air != -1:
-    print "Calibrated to", fresh_air
-
-    print "Waiting for fart..."
-
-    while not GPIO.input(TRIGGER): #wait as long as trigger is LOW
-        time.sleep(.1)
-
-    fart = calibrate(sleep_time = 0.1) #quickly recalibrate to get the fart level
-
-    if fart > fresh_air or fart == -1:
-        print "Fart level", fart, "detected!"
-
-        mixer.music.play(-1) # -1 to loop the sound
-        time.sleep(10) #let it play for 10 seconds
-        mixer.music.stop()
-else:
-     print "Could not calibrate"
+while not GPIO.input(TRIGGER) and time.time() - start_time < 120:
 ```
 
-So first we use a `while` loop with the syntax `while not GPIO.input(TRIGGER)`, with a sleep inside the loop. This will hold up the code from progressing onto the lines below while the trigger pin reads `0` LOW. Cue a fart and the output voltage of the sensor should increase enough for the trigger pin to go back into HIGH, which will cause the loop to exit. We can then reuse the `calibrate` function as a way to measure the fart potency!
+You'll also need to change the `120` on the following line below the `while` statement. Consider using a variable for this:
 
-To do this we call the `calibrate` function again but we pass in a 0.1 second `sleep_time` parameter, because we want to do this quickly in order to sound the alarm. We store the result of this in a variable called `fart` so that we can compare it to `fresh_air`. We should only sound the alarm if `fart` is greater (worse air quality) than `fresh_air`, or if `fart` was a failed calibration meaning the air quality can't get any worse. So we use the `if fart > fresh_air or fart == -1` syntax to do this; inside the `if` statement we can print out the level of the fart, and put the three lines of code to play the alarm sound for ten seconds.
-
-Let's run the code. Press `Ctrl - O` then `Enter` to save, followed by `Ctrl - X` to quit.
-Remember to use the `sudo` command when you run the code.
-
-```bash
-sudo ./farts.py
+```python
+if time.time() - start_time < 120:
 ```
 
-The output should look something like this:
+If that doesn't help there is one other option. This is to force the ladder DAC into a lower resistance or higher binary number configuration than was returned by the `calibrate` function in your code. This will make the fart detector slightly less sensitive, meaning it should no longer give false alarms; it will, consequently, need a stronger fart to set it off.
 
-```
-0 0
-1 1
-2 10
-3 11
-4 100
-Calibrated to 4
-Waiting for fart...
+We will have to respect the upper limit of 15 which is `1111` in binary. So firstly we can use an `if` statement to check the calibration level. If it is less than 15 then we can add 1 to `fresh_air` and call the `set_dac` function again.
+
+```python
+if fresh_air < 15:
+    fresh_air += 1
+    set_dac(fresh_air)
 ```
 
-I would suggest using a deodorant can to test that the air quality sensor is working. Most deodorants use a gas called isobutane: the sensor is very sensitive to isobutane, so this gives us a good way to simulate farts on demand.
+We then need to put this `if` statement into the right place in our code. It should go just before the `print "Calibrated to", fresh_air` line like so:
 
-You only need a very small squirt to set it off, so spray some in the general direction of the sensor and wait. The message `Fart level x detected!` should appear and the *evacuate* alarm should go off. If you get a `-1` then you probably sprayed too much; you may need to wait a bit to be able to successfully calibrate the next time you run the code.
+```python
+while True:
+    fresh_air = calibrate(trace = True, sleep_time = 0.5)
 
-Make sure you don't spray the deodorant directly onto the sensor: if too much isobutane gets inside it, it may well not calibrate again for several hours.
+    if fresh_air != -1:
+        if fresh_air < 15:
+            fresh_air += 1
+            set_dac(fresh_air)
+
+        print "Calibrated to", fresh_air
+```
+
+The consequence of this change is that you are making the fart detector less sensitive, but only by one position on its scale of 0 to 15, so it should still function as expected.
+
+### My farts don't set it off
+
+If you farted and the alarm didn't go off then it is likely that the fart didn't smell, which happens more often than you might think. To ensure that your farts can set the detector off, you need to eat something that will ferment in the gut and produce hydrogen and methane, which the sensor can easily detect. Some carbohydrates cannot be digested and absorbed by the intestines, and so they pass down into your colon where they ferment and produce these gases.
+
+Foods that contain a high amount of unabsorbable carbohydrates include beans, broccoli, cabbage, cauliflower, artichokes, raisins, pulses, lentils, onions, prunes, apples and brussels sprouts. Need I say more?
 

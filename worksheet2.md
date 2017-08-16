@@ -6,11 +6,7 @@ Connect a sensor to your Raspberry Pi to warn you when there are noxious gases a
 
 We need to calibrate the ladder to bring the output voltage of the air quality sensor down to just below the threshold of the trigger pin, so that it reads LOW. That way, any increase in output voltage caused by a fart will tip the trigger from LOW into HIGH, which we can easily detect in code.
 
-Enter the following command:
-
-```bash
-nano farts.py
-```
+Open up the `farts.py` file you already created.
 
 Remove the three lines below. These are no longer needed, but will be used again later.
 

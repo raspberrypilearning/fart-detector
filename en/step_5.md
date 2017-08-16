@@ -1,19 +1,16 @@
-## Wire up the air quality sensor
+## Wire up the trigger pin
 
-![](images/pinout.png)
+Shut the Raspberry Pi down, if it is not already turned off, by entering the following:
 
-This is the bottom view of the air quality sensor. The pin numbers have the following functions:
+```bash
+sudo halt
+```
 
-- Heater (-)
-- Sensor electrode (-)
-- Sensor electrode (+)
-- Heater (+)
+Unplug the power for now; we'll plug it back in again later.
 
-So there are two distinct circuits that we need to accommodate. First is the *heater* (pins 1 and 4) which is used to energise the air, and the other is the *sensor* itself (pins 2 and 3). The output (-) side of the sensor is where we will connect our resistors. Take the breadboard and push the four pins of the sensor into it, so that it straddles the central gap as shown below. You may need to bend the pins a little, but this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
+Next, let's connect the output of the sensor to one of the GPIO pins: this will be the trigger pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this. Take a jumper wire and make the white connection shown below.
 
-![](images/fzz_a.png)
+![](images/fzz_b.png)
 
-The sensor can run on 5 volts but we're going to run it on 3.3 volts here, since this is safer for use with a GPIO input. Use the jumper wires to make the orange connections shown above; this will supply 3.3 volts to pins 3 and 4 of the sensor (both positive electrodes). The colour of the wire you use doesn't matter. Next, connect the negative (-) terminal of the heater directly to ground as shown above by the black wires.
-
-We still need to do something with the negative side of the sensor, row 1 in the top right corner of the breadboard.
+Next take a 47kΩ resistor (resistors are [colour coded](http://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding) to help you identify them) and connect it between the sensor output and ground as shown above. This will siphon off a portion of the voltage coming from the sensor output, to help bring it down to the 1.1 to 1.4 volt region of the GPIO threshold for our trigger pin. This single resistor is not going to be enough to get the job done though, so read on.
 

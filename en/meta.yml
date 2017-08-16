@@ -15,17 +15,13 @@ site_areas: ''
 steps:
 - title: Introduction
 - title: What you will need
-- title: Fart Detector
 - title: 'Giving your Pi a ''nose'': how it works'
 - title: Wire up the air quality sensor
 - title: Wire up the trigger pin
 - title: Build a resistor ladder DAC
 - title: Play a test alarm sound
-- title: Continue
-- title: Fart Detector - Part 2
 - title: Write code to calibrate the ladder DAC
 - title: Monitoring for farts and raising the alarm
 - title: Continuous monitoring and recalibration
 - title: Customise the output
 - title: Troubleshooting
-
