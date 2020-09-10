@@ -58,7 +58,7 @@ sudo halt
 
 Unplug the power for now; we'll plug it back in again later.
 
-Next, let's connect the output of the sensor to one of the GPIO pins: this will be the trigger pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this. Take a jumper wire and make the white connection shown below.
+Next, let's connect the output of the sensor to one of the GPIO pins: this will be the trigger pin which we will monitor in our code to see if a fart has occurred. Use GPIO 4 for this. Take a jumper wire and make the orange connection shown below.
 
 ![](images/fzz_b.png)
 
