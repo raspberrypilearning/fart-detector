@@ -11,7 +11,7 @@ To detect a fart with the Raspberry Pi, however, is a slightly different proposi
 
 We also need to understand that the air quality sensor gives us an analogue signal, and the difference between an analogue signal and a digital one. Digital signals are essentially binary: 1 or 0; on or off. Analogue signals, on the other hand, have the full range between on or off. Think of a car steering wheel: the wheel is analogue because there is a full range of steering available to the driver. You can steer very gently around a long sweeping corner, you can turn the wheel to full lock, or anywhere in between. If you wanted to steer a car digitally you would basically have full lock left and full lock right only.
 
-###Reading an analogue signal with a digital device
+### Reading an analogue signal with a digital device
 
 The challenge we face is being able to read an analogue signal on a digital computer. The Raspberry Pi GPIO pins can be used as inputs or outputs. Output mode is for when you want to supply voltage to something like an LED or a buzzer. If we use input mode, a GPIO pin has a value that we can read in our code. If the pin has voltage going into it, the reading will be `1` (*HIGH*); if the pin was connected directly to ground (no voltage), the reading would be `0` (*LOW*). So the pins are digital, allowing only `1` or `0`.
 
@@ -19,7 +19,7 @@ How can we solve this? One way would be to use an ADC chip ([Analogue to Digital
 
 We already know that the sensor is like a variable resistor: the worse the air quality, the lower the resistance and the more voltage is let through. Logically, when the sensor comes into contact with a fart, the output voltage should spike. Therefore, we just need to detect these voltage spikes and that *can* be done digitally. We can make it so that when a spike occurs a GPIO pin goes from LOW to HIGH; we can then detect this change in our code and play an alarm sound file!
 
-###The high and low threshold
+### The high and low threshold
 
 How does the Raspberry Pi know if a GPIO pin is HIGH or LOW?
 
@@ -36,9 +36,9 @@ If we use some resistors to bring the output voltage of the air quality sensor d
 This is the bottom view of the air quality sensor. The pin numbers have the following functions:
 
 1. Heater (-)
-1. Sensor electrode (-)
-1. Sensor electrode (+)
-1. Heater (+)
+2. Sensor electrode (-)
+3. Sensor electrode (+)
+4. Heater (+)
 
 So there are two distinct circuits that we need to accommodate. First is the *heater* (pins 1 and 4) which is used to energise the air, and the other is the *sensor* itself (pins 2 and 3). The output (-) side of the sensor is where we will connect our resistors. Take the breadboard and push the four pins of the sensor into it, so that it straddles the central gap as shown below. You may need to bend the pins a little, but this will not harm the sensor. Ensure the little tab is in the same orientation as shown.
 
