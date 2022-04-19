@@ -5,7 +5,7 @@ description: Make an alarm that's triggered by certain potent gases
 original_url: https://raspberrypi.org/learning/fart-detector
 theme: green
 duration: 3
-listed: true
+listed: false
 ingredient: false
 copyedit: true
 curriculum: 3, design-0, programming-3, phys-comp-3, manufacture-0, community-0
@@ -16,9 +16,10 @@ hardware: raspberry-pi, electronic-components
 software: python
 version: 3
 last_tested: 2017-01-01
-steps: 
+steps:
 - title: Introduction
 - title: What you will need
+  completion: engaged
 - title: 'Giving your Pi a ''nose'': how it works'
 - title: Wire up the air quality sensor
 - title: Wire up the trigger pin
@@ -28,4 +29,5 @@ steps:
 - title: Monitoring for farts and raising the alarm
 - title: Continuous monitoring and recalibration
 - title: Customise the output
+  completion: internal
 - title: Troubleshooting
